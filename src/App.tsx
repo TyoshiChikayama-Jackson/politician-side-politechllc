@@ -9,10 +9,10 @@ import { Compliance } from './pages/Compliance';
 type ViewItem = { id: 'dashboard' | 'crm' | 'posts' | 'compliance'; label: string };
 
 const views: readonly ViewItem[] = [
-  { id: 'dashboard', label: 'Dashboard' },
-  { id: 'crm', label: 'CRM' },
-  { id: 'posts', label: 'Post Studio' },
-  { id: 'compliance', label: 'FEC & Finance' }
+  { id: 'dashboard', label: 'Campaign Hub' },
+  { id: 'crm', label: 'Community' },
+  { id: 'posts', label: 'Message Center' },
+  { id: 'compliance', label: 'Finance & Filings' }
 ];
 
 type ViewId = ViewItem['id'];

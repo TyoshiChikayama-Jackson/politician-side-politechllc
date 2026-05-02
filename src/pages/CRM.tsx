@@ -23,8 +23,8 @@ export function CRM() {
     <section className="section-panel">
       <div className="section-title">
         <div>
-          <h2>CRM & constituent tracking</h2>
-          <p>Manage people, relationships, tasks, and localized outreach in one central campaign workspace.</p>
+          <h2>Community Engagement</h2>
+          <p>Build meaningful relationships with constituents. Track involvement, manage outreach, and strengthen community ties.</p>
         </div>
       </div>
 

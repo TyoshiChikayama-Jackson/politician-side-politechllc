@@ -17,8 +17,8 @@ export function Compliance() {
     <section className="section-panel">
       <div className="section-title">
         <div>
-          <h2>FEC compliance & fundraising</h2>
-          <p>Track donations, document expenditures, and stay audit-ready with campaign finance tools.</p>
+          <h2>Finance & Filings</h2>
+          <p>Full transparency and compliance. Track all donations and expenditures to stay audit-ready and legally compliant.</p>
         </div>
       </div>
 

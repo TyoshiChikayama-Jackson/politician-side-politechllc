@@ -14,8 +14,8 @@ export function Posts() {
     <section className="section-panel">
       <div className="section-title">
         <div>
-          <h2>Post generation studio</h2>
-          <p>Create candidate messages fast, then export or post them to campaign channels.</p>
+          <h2>Message Center</h2>
+          <p>Craft authentic messages to connect with voters. Share updates, policy positions, and campaign news across all channels.</p>
         </div>
       </div>
 

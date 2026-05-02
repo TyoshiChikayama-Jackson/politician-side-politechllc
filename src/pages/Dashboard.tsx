@@ -13,23 +13,23 @@ export function Dashboard() {
     <section className="section-panel">
       <div className="section-title">
         <div>
-          <h2>Campaign command center</h2>
-          <p>Overview for candidate teams, volunteers, and community outreach.</p>
+          <h2>Campaign Dashboard</h2>
+          <p>Your political engagement hub. Monitor community outreach, messaging, and compliance all in one place.</p>
         </div>
       </div>
 
       <div className="dashboard-grid">
         <DashboardCard
-          title="Constituent load"
-          description={`${constituents.length} active supporters, donors, and volunteers in your local network.`}
+          title="Community Members"
+          description={`${constituents.length} constituents tracked. Build relationships, track engagement, and grow your network.`}
         />
         <DashboardCard
-          title="Finance summary"
-          description={`Raised $${totalDonations.toLocaleString()} and spent $${totalExpenses.toLocaleString()} so far.`}
+          title="Campaign Finance"
+          description={`Raised $${totalDonations.toLocaleString()} | Spent $${totalExpenses.toLocaleString()}. Stay audit-ready and compliant.`}
         />
         <DashboardCard
-          title="Post studio"
-          description="Create social posts, save message drafts, and cross-post to your campaign feeds."
+          title="Message Center"
+          description="Craft authentic messages and reach voters across your district with consistent, compelling communications."
         />
 
       </div>

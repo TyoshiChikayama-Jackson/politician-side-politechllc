@@ -12,8 +12,8 @@ export function Header<T extends string>({ active, views, onSelect }: HeaderProp
       <div className="site-brand">
         <div className="logo">PT</div>
         <div>
-          <h1>PoliTech Platform</h1>
-          <p>Local & state candidate CRM, compliance, outreach, and post generation.</p>
+          <h1>PoliTech</h1>
+          <p>Empowering democracy through technology</p>
         </div>
       </div>
 
