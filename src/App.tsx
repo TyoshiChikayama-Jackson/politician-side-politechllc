@@ -5,16 +5,14 @@ import { Dashboard } from './pages/Dashboard';
 import { CRM } from './pages/CRM';
 import { Posts } from './pages/Posts';
 import { Compliance } from './pages/Compliance';
-import { MapView } from './pages/MapView';
 
-type ViewItem = { id: 'dashboard' | 'crm' | 'posts' | 'compliance' | 'map'; label: string };
+type ViewItem = { id: 'dashboard' | 'crm' | 'posts' | 'compliance'; label: string };
 
 const views: readonly ViewItem[] = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'crm', label: 'CRM' },
   { id: 'posts', label: 'Post Studio' },
-  { id: 'compliance', label: 'FEC & Finance' },
-  { id: 'map', label: 'Zip Map' }
+  { id: 'compliance', label: 'FEC & Finance' }
 ];
 
 type ViewId = ViewItem['id'];
@@ -29,8 +27,6 @@ function App() {
         return <Posts />;
       case 'compliance':
         return <Compliance />;
-      case 'map':
-        return <MapView />;
       default:
         return <Dashboard />;
     }

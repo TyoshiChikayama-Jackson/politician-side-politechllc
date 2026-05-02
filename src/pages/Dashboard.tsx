@@ -31,10 +31,7 @@ export function Dashboard() {
           title="Post studio"
           description="Create social posts, save message drafts, and cross-post to your campaign feeds."
         />
-        <DashboardCard
-          title="Zip code visibility"
-          description="View ward-by-ward constituent clusters and outreach gaps across district zip codes."
-        />
+
       </div>
     </section>
   );
