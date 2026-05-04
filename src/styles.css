@@ -237,6 +237,53 @@ textarea {
   gap: 8px;
 }
 
+.form-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.form-span-full {
+  grid-column: 1 / -1;
+}
+
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.summary-pill {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 102, 241, 0.16);
+  background: rgba(99, 102, 241, 0.08);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.warning-banner {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--danger);
+}
+
+.export-buttons {
+  flex-wrap: wrap;
+}
+
+.muted-text {
+  color: var(--muted);
+}
+
+.row-warning {
+  background: rgba(254, 226, 226, 0.75);
+}
+
 .small-tag {
   display: inline-flex;
   padding: 6px 10px;
