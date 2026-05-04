@@ -51,3 +51,15 @@ export type ExpenditureRecord = {
   date: string;
   memo: string;
 };
+
+export type StaffMember = {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  managerId: string | null;
+  accessLevel: 'Admin' | 'Editor' | 'Viewer';
+  startDate: string;
+  lastActive: string;
+  email: string;
+};
