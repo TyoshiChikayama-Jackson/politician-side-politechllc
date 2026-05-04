@@ -1,17 +1,17 @@
 :root {
   color-scheme: light;
-  --bg: #ffffff;
-  --surface: #f8fafc;
+  --bg: #f8fafc;
+  --surface: #ffffff;
   --surface-strong: #e2e8f0;
   --text: #0f172a;
-  --muted: #64748b;
-  --brand: #6366f1;
-  --brand-soft: #a78bfa;
-  --accent: #10b981;
-  --danger: #ef4444;
-  --warn: #f59e0b;
-  --card: rgba(255, 255, 255, 0.9);
-  --border: rgba(0, 0, 0, 0.1);
+  --muted: #475569;
+  --brand: #4338ca;
+  --brand-soft: #6366f1;
+  --accent: #0f766e;
+  --danger: #b91c1c;
+  --warn: #b45309;
+  --card: #ffffff;
+  --border: rgba(148, 163, 184, 0.24);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -97,20 +97,21 @@ button, input, textarea, select {
 }
 
 .nav-button {
-  border: 1px solid transparent;
-  background: rgba(248, 250, 252, 0.9);
-  color: var(--muted);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text);
   padding: 0.75rem 1rem;
   border-radius: 999px;
   cursor: pointer;
-  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
 .nav-button.active,
 .nav-button:hover {
-  border-color: rgba(99, 102, 241, 0.4);
-  color: var(--text);
-  background: rgba(248, 250, 252, 0.95);
+  border-color: rgba(67, 56, 202, 0.4);
+  color: var(--brand);
+  background: rgba(67, 56, 202, 0.08);
+  transform: translateY(-1px);
 }
 
 .page-content {
@@ -123,15 +124,24 @@ button, input, textarea, select {
   border: 1px solid var(--border);
   border-radius: 24px;
   padding: 24px;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.08);
 }
 
 .section-title {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 16px;
   align-items: center;
   margin-bottom: 18px;
+}
+
+.section-title h2 {
+  color: var(--text);
+}
+
+.section-title p {
+  color: var(--muted);
 }
 
 .section-title h2 {
@@ -154,11 +164,13 @@ button, input, textarea, select {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 20px;
+  padding: 22px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
 .card h3 {
   margin: 0 0 10px;
+  color: var(--text);
 }
 
 .card p {
@@ -173,14 +185,19 @@ button, input, textarea, select {
 
 .data-table th,
 .data-table td {
-  padding: 14px 12px;
+  padding: 14px 16px;
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
 }
 
 .data-table th {
   color: var(--muted);
   font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.data-table td {
+  color: var(--text);
 }
 
 .status-pill {
@@ -190,8 +207,8 @@ button, input, textarea, select {
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.85rem;
-  background: rgba(99, 102, 241, 0.16);
-  color: var(--text);
+  background: rgba(67, 56, 202, 0.08);
+  color: var(--brand);
 }
 
 .button-group {
@@ -207,24 +224,41 @@ button.primary {
   border-radius: 16px;
   padding: 0.85rem 1.3rem;
   cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+button.primary:hover {
+  background: #3730a3;
 }
 
 button.secondary {
-  background: rgba(15, 23, 47, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(248, 250, 252, 1);
+  border: 1px solid rgba(148, 163, 184, 0.35);
   color: var(--text);
   border-radius: 16px;
   padding: 0.85rem 1.3rem;
   cursor: pointer;
 }
 
+button.secondary:hover {
+  background: rgba(226, 232, 240, 1);
+}
+
 input, textarea, select {
   width: 100%;
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  border: 1px solid rgba(148, 163, 184, 0.35);
   border-radius: 14px;
   padding: 14px 16px;
-  background: rgba(15, 23, 47, 0.76);
+  background: #ffffff;
   color: var(--text);
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid rgba(99, 102, 241, 0.35);
+  outline-offset: 2px;
 }
 
 textarea {
@@ -257,9 +291,9 @@ textarea {
 .summary-pill {
   padding: 10px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(99, 102, 241, 0.16);
-  background: rgba(99, 102, 241, 0.08);
-  color: var(--text);
+  border: 1px solid rgba(67, 56, 202, 0.24);
+  background: rgba(67, 56, 202, 0.08);
+  color: var(--brand);
   font-size: 0.9rem;
 }
 
