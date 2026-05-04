@@ -17,7 +17,7 @@ const initialFormState = {
 };
 
 export function Compliance() {
-  const [jurisdictionId, setJurisdictionId] = useState('tx-state');
+  const [jurisdictionId, setJurisdictionId] = useState('in-state');
   const [donations, setDonations] = useState<FinanceDonationRecord[]>(initialDonations);
   const [formState, setFormState] = useState(initialFormState);
   const [errorMessage, setErrorMessage] = useState('');

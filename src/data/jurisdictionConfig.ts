@@ -15,36 +15,36 @@ export type JurisdictionConfig = {
 
 export const jurisdictions: JurisdictionConfig[] = [
   {
-    id: 'tx-state',
-    label: 'Texas State Campaign',
+    id: 'in-state',
+    label: 'Indiana State Campaign',
     type: 'State',
-    stateCode: 'TX',
+    stateCode: 'IN',
     contributionLimits: {
       individual: 3000,
       corporate: 0,
       maxPerCycle: 3000
     },
     filingDeadline: '2026-05-15',
-    activeCycle: '2026 Primary',
-    notes: 'Use state gift limits for city and state candidates in Texas.'
+    activeCycle: '2026 General',
+    notes: 'Includes municipal campaigns across Indiana’s 92 counties and state legislative offices.'
   },
   {
-    id: 'ca-state',
-    label: 'California State Campaign',
+    id: 'in-municipal',
+    label: 'Indiana Municipal Campaign',
     type: 'State',
-    stateCode: 'CA',
+    stateCode: 'IN',
     contributionLimits: {
-      individual: 4200,
+      individual: 1500,
       corporate: 0,
-      maxPerCycle: 4200
+      maxPerCycle: 1500
     },
-    filingDeadline: '2026-06-01',
-    activeCycle: '2026 Primary',
-    notes: 'California requires additional itemized disclosure for checks over $100.'
+    filingDeadline: '2026-05-15',
+    activeCycle: '2026 Municipal',
+    notes: 'Supports county and city government campaigns across all 92 Indiana counties.'
   },
   {
     id: 'federal',
-    label: 'Federal Candidate',
+    label: 'Federal Candidate (Indiana)',
     type: 'Federal',
     stateCode: 'FED',
     contributionLimits: {
@@ -54,6 +54,6 @@ export const jurisdictions: JurisdictionConfig[] = [
     },
     filingDeadline: '2026-06-15',
     activeCycle: '2026 Federal',
-    notes: 'FEC federal limits apply. All donations above $200 require full disclosure.'
+    notes: 'FEC federal limits apply; this view is tailored for Indiana congressional campaigns.'
   }
 ];

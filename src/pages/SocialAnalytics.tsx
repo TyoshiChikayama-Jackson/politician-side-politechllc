@@ -91,7 +91,7 @@ export function SocialAnalytics() {
       <div className="section-title">
         <div>
           <h2>Social Media Analytics</h2>
-          <p>Compare campaign performance across platforms while coordinating notes, tasks, and the content calendar.</p>
+          <p>Compare performance for Indiana campaigns across all 92 counties and statewide government levels.</p>
         </div>
       </div>
 
