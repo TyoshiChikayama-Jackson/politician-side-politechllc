@@ -1,17 +1,19 @@
 :root {
   color-scheme: light;
-  --bg: #f8fafc;
+  --bg: #eff2f7;
   --surface: #ffffff;
+  --surface-soft: #f8fafc;
   --surface-strong: #e2e8f0;
-  --text: #0f172a;
-  --muted: #475569;
-  --brand: #4338ca;
-  --brand-soft: #6366f1;
-  --accent: #0f766e;
+  --text: #111827;
+  --muted: #4b5563;
+  --brand: #111827;
+  --brand-soft: #2563eb;
+  --accent: #d97706;
   --danger: #b91c1c;
-  --warn: #b45309;
+  --warn: #c2410c;
   --card: #ffffff;
-  --border: rgba(148, 163, 184, 0.24);
+  --border: rgba(79, 89, 109, 0.16);
+  --shadow: rgba(15, 23, 42, 0.08);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -22,13 +24,14 @@
 html, body, #root {
   min-height: 100%;
   margin: 0;
-  background: radial-gradient(circle at top, rgba(99, 102, 241, 0.1), transparent 32%),
-    linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #e2e8f0 100%);
+  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.08), transparent 28%),
+    linear-gradient(180deg, #fbfcfd 0%, #eff2f7 45%, #dbe3ef 100%);
   color: var(--text);
 }
 
 body {
   margin: 0;
+  background: var(--bg);
 }
 
 a {
@@ -42,31 +45,32 @@ button, input, textarea, select {
 
 .brand-shell {
   min-height: 100vh;
-  padding: 24px;
+  padding: 28px 24px 36px;
 }
 
 .app-shell {
-  max-width: 1360px;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  gap: 24px;
+  gap: 28px;
 }
 
 .site-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .site-brand .logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
   background: linear-gradient(135deg, var(--brand), var(--accent));
   display: grid;
   place-items: center;
   font-weight: 800;
   color: white;
+  font-size: 1rem;
 }
 
 .site-brand h1,
@@ -75,18 +79,19 @@ button, input, textarea, select {
 }
 
 .site-brand h1 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
 
 .site-brand p {
   color: var(--muted);
+  letter-spacing: 0.01em;
 }
 
 .page-header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 14px;
+  gap: 20px;
   align-items: center;
 }
 
@@ -97,20 +102,22 @@ button, input, textarea, select {
 }
 
 .nav-button {
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.16);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--text);
-  padding: 0.75rem 1rem;
+  padding: 0.9rem 1.15rem;
   border-radius: 999px;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
 }
 
 .nav-button.active,
 .nav-button:hover {
-  border-color: rgba(67, 56, 202, 0.4);
+  border-color: rgba(31, 41, 55, 0.22);
   color: var(--brand);
-  background: rgba(67, 56, 202, 0.08);
+  background: rgba(255, 255, 255, 0.98);
   transform: translateY(-1px);
 }
 
@@ -120,11 +127,11 @@ button, input, textarea, select {
 }
 
 .section-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 24px;
-  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.12);
+  border-radius: 28px;
+  padding: 26px;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08);
 }
 
 .section-title {
@@ -133,25 +140,19 @@ button, input, textarea, select {
   justify-content: space-between;
   gap: 16px;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 
 .section-title h2 {
   color: var(--text);
-}
-
-.section-title p {
-  color: var(--muted);
-}
-
-.section-title h2 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
 }
 
 .section-title p {
   margin: 0;
   color: var(--muted);
+  max-width: 600px;
 }
 
 .dashboard-grid {
