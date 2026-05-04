@@ -1,12 +1,97 @@
+import { useMemo, useState } from 'react';
 import { socialMetrics, postPerformance, benchmarkComparison, socialPlatforms } from '../data/socialData';
 
+const weekdayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function formatCalendarKey(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function buildMonthDays(viewMonth: Date) {
+  const firstOfMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1);
+  const startDay = firstOfMonth.getDay();
+  const daysInMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+  const previousMonthEnd = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 0).getDate();
+
+  const days = [];
+  for (let offset = 0; offset < 42; offset += 1) {
+    const dayIndex = offset - startDay;
+    const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), dayIndex + 1);
+    const isCurrentMonth = offset >= startDay && offset < startDay + daysInMonth;
+    days.push({ date, isCurrentMonth });
+  }
+
+  return days;
+}
+
 export function SocialAnalytics() {
+  const [viewMonth, setViewMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [calendarEvent, setCalendarEvent] = useState('');
+  const [notes, setNotes] = useState([
+    { id: 'N-001', text: 'Confirm LinkedIn boost budget for next week', completed: false },
+    { id: 'N-002', text: 'Review opponent paid social messaging', completed: false }
+  ]);
+  const [todos, setTodos] = useState([
+    { id: 'T-001', text: 'Schedule Wednesday volunteer highlight post', completed: false },
+    { id: 'T-002', text: 'Create press image for town hall recap', completed: true }
+  ]);
+  const [noteDraft, setNoteDraft] = useState('');
+  const [todoDraft, setTodoDraft] = useState('');
+  const [calendarEvents, setCalendarEvents] = useState<Record<string, string[]>>({
+    [formatCalendarKey(new Date())]: ['LinkedIn post planning session'],
+    [formatCalendarKey(new Date(new Date().setDate(new Date().getDate() + 3)))]: ['District office visit scheduling']
+  });
+
+  const monthLabel = useMemo(
+    () => viewMonth.toLocaleString('default', { month: 'long', year: 'numeric' }),
+    [viewMonth]
+  );
+
+  const calendarDays = useMemo(() => buildMonthDays(viewMonth), [viewMonth]);
+  const selectedKey = formatCalendarKey(selectedDate);
+  const eventsForSelectedDate = calendarEvents[selectedKey] ?? [];
+
+  const handleAddNote = () => {
+    const trimmed = noteDraft.trim();
+    if (!trimmed) return;
+    setNotes((current) => [...current, { id: `N-${Date.now()}`, text: trimmed, completed: false }]);
+    setNoteDraft('');
+  };
+
+  const handleAddTodo = () => {
+    const trimmed = todoDraft.trim();
+    if (!trimmed) return;
+    setTodos((current) => [...current, { id: `T-${Date.now()}`, text: trimmed, completed: false }]);
+    setTodoDraft('');
+  };
+
+  const handleToggleTodo = (id: string) => {
+    setTodos((current) => current.map((item) => (item.id === id ? { ...item, completed: !item.completed } : item)));
+  };
+
+  const handleAddCalendarEvent = () => {
+    const trimmed = calendarEvent.trim();
+    if (!trimmed) return;
+    setCalendarEvents((current) => ({
+      ...current,
+      [selectedKey]: [...(current[selectedKey] ?? []), trimmed]
+    }));
+    setCalendarEvent('');
+  };
+
+  const moveMonth = (amount: number) => {
+    setViewMonth((current) => new Date(current.getFullYear(), current.getMonth() + amount, 1));
+  };
+
+  const todayKey = formatCalendarKey(new Date());
+
   return (
     <section className="section-panel">
       <div className="section-title">
         <div>
           <h2>Social Media Analytics</h2>
-          <p>Compare campaign performance across platforms and benchmark against other statewide candidates.</p>
+          <p>Compare campaign performance across platforms while coordinating notes, tasks, and the content calendar.</p>
         </div>
       </div>
 
@@ -35,6 +120,117 @@ export function SocialAnalytics() {
                 <span className="metric-trend">{metric.trend}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="dashboard-grid">
+        <div className="card">
+          <h3>Campaign calendar</h3>
+          <div className="calendar-header">
+            <button type="button" className="secondary" onClick={() => moveMonth(-1)}>
+              Previous
+            </button>
+            <strong>{monthLabel}</strong>
+            <button type="button" className="secondary" onClick={() => moveMonth(1)}>
+              Next
+            </button>
+          </div>
+          <div className="calendar-grid">
+            {weekdayLabels.map((weekday) => (
+              <div key={weekday} className="calendar-weekday">
+                {weekday}
+              </div>
+            ))}
+            {calendarDays.map(({ date, isCurrentMonth }) => {
+              const key = formatCalendarKey(date);
+              const isSelected = key === selectedKey;
+              const isToday = key === todayKey;
+              return (
+                <button
+                  type="button"
+                  key={key}
+                  className={`calendar-day ${isCurrentMonth ? '' : 'calendar-day--dimmed'} ${isSelected ? 'calendar-day--selected' : ''} ${isToday ? 'calendar-day--today' : ''}`}
+                  onClick={() => setSelectedDate(date)}
+                >
+                  {date.getDate()}
+                </button>
+              );
+            })}
+          </div>
+          <div className="calendar-details">
+            <h4>Events for {selectedDate.toLocaleDateString()}</h4>
+            <ul>
+              {eventsForSelectedDate.length > 0 ? (
+                eventsForSelectedDate.map((event, index) => <li key={`${selectedKey}-${index}`}>{event}</li>)
+              ) : (
+                <li className="muted-text">No events scheduled for this day.</li>
+              )}
+            </ul>
+            <div className="form-group">
+              <label htmlFor="calendar-event">Add event</label>
+              <input
+                id="calendar-event"
+                value={calendarEvent}
+                onChange={(event) => setCalendarEvent(event.target.value)}
+                placeholder="Content review, press brief, post draft"
+              />
+            </div>
+            <button type="button" className="primary" onClick={handleAddCalendarEvent}>
+              Add calendar event
+            </button>
+          </div>
+        </div>
+
+        <div className="card">
+          <h3>Notes & to-dos</h3>
+          <div className="note-todo-grid">
+            <div>
+              <h4>Quick notes</h4>
+              <div className="form-group">
+                <label htmlFor="note-draft">New note</label>
+                <textarea
+                  id="note-draft"
+                  value={noteDraft}
+                  onChange={(event) => setNoteDraft(event.target.value)}
+                  placeholder="Record talking points, key priorities, or campaign reminders"
+                />
+              </div>
+              <button type="button" className="primary" onClick={handleAddNote}>
+                Save note
+              </button>
+              <ul className="note-list">
+                {notes.map((note) => (
+                  <li key={note.id}>{note.text}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4>To-do list</h4>
+              <div className="form-group">
+                <label htmlFor="todo-draft">New task</label>
+                <input
+                  id="todo-draft"
+                  value={todoDraft}
+                  onChange={(event) => setTodoDraft(event.target.value)}
+                  placeholder="Add action item for social or field team"
+                />
+              </div>
+              <button type="button" className="primary" onClick={handleAddTodo}>
+                Add task
+              </button>
+              <ul className="todo-list">
+                {todos.map((item) => (
+                  <li key={item.id} className={item.completed ? 'todo-completed' : ''}>
+                    <label>
+                      <input type="checkbox" checked={item.completed} onChange={() => handleToggleTodo(item.id)} />
+                      {item.text}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
