@@ -5,13 +5,15 @@ import { Dashboard } from './pages/Dashboard';
 import { CRM } from './pages/CRM';
 import { Posts } from './pages/Posts';
 import { Compliance } from './pages/Compliance';
+import { SocialAnalytics } from './pages/SocialAnalytics';
 
-type ViewItem = { id: 'dashboard' | 'crm' | 'posts' | 'compliance'; label: string };
+type ViewItem = { id: 'dashboard' | 'crm' | 'posts' | 'analytics' | 'compliance'; label: string };
 
 const views: readonly ViewItem[] = [
   { id: 'dashboard', label: 'Campaign Hub' },
   { id: 'crm', label: 'Community' },
   { id: 'posts', label: 'Message Center' },
+  { id: 'analytics', label: 'Social Analytics' },
   { id: 'compliance', label: 'Finance & Filings' }
 ];
 
@@ -25,6 +27,8 @@ function App() {
         return <CRM />;
       case 'posts':
         return <Posts />;
+      case 'analytics':
+        return <SocialAnalytics />;
       case 'compliance':
         return <Compliance />;
       default:

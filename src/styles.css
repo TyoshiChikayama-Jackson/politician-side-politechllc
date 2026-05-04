@@ -318,6 +318,52 @@ textarea {
   background: rgba(254, 226, 226, 0.75);
 }
 
+.row-highlight {
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.platform-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.platform-chip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(248, 250, 252, 0.95);
+}
+
+.metric-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.metric-card {
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.metric-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.metric-trend {
+  display: inline-flex;
+  margin-top: 8px;
+  color: var(--brand);
+  font-weight: 600;
+}
+
 .small-tag {
   display: inline-flex;
   padding: 6px 10px;
