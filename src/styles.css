@@ -158,43 +158,31 @@ button, input, textarea, select {
 .dashboard-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.dashboard-main-grid {
+.dashboard-main-grid,
+.staff-grid {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
-  gap: 18px;
+  gap: 22px;
 }
 
-.dashboard-side {
-  display: grid;
-  gap: 18px;
-}
-
-.dashboard-content {
+.dashboard-side,
+.dashboard-content,
+.org-chart {
   display: grid;
   gap: 18px;
 }
 
 .dashboard-grid-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.staff-grid {
-  display: grid;
-  grid-template-columns: 320px minmax(0, 1fr);
   gap: 18px;
 }
 
 .staff-org-card,
 .staff-detail-card {
   min-height: 560px;
-}
-
-.org-chart {
-  display: grid;
-  gap: 18px;
 }
 
 .org-node {
@@ -206,17 +194,19 @@ button, input, textarea, select {
 .org-report {
   width: 100%;
   text-align: left;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  background: rgba(248, 250, 252, 0.95);
-  padding: 16px;
-  border-radius: 18px;
+  border: 1px solid rgba(79, 89, 109, 0.14);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 18px;
+  border-radius: 20px;
   cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
 .org-node-button:hover,
 .org-report:hover {
-  border-color: rgba(67, 56, 202, 0.35);
-  background: rgba(248, 250, 252, 1);
+  border-color: rgba(31, 41, 55, 0.18);
+  background: rgba(255, 255, 255, 0.98);
+  transform: translateY(-1px);
 }
 
 .org-report-grid {
@@ -227,7 +217,7 @@ button, input, textarea, select {
 
 .staff-info-grid {
   display: grid;
-  gap: 14px;
+  gap: 18px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -250,7 +240,7 @@ button, input, textarea, select {
 }
 
 .section-block {
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 
 .deadline-list,
@@ -259,41 +249,41 @@ button, input, textarea, select {
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .deadline-list li,
 .message-summary-list li {
-  padding: 14px 16px;
-  background: rgba(248, 250, 252, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  border-radius: 18px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.12);
+  border-radius: 20px;
 }
 
 .deadline-list strong {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .mini-calendar-grid {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .mini-calendar-day {
-  padding: 14px 12px;
-  border-radius: 16px;
-  background: rgba(248, 250, 252, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 16px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.12);
   text-align: left;
 }
 
 .mini-calendar-label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--muted);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .status-card {
@@ -302,19 +292,19 @@ button, input, textarea, select {
 
 .status-grid {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .status-item {
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(248, 250, 252, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.12);
 }
 
 .status-item strong {
   display: block;
-  margin-top: 6px;
+  margin-top: 8px;
   color: var(--text);
   font-size: 1.1rem;
 }
@@ -333,7 +323,7 @@ button, input, textarea, select {
   border: none;
   border-radius: 999px;
   padding: 14px 18px;
-  box-shadow: 0 18px 44px rgba(67, 56, 202, 0.16);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
   cursor: pointer;
   z-index: 30;
 }
@@ -344,8 +334,8 @@ button, input, textarea, select {
   bottom: 20px;
   width: min(380px, calc(100vw - 32px));
   max-height: 76vh;
-  background: var(--surface);
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.14);
   border-radius: 24px;
   box-shadow: 0 28px 80px rgba(15, 23, 42, 0.18);
   transform: translateY(110%);
@@ -363,8 +353,8 @@ button, input, textarea, select {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  padding: 18px 20px;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 20px 22px;
+  border-bottom: 1px solid rgba(79, 89, 109, 0.12);
 }
 
 .conversation-list {
@@ -376,10 +366,10 @@ button, input, textarea, select {
 }
 
 .conversation-item {
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(248, 250, 252, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.16);
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.14);
 }
 
 .conversation-item p {
@@ -397,13 +387,13 @@ button, input, textarea, select {
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 22px;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
 }
 
 .card h3 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: var(--text);
 }
 
@@ -415,19 +405,21 @@ button, input, textarea, select {
 .data-table {
   width: 100%;
   border-collapse: collapse;
+  background: transparent;
 }
 
 .data-table th,
 .data-table td {
-  padding: 14px 16px;
+  padding: 16px 18px;
   text-align: left;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  border-bottom: 1px solid rgba(79, 89, 109, 0.12);
 }
 
 .data-table th {
   color: var(--muted);
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .data-table td {
@@ -438,17 +430,17 @@ button, input, textarea, select {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 999px;
   font-size: 0.85rem;
-  background: rgba(67, 56, 202, 0.08);
-  color: var(--brand);
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--brand-soft);
 }
 
 .button-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
 }
 
 button.primary {
@@ -456,32 +448,36 @@ button.primary {
   color: white;
   border: none;
   border-radius: 16px;
-  padding: 0.85rem 1.3rem;
+  padding: 0.95rem 1.35rem;
   cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
 }
 
 button.primary:hover {
-  background: #3730a3;
+  background: #111827;
+  transform: translateY(-1px);
 }
 
 button.secondary {
-  background: rgba(248, 250, 252, 1);
-  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.16);
   color: var(--text);
   border-radius: 16px;
-  padding: 0.85rem 1.3rem;
+  padding: 0.95rem 1.35rem;
   cursor: pointer;
 }
 
 button.secondary:hover {
-  background: rgba(226, 232, 240, 1);
+  background: rgba(241, 245, 249, 0.98);
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  border-radius: 14px;
+  border: 1px solid rgba(79, 89, 109, 0.18);
+  border-radius: 16px;
   padding: 14px 16px;
   background: #ffffff;
   color: var(--text);
@@ -491,23 +487,23 @@ input, textarea, select {
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid rgba(99, 102, 241, 0.35);
+  outline: 2px solid rgba(59, 130, 246, 0.32);
   outline-offset: 2px;
 }
 
 textarea {
-  min-height: 130px;
+  min-height: 140px;
   resize: vertical;
 }
 
 .form-group {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .form-grid {
   display: grid;
-  gap: 18px;
+  gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
@@ -525,18 +521,18 @@ textarea {
 .summary-pill {
   padding: 10px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(67, 56, 202, 0.24);
-  background: rgba(67, 56, 202, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  background: rgba(59, 130, 246, 0.1);
   color: var(--brand);
   font-size: 0.9rem;
 }
 
 .warning-banner {
-  margin-top: 14px;
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.2);
   color: var(--danger);
 }
 
@@ -553,49 +549,50 @@ textarea {
 }
 
 .row-highlight {
-  background: rgba(99, 102, 241, 0.08);
+  background: rgba(59, 130, 246, 0.08);
 }
 
 .platform-grid {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .platform-chip {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 14px;
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  background: rgba(248, 250, 252, 0.95);
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(79, 89, 109, 0.14);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .metric-grid {
   display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .metric-card {
-  background: rgba(248, 250, 252, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 18px;
-  padding: 18px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.14);
+  border-radius: 22px;
+  padding: 22px;
 }
 
 .metric-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .metric-trend {
   display: inline-flex;
-  margin-top: 8px;
+  margin-top: 10px;
   color: var(--brand);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .calendar-header,
@@ -604,30 +601,31 @@ textarea {
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .calendar-weekday {
   text-align: center;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 .calendar-day {
-  min-height: 56px;
-  border-radius: 16px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  background: rgba(248, 250, 252, 0.95);
+  min-height: 60px;
+  border-radius: 18px;
+  border: 1px solid rgba(79, 89, 109, 0.12);
+  background: rgba(255, 255, 255, 0.95);
   color: var(--text);
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
 }
 
@@ -637,7 +635,7 @@ textarea {
 
 .calendar-day--selected {
   border-color: var(--brand);
-  background: rgba(67, 56, 202, 0.12);
+  background: rgba(59, 130, 246, 0.12);
 }
 
 .calendar-day--today {
@@ -651,22 +649,23 @@ textarea {
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .calendar-details li,
 .note-list li,
 .todo-list li {
-  padding: 12px 14px;
-  border-radius: 16px;
-  background: rgba(248, 250, 252, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.16);
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(79, 89, 109, 0.12);
+  background: rgba(255, 255, 255, 0.95);
   color: var(--text);
 }
 
 .note-todo-grid {
   display: grid;
   gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .note-todo-grid h4 {
