@@ -61,15 +61,6 @@ function App() {
     <BrandLayout>
       <Header views={views} active={activeView} onSelect={setActiveView} />
       <main className="page-content">{content}</main>
-      <button
-        type="button"
-        className="floating-message-button"
-        onClick={() => setActiveView('messages')}
-        title="Open Message Center"
-        aria-label="Open Message Center"
-      >
-        📧
-      </button>
     </BrandLayout>
   );
 }
