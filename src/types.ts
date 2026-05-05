@@ -63,3 +63,12 @@ export type StaffMember = {
   lastActive: string;
   email: string;
 };
+
+export type Message = {
+  id: string;
+  recipient: string;
+  subject: string;
+  content: string;
+  timestamp: string;
+  status: 'Sent' | 'Draft' | 'Scheduled';
+};
