@@ -1073,3 +1073,991 @@ button.small {
 .theme-toggle:active {
   transform: scale(0.95);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   POLITICIAN DASHBOARD — Extended Design System
+   Purple/Indigo brand, dark navy cards, gradient headers
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Purple brand tokens (supplement existing --brand blue) */
+:root {
+  --purple: #6B5DE6;
+  --purple-soft: #8B7FF0;
+  --purple-dim: rgba(107, 93, 230, 0.12);
+  --purple-dim-strong: rgba(107, 93, 230, 0.22);
+  --indigo: #4F46E5;
+  --navy: #1a1f3c;
+  --navy-card: #1e2444;
+  --navy-border: rgba(107, 93, 230, 0.18);
+  --grad-header: linear-gradient(135deg, #1a1f3c 0%, #2d1b69 50%, #4F46E5 100%);
+  --grad-purple: linear-gradient(135deg, #6B5DE6, #4F46E5);
+  --grad-card: linear-gradient(135deg, rgba(107,93,230,0.08), rgba(79,70,229,0.04));
+}
+
+/* ─── App Shell with Sidebar ─────────────────────────────────────────────── */
+
+.pol-app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+
+.pol-sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 50;
+  transition: width 0.25s ease, transform 0.25s ease;
+  overflow: hidden;
+}
+
+.pol-sidebar.collapsed {
+  width: 72px;
+}
+
+.pol-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  min-height: 80px;
+  overflow: hidden;
+}
+
+.pol-sidebar-logo {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 12px;
+  background: var(--grad-purple);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: white;
+  font-size: 1rem;
+}
+
+.pol-sidebar-brand-text {
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.pol-sidebar.collapsed .pol-sidebar-brand-text {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pol-sidebar-brand-text h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+}
+
+.pol-sidebar-brand-text p {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+
+.pol-sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.pol-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  width: 100%;
+  text-align: left;
+  transition: background 0.18s ease, color 0.18s ease;
+  white-space: nowrap;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.pol-nav-item:hover {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.9);
+}
+
+.pol-nav-item.active {
+  background: var(--purple-dim-strong);
+  color: var(--purple-soft);
+}
+
+.pol-nav-item.active .pol-nav-icon {
+  color: var(--purple-soft);
+}
+
+.pol-nav-icon {
+  font-size: 1.1rem;
+  min-width: 22px;
+  text-align: center;
+  transition: color 0.18s ease;
+}
+
+.pol-nav-label {
+  transition: opacity 0.2s ease;
+}
+
+.pol-sidebar.collapsed .pol-nav-label {
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  overflow: hidden;
+}
+
+.pol-sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.pol-sidebar-collapse-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pol-sidebar-collapse-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8);
+}
+
+/* ─── Main Content Area ──────────────────────────────────────────────────── */
+
+.pol-main {
+  flex: 1;
+  margin-left: 260px;
+  min-height: 100vh;
+  transition: margin-left 0.25s ease;
+  background: var(--bg);
+}
+
+.pol-main.sidebar-collapsed {
+  margin-left: 72px;
+}
+
+.pol-page {
+  padding: 32px;
+  max-width: 1300px;
+}
+
+/* ─── Gradient Page Header ───────────────────────────────────────────────── */
+
+.pol-page-header {
+  background: var(--grad-header);
+  border-radius: 24px;
+  padding: 32px 36px;
+  margin-bottom: 28px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.pol-page-header::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+
+.pol-page-header h1 {
+  margin: 0 0 6px;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.pol-page-header p {
+  margin: 0;
+  opacity: 0.72;
+  font-size: 0.97rem;
+}
+
+.pol-header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* ─── Dark Stat Cards ────────────────────────────────────────────────────── */
+
+.pol-stat-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-bottom: 24px;
+}
+
+.pol-stat-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 20px;
+  padding: 22px 24px;
+  color: white;
+}
+
+.pol-stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.pol-stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--purple-soft);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.pol-stat-sub {
+  display: block;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ─── Party & Status Badges ──────────────────────────────────────────────── */
+
+.pol-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pol-badge.democrat { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+.pol-badge.republican { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+.pol-badge.independent { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.25); }
+
+.pol-badge.passed { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+.pol-badge.failed { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+.pol-badge.in-progress { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
+.pol-badge.pending { background: rgba(148,163,184,0.12); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
+
+.pol-badge.compliant { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+.pol-badge.warning { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+.pol-badge.violation { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+
+.pol-badge.active { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+.pol-badge.lapsed { background: rgba(148,163,184,0.12); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
+.pol-badge.maxed-out { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+
+.pol-badge.major { background: rgba(107,93,230,0.15); color: var(--purple-soft); border: 1px solid var(--navy-border); }
+.pol-badge.volunteer-tag { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
+.pol-badge.in-kind-tag { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+.pol-badge.pac-tag { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+.pol-badge.recurring-tag { background: rgba(107,93,230,0.12); color: var(--purple-soft); border: 1px solid var(--navy-border); }
+
+/* ─── Purple CTA Buttons ─────────────────────────────────────────────────── */
+
+button.pol-btn-primary {
+  background: var(--grad-purple);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 0.85rem 1.3rem;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 16px rgba(107,93,230,0.35);
+}
+
+button.pol-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(107,93,230,0.45);
+}
+
+button.pol-btn-secondary {
+  background: var(--purple-dim);
+  color: var(--purple-soft);
+  border: 1px solid var(--navy-border);
+  border-radius: 14px;
+  padding: 0.85rem 1.3rem;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+button.pol-btn-secondary:hover {
+  background: var(--purple-dim-strong);
+  transform: translateY(-1px);
+}
+
+button.pol-btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(79,89,109,0.18);
+  border-radius: 14px;
+  padding: 0.85rem 1.3rem;
+  cursor: pointer;
+  font-size: 0.92rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+button.pol-btn-ghost:hover {
+  border-color: var(--navy-border);
+  color: var(--purple-soft);
+}
+
+button.pol-btn-danger {
+  background: rgba(239,68,68,0.1);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 14px;
+  padding: 0.85rem 1.3rem;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+button.pol-btn-danger:hover {
+  background: rgba(239,68,68,0.18);
+}
+
+button.pol-btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.82rem;
+}
+
+/* ─── Content Grid Layouts ───────────────────────────────────────────────── */
+
+.pol-grid-2 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pol-grid-3 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pol-grid-auto {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.pol-sidebar-layout {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 320px minmax(0, 1fr);
+}
+
+/* ─── Content Cards ──────────────────────────────────────────────────────── */
+
+.pol-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.pol-card h3 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pol-card-dark {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 20px;
+  padding: 24px;
+  color: white;
+}
+
+.pol-card-dark h3 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ─── Activity Feed ──────────────────────────────────────────────────────── */
+
+.pol-activity-feed {
+  display: grid;
+  gap: 12px;
+}
+
+.pol-activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.pol-activity-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+}
+
+.pol-activity-dot.green { background: #34d399; }
+.pol-activity-dot.blue { background: #60a5fa; }
+.pol-activity-dot.purple { background: var(--purple-soft); }
+.pol-activity-dot.yellow { background: #fbbf24; }
+.pol-activity-dot.red { background: #f87171; }
+
+.pol-activity-content strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.pol-activity-content span {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ─── Alert Panel ────────────────────────────────────────────────────────── */
+
+.pol-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.pol-alert.danger {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+}
+
+.pol-alert.warning {
+  background: rgba(251,191,36,0.08);
+  border: 1px solid rgba(251,191,36,0.2);
+}
+
+.pol-alert.info {
+  background: var(--purple-dim);
+  border: 1px solid var(--navy-border);
+}
+
+.pol-alert-icon { font-size: 1.1rem; margin-top: 2px; }
+.pol-alert-body strong { display: block; font-size: 0.92rem; color: var(--text); }
+.pol-alert-body p { margin: 3px 0 0; font-size: 0.82rem; color: var(--muted); }
+
+/* ─── Donor / Record List ────────────────────────────────────────────────── */
+
+.pol-record-list {
+  display: grid;
+  gap: 10px;
+}
+
+.pol-record-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pol-record-item:hover {
+  border-color: var(--navy-border);
+  background: var(--purple-dim);
+}
+
+.pol-record-item.selected {
+  border-color: var(--purple);
+  background: var(--purple-dim);
+}
+
+.pol-record-item.violation-row {
+  border-color: rgba(239,68,68,0.3);
+  background: rgba(239,68,68,0.05);
+}
+
+.pol-record-item.warning-row {
+  border-color: rgba(251,191,36,0.3);
+  background: rgba(251,191,36,0.04);
+}
+
+/* ─── Progress / Budget Bar ──────────────────────────────────────────────── */
+
+.pol-progress-track {
+  height: 8px;
+  background: rgba(107,93,230,0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.pol-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--grad-purple);
+  transition: width 0.4s ease;
+}
+
+.pol-progress-fill.over-budget {
+  background: linear-gradient(90deg, #f87171, #ef4444);
+}
+
+.pol-progress-fill.near-limit {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+/* ─── Thermometer (Fundraising Goal) ─────────────────────────────────────── */
+
+.pol-thermometer {
+  position: relative;
+  height: 12px;
+  background: rgba(107,93,230,0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.pol-thermometer-fill {
+  height: 100%;
+  background: var(--grad-purple);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+/* ─── Search & Filter Bar ────────────────────────────────────────────────── */
+
+.pol-search-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.pol-search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 16px 10px 38px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.92rem;
+  position: relative;
+}
+
+.pol-search-input:focus {
+  outline: none;
+  border-color: var(--purple);
+}
+
+.pol-search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.pol-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+  font-size: 0.95rem;
+}
+
+/* ─── Tab Row ────────────────────────────────────────────────────────────── */
+
+.pol-tab-row {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.pol-tab {
+  padding: 10px 18px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  border-radius: 8px 8px 0 0;
+  transition: color 0.18s ease;
+}
+
+.pol-tab:hover { color: var(--text); }
+
+.pol-tab.active {
+  color: var(--purple);
+  border-bottom-color: var(--purple);
+  font-weight: 700;
+}
+
+/* ─── Compliance Warning Modal ───────────────────────────────────────────── */
+
+.pol-violation-modal .modal-content {
+  border: 2px solid rgba(239,68,68,0.4);
+}
+
+.pol-violation-banner {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  color: #f87171;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ─── Toast Notification ─────────────────────────────────────────────────── */
+
+.pol-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.pol-toast {
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: var(--navy);
+  color: white;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 32px rgba(15,23,42,0.22);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: pol-toast-in 0.25s ease;
+  border: 1px solid rgba(107,93,230,0.25);
+}
+
+.pol-toast.success { border-color: rgba(16,185,129,0.35); }
+.pol-toast.error { border-color: rgba(239,68,68,0.35); }
+.pol-toast.warning { border-color: rgba(251,191,36,0.35); }
+
+@keyframes pol-toast-in {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ─── PoliCred Score Display ─────────────────────────────────────────────── */
+
+.pol-cred-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 20px;
+  padding: 28px;
+  color: white;
+  text-align: center;
+}
+
+.pol-cred-score {
+  font-size: 4rem;
+  font-weight: 900;
+  background: var(--grad-purple);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin: 8px 0;
+}
+
+.pol-cred-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+}
+
+.pol-cred-breakdown {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.pol-cred-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pol-cred-row-label { font-size: 0.88rem; color: rgba(255,255,255,0.6); }
+.pol-cred-row-value { font-size: 0.88rem; font-weight: 700; color: var(--purple-soft); }
+
+/* ─── Inline Validation ──────────────────────────────────────────────────── */
+
+.pol-field-error {
+  font-size: 0.8rem;
+  color: #f87171;
+  margin-top: 4px;
+}
+
+.pol-field-group {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.pol-field-group label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ─── AI Button ──────────────────────────────────────────────────────────── */
+
+.pol-ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(107,93,230,0.15), rgba(79,70,229,0.1));
+  border: 1px solid var(--navy-border);
+  color: var(--purple-soft);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.pol-ai-btn:hover {
+  background: linear-gradient(135deg, rgba(107,93,230,0.25), rgba(79,70,229,0.2));
+  transform: translateY(-1px);
+}
+
+.pol-ai-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── PoliAI Chat Widget ─────────────────────────────────────────────────── */
+
+.pol-ai-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 200;
+}
+
+.pol-ai-launcher {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--grad-purple);
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(107,93,230,0.45);
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pol-ai-launcher:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(107,93,230,0.55);
+}
+
+.pol-ai-panel {
+  position: absolute;
+  right: 0;
+  bottom: 68px;
+  width: 360px;
+  max-height: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(15,23,42,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+  transform-origin: bottom right;
+}
+
+.pol-ai-panel.open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.pol-ai-panel-header {
+  padding: 16px 20px;
+  background: var(--grad-header);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pol-ai-panel-header h4 { margin: 0; font-size: 0.95rem; font-weight: 700; }
+.pol-ai-panel-header p { margin: 2px 0 0; font-size: 0.78rem; opacity: 0.65; }
+
+.pol-ai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pol-ai-msg {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: 90%;
+}
+
+.pol-ai-msg.user {
+  background: var(--purple-dim-strong);
+  color: var(--purple-soft);
+  align-self: flex-end;
+  border-radius: 12px 12px 4px 12px;
+}
+
+.pol-ai-msg.assistant {
+  background: var(--surfaceSoft, #f1f5f9);
+  color: var(--text);
+  align-self: flex-start;
+  border-radius: 12px 12px 12px 4px;
+}
+
+.pol-ai-input-row {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+}
+
+.pol-ai-input-row input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.88rem;
+  min-width: 0;
+}
+
+.pol-ai-input-row input:focus {
+  outline: none;
+  border-color: var(--purple);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .pol-sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+  }
+
+  .pol-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .pol-main {
+    margin-left: 0 !important;
+  }
+
+  .pol-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pol-sidebar-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .pol-page { padding: 16px; }
+  .pol-page-header { padding: 22px 20px; }
+  .pol-page-header h1 { font-size: 1.4rem; }
+  .pol-stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .pol-grid-2, .pol-grid-3 { grid-template-columns: 1fr; }
+  .pol-ai-panel { width: calc(100vw - 48px); }
+}

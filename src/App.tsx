@@ -1,71 +1,55 @@
-import { useMemo, useState } from 'react';
-import { BrandLayout } from './components/BrandLayout';
-import { Header } from './components/Header';
-import { ThemeToggle } from './components/ThemeToggle';
+import { useState, useMemo } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { Dashboard } from './pages/Dashboard';
-import { CRM } from './pages/CRM';
-import { Posts } from './pages/Posts';
-import { Messages } from './pages/Messages';
-import { Staff } from './pages/Staff';
-import { Compliance } from './pages/Compliance';
-import { SocialAnalytics } from './pages/SocialAnalytics';
-import type { Message } from './types';
-
-type ViewItem = { id: 'dashboard' | 'crm' | 'posts' | 'messages' | 'analytics' | 'staff' | 'compliance'; label: string };
-
-const views: readonly ViewItem[] = [
-  { id: 'dashboard', label: 'Campaign Hub' },
-  { id: 'crm', label: 'Community' },
-  { id: 'posts', label: 'Content Hub' },
-  { id: 'messages', label: 'Message Center' },
-  { id: 'analytics', label: 'Social Analytics' },
-  { id: 'staff', label: 'Staff' },
-  { id: 'compliance', label: 'Finance & Filings' }
-];
-
-type ViewId = ViewItem['id'];
+import { ThemeToggle } from './components/ThemeToggle';
+import { PoliticianSidebar } from './components/PoliticianSidebar';
+import type { PoliticianView } from './components/PoliticianSidebar';
+import { PoliAIWidget } from './components/PoliAIWidget';
+import { PoliticianOverview } from './pages/politician/PoliticianOverview';
+import { PoliticianDonors } from './pages/politician/PoliticianDonors';
+import { PoliticianExpenses } from './pages/politician/PoliticianExpenses';
+import { PoliticianVolunteers } from './pages/politician/PoliticianVolunteers';
+import { PoliticianCommunications } from './pages/politician/PoliticianCommunications';
+import { PoliticianBills } from './pages/politician/PoliticianBills';
+import { PoliticianAnalytics } from './pages/politician/PoliticianAnalytics';
+import { PoliticianQuestionnaire } from './pages/politician/PoliticianQuestionnaire';
+import { PoliticianSettings } from './pages/politician/PoliticianSettings';
 
 function App() {
-  const [activeView, setActiveView] = useState<ViewId>('dashboard');
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  const handleSendMessage = (messageData: Omit<Message, 'id' | 'timestamp' | 'status'>) => {
-    const newMessage: Message = {
-      ...messageData,
-      id: `msg-${Date.now()}`,
-      timestamp: new Date().toISOString(),
-      status: 'Sent',
-    };
-    setMessages(prev => [newMessage, ...prev]);
-  };
+  const [activeView, setActiveView] = useState<PoliticianView>('overview');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const content = useMemo(() => {
     switch (activeView) {
-      case 'crm':
-        return <CRM />;
-      case 'posts':
-        return <Posts />;
-      case 'messages':
-        return <Messages messages={messages} onSendMessage={handleSendMessage} />;
-      case 'analytics':
-        return <SocialAnalytics />;
-      case 'staff':
-        return <Staff />;
-      case 'compliance':
-        return <Compliance />;
-      default:
-        return <Dashboard />;
+      case 'overview': return <PoliticianOverview />;
+      case 'donors': return <PoliticianDonors />;
+      case 'expenses': return <PoliticianExpenses />;
+      case 'volunteers': return <PoliticianVolunteers />;
+      case 'communications': return <PoliticianCommunications />;
+      case 'bills': return <PoliticianBills />;
+      case 'analytics': return <PoliticianAnalytics />;
+      case 'questionnaire': return <PoliticianQuestionnaire />;
+      case 'settings': return <PoliticianSettings />;
+      default: return <PoliticianOverview />;
     }
-  }, [activeView, messages]);
+  }, [activeView]);
 
   return (
     <ThemeProvider>
-      <BrandLayout>
-        <Header views={views} active={activeView} onSelect={setActiveView} />
+      <div className="pol-app-shell">
+        <PoliticianSidebar
+          active={activeView}
+          onSelect={setActiveView}
+          collapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed((v) => !v)}
+        />
+        <main className={`pol-main${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
+          <div className="pol-page">
+            {content}
+          </div>
+        </main>
         <ThemeToggle />
-        <main className="page-content">{content}</main>
-      </BrandLayout>
+        <PoliAIWidget />
+      </div>
     </ThemeProvider>
   );
 }
