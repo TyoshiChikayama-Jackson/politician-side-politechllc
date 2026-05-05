@@ -16,13 +16,13 @@ export function Posts() {
         <div className="section-title">
           <div>
             <h2>Content Hub</h2>
-            <p>Craft authentic messages to connect with voters. Share updates, policy positions, and campaign news across all channels.</p>
+            <p>Maintain your relationship with supports. Share updates, policy positions, and campaign news across all channels.</p>
           </div>
         </div>
 
         <div className="dashboard-grid">
           <div className="card">
-            <h3>Message templates</h3>
+            <h3>Templates</h3>
             <div className="button-group">
               {templates.map((template, index) => (
                 <button

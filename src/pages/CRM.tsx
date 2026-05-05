@@ -24,13 +24,13 @@ export function CRM() {
       <div className="section-title">
         <div>
           <h2>Community Engagement</h2>
-          <p>Build meaningful relationships with constituents. Track involvement, manage outreach, and strengthen community ties.</p>
+          <p>BStay connected to those you represent. Track involvement, manage outreach, and strengthen community ties.</p>
         </div>
       </div>
 
       <div className="dashboard-grid">
         <div className="card">
-          <h3>Status breakdown</h3>
+          <h3>Engageent breakdown</h3>
           <ul>
             {(Object.entries(breakdown) as Array<[StatusKey, number]>).map(([key, count]) => (
               <li key={key} className={statusColor[key] ?? ''}>
@@ -40,7 +40,7 @@ export function CRM() {
           </ul>
         </div>
         <div className="card">
-          <h3>Quick tasks</h3>
+          <h3>Tasks</h3>
           <p>Set follow-up reminders and assign constituents to volunteers or events.</p>
         </div>
       </div>

@@ -42,8 +42,8 @@ export function Dashboard() {
     <section className="section-panel">
       <div className="section-title">
         <div>
-          <h2>Campaign Dashboard</h2>
-          <p>Your political engagement hub. Monitor community outreach, messaging, and compliance all in one place.</p>
+          <h2>Your Dashboard</h2>
+          <p>Your personalized political engagement hub. Monitor community outreach, messaging, and compliance all in one place.</p>
         </div>
       </div>
 
@@ -63,7 +63,7 @@ export function Dashboard() {
           </div>
 
           <div className="card">
-            <h3>Mini calendar</h3>
+            <h3>Quick calendar</h3>
             <div className="mini-calendar-grid">
               {Array.from({ length: 7 }, (_, index) => {
                 const day = new Date();
@@ -105,7 +105,7 @@ export function Dashboard() {
             </div>
 
             <div className="card status-card">
-              <h3>Compliance status</h3>
+              <h3>Compliance</h3>
               <div className="status-grid">
                 {complianceSummary.map((item) => (
                   <div key={item.label} className="status-item">
