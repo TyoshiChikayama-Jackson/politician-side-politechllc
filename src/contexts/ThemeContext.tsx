@@ -21,36 +21,36 @@ export interface ThemeColors {
 
 export const themes: Record<Theme, ThemeColors> = {
   light: {
-    bg: '#eff2f7',
+    bg: '#f8fafc',
     surface: '#ffffff',
-    surfaceSoft: '#f8fafc',
+    surfaceSoft: '#f1f5f9',
     surfaceStrong: '#e2e8f0',
     text: '#111827',
-    muted: '#4b5563',
-    brand: '#111827',
-    brandSoft: '#2563eb',
+    muted: '#64748b',
+    brand: '#2563eb',
+    brandSoft: '#60a5fa',
     accent: '#d97706',
     danger: '#b91c1c',
     warn: '#c2410c',
     card: '#ffffff',
-    border: 'rgba(79, 89, 109, 0.16)',
-    shadow: 'rgba(15, 23, 42, 0.08)',
+    border: '#e5e7eb',
+    shadow: 'rgba(37, 99, 235, 0.08)',
   },
   dark: {
-    bg: '#0f172a',
+    bg: '#111827',
     surface: '#1e293b',
-    surfaceSoft: '#334155',
-    surfaceStrong: '#475569',
+    surfaceSoft: '#22304a',
+    surfaceStrong: '#334155',
     text: '#f1f5f9',
     muted: '#94a3b8',
     brand: '#60a5fa',
-    brandSoft: '#3b82f6',
+    brandSoft: '#2563eb',
     accent: '#fbbf24',
     danger: '#ef4444',
     warn: '#f97316',
     card: '#1e293b',
-    border: 'rgba(148, 163, 184, 0.2)',
-    shadow: 'rgba(0, 0, 0, 0.3)',
+    border: '#334155',
+    shadow: 'rgba(37, 99, 235, 0.18)',
   },
 };
 
@@ -100,6 +100,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
     // Update color-scheme for better browser integration
     root.style.colorScheme = theme;
+
+    // Set data-theme attribute for CSS selectors
+    root.setAttribute('data-theme', theme);
   }, [theme, colors]);
 
   const value = {
