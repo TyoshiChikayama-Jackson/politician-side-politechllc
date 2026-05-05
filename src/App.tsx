@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { BrandLayout } from './components/BrandLayout';
 import { Header } from './components/Header';
+import { ThemeToggle } from './components/ThemeToggle';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { Dashboard } from './pages/Dashboard';
 import { CRM } from './pages/CRM';
 import { Posts } from './pages/Posts';
@@ -58,10 +60,13 @@ function App() {
   }, [activeView, messages]);
 
   return (
-    <BrandLayout>
-      <Header views={views} active={activeView} onSelect={setActiveView} />
-      <main className="page-content">{content}</main>
-    </BrandLayout>
+    <ThemeProvider>
+      <BrandLayout>
+        <Header views={views} active={activeView} onSelect={setActiveView} />
+        <ThemeToggle />
+        <main className="page-content">{content}</main>
+      </BrandLayout>
+    </ThemeProvider>
   );
 }
 
