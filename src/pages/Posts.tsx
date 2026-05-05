@@ -6,35 +6,16 @@ const templates = [
   'Today I visited neighborhood small businesses to hear your ideas for better city services.',
 ];
 
-const messages = [
-  {
-    sender: 'Monroe County Volunteer Lead',
-    message: 'Thanks for the post draft—let’s push this during rush hour tomorrow.',
-    time: '9:14 AM'
-  },
-  {
-    sender: 'State Campaign Organizer',
-    message: 'Please review the LinkedIn content before the media briefing.',
-    time: 'Yesterday'
-  },
-  {
-    sender: 'Local Press Contact',
-    message: 'We’d like a quote for the upcoming transportation town hall.',
-    time: '2 days ago'
-  }
-];
-
 export function Posts() {
   const [message, setMessage] = useState(templates[0]);
   const [selected, setSelected] = useState(0);
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
       <section className="section-panel">
         <div className="section-title">
           <div>
-            <h2>Message Center</h2>
+            <h2>Content Hub</h2>
             <p>Craft authentic messages to connect with voters. Share updates, policy positions, and campaign news across all channels.</p>
           </div>
         </div>
@@ -79,32 +60,6 @@ export function Posts() {
           </div>
         </div>
       </section>
-
-      <button type="button" className="drawer-launcher" onClick={() => setDrawerOpen((current) => !current)}>
-        {drawerOpen ? 'Hide messages' : 'Messages'}
-      </button>
-
-      <aside className={`message-drawer ${drawerOpen ? 'open' : ''}`}>
-        <div className="drawer-header">
-          <div>
-            <h3>Messages</h3>
-            <p className="muted-text">Pull up campaign conversations and quick replies.</p>
-          </div>
-          <button type="button" className="secondary" onClick={() => setDrawerOpen(false)}>
-            Close
-          </button>
-        </div>
-
-        <div className="conversation-list">
-          {messages.map((item) => (
-            <div key={item.sender} className="conversation-item">
-              <strong>{item.sender}</strong>
-              <p>{item.message}</p>
-              <span className="muted-text">{item.time}</span>
-            </div>
-          ))}
-        </div>
-      </aside>
     </>
   );
 }
