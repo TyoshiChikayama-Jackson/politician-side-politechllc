@@ -43,6 +43,10 @@ export function SocialAnalytics() {
     [formatCalendarKey(new Date(new Date().setDate(new Date().getDate() + 3)))]: ['District office visit scheduling']
   });
 
+  // New state for creating posts
+  const [postDraft, setPostDraft] = useState({ title: '', content: '', platform: 'LinkedIn' });
+  const [posts, setPosts] = useState(postPerformance);
+
   const monthLabel = useMemo(
     () => viewMonth.toLocaleString('default', { month: 'long', year: 'numeric' }),
     [viewMonth]
@@ -70,6 +74,14 @@ export function SocialAnalytics() {
     setTodos((current) => current.map((item) => (item.id === id ? { ...item, completed: !item.completed } : item)));
   };
 
+  const handleDeleteNote = (id: string) => {
+    setNotes((current) => current.filter((note) => note.id !== id));
+  };
+
+  const handleDeleteTodo = (id: string) => {
+    setTodos((current) => current.filter((todo) => todo.id !== id));
+  };
+
   const handleAddCalendarEvent = () => {
     const trimmed = calendarEvent.trim();
     if (!trimmed) return;
@@ -78,6 +90,22 @@ export function SocialAnalytics() {
       [selectedKey]: [...(current[selectedKey] ?? []), trimmed]
     }));
     setCalendarEvent('');
+  };
+
+  const handleCreatePost = () => {
+    const { title, content, platform } = postDraft;
+    if (!title.trim() || !content.trim()) return;
+    const newPost = {
+      id: `P-${Date.now()}`,
+      platform,
+      title: title.trim(),
+      impressions: 0,
+      engagementRate: 0,
+      interactions: 0,
+      status: 'Draft'
+    };
+    setPosts((current) => [newPost, ...current]);
+    setPostDraft({ title: '', content: '', platform: 'LinkedIn' });
   };
 
   const moveMonth = (amount: number) => {
@@ -188,9 +216,7 @@ export function SocialAnalytics() {
             <div>
               <h4>Quick notes</h4>
               <div className="form-group">
-                <label htmlFor="note-draft">New note</label>
                 <textarea
-                  id="note-draft"
                   value={noteDraft}
                   onChange={(event) => setNoteDraft(event.target.value)}
                   placeholder="Record talking points, key priorities, or campaign reminders"
@@ -199,19 +225,22 @@ export function SocialAnalytics() {
               <button type="button" className="primary" onClick={handleAddNote}>
                 Save note
               </button>
-              <ul className="note-list">
+              <div className="note-list">
                 {notes.map((note) => (
-                  <li key={note.id}>{note.text}</li>
+                  <div key={note.id} className="note-item">
+                    <p>{note.text}</p>
+                    <button type="button" className="secondary small" onClick={() => handleDeleteNote(note.id)}>
+                      Delete
+                    </button>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
 
             <div>
               <h4>To-do list</h4>
               <div className="form-group">
-                <label htmlFor="todo-draft">New task</label>
                 <input
-                  id="todo-draft"
                   value={todoDraft}
                   onChange={(event) => setTodoDraft(event.target.value)}
                   placeholder="Add action item for social or field team"
@@ -220,19 +249,62 @@ export function SocialAnalytics() {
               <button type="button" className="primary" onClick={handleAddTodo}>
                 Add task
               </button>
-              <ul className="todo-list">
+              <div className="todo-list">
                 {todos.map((item) => (
-                  <li key={item.id} className={item.completed ? 'todo-completed' : ''}>
+                  <div key={item.id} className="todo-item">
                     <label>
                       <input type="checkbox" checked={item.completed} onChange={() => handleToggleTodo(item.id)} />
-                      {item.text}
+                      <span className={item.completed ? 'todo-completed' : ''}>{item.text}</span>
                     </label>
-                  </li>
+                    <button type="button" className="secondary small" onClick={() => handleDeleteTodo(item.id)}>
+                      Delete
+                    </button>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="card">
+        <h3>Create new post</h3>
+        <div className="form-grid">
+          <div className="form-group">
+            <label htmlFor="post-title">Post title</label>
+            <input
+              id="post-title"
+              value={postDraft.title}
+              onChange={(e) => setPostDraft({ ...postDraft, title: e.target.value })}
+              placeholder="Enter post title"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="post-platform">Platform</label>
+            <select
+              id="post-platform"
+              value={postDraft.platform}
+              onChange={(e) => setPostDraft({ ...postDraft, platform: e.target.value })}
+            >
+              {socialPlatforms.filter(p => p.active).map(p => (
+                <option key={p.name} value={p.name}>{p.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group form-span-full">
+            <label htmlFor="post-content">Post content</label>
+            <textarea
+              id="post-content"
+              value={postDraft.content}
+              onChange={(e) => setPostDraft({ ...postDraft, content: e.target.value })}
+              placeholder="Write your post content here..."
+              rows={4}
+            />
+          </div>
+        </div>
+        <button type="button" className="primary" onClick={handleCreatePost}>
+          Create post
+        </button>
       </div>
 
       <div className="card">
@@ -250,7 +322,7 @@ export function SocialAnalytics() {
             </tr>
           </thead>
           <tbody>
-            {postPerformance.map((post) => (
+            {posts.map((post) => (
               <tr key={post.id}>
                 <td>{post.title}</td>
                 <td>{post.platform}</td>
