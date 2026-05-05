@@ -57,13 +57,17 @@ function App() {
 
   return (
     <BrandLayout>
-      <Header
-        views={views}
-        active={activeView}
-        onSelect={setActiveView}
-        onOpenMessaging={() => setIsMessagingOpen(true)}
-      />
+      <Header views={views} active={activeView} onSelect={setActiveView} />
       <main className="page-content">{content}</main>
+      <button
+        type="button"
+        className="floating-message-button"
+        onClick={() => setIsMessagingOpen(true)}
+        title="Send Message"
+        aria-label="Send Message"
+      >
+        📧
+      </button>
       <MessagingModal
         isOpen={isMessagingOpen}
         onClose={() => setIsMessagingOpen(false)}

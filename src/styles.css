@@ -121,16 +121,6 @@ button, input, textarea, select {
   transform: translateY(-1px);
 }
 
-.messaging-button {
-  background: var(--brand) !important;
-  color: white !important;
-  border-color: var(--brand) !important;
-}
-
-.messaging-button:hover {
-  background: var(--brand-hover) !important;
-}
-
 .page-content {
   display: grid;
   gap: 24px;
@@ -971,4 +961,35 @@ button.small {
 .button.secondary:hover {
   background: rgba(255, 255, 255, 0.98);
   border-color: rgba(79, 89, 109, 0.22);
+}
+
+/* Floating Message Button */
+.floating-message-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+  transition: all 0.2s ease;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-message-button:hover {
+  background: var(--brand-hover);
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.2);
+}
+
+.floating-message-button:active {
+  transform: scale(0.95);
 }

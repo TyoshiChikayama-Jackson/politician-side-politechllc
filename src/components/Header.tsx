@@ -4,10 +4,9 @@ type HeaderProps<T extends string> = {
   active: T;
   views: readonly { id: T; label: string }[];
   onSelect: Dispatch<SetStateAction<T>>;
-  onOpenMessaging: () => void;
 };
 
-export function Header<T extends string>({ active, views, onSelect, onOpenMessaging }: HeaderProps<T>) {
+export function Header<T extends string>({ active, views, onSelect }: HeaderProps<T>) {
   return (
     <header className="page-header section-panel">
       <div className="site-brand">
@@ -29,14 +28,6 @@ export function Header<T extends string>({ active, views, onSelect, onOpenMessag
             {view.label}
           </button>
         ))}
-        <button
-          type="button"
-          className="nav-button messaging-button"
-          onClick={onOpenMessaging}
-          title="Send Message"
-        >
-          📧 Message
-        </button>
       </nav>
     </header>
   );
