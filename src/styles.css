@@ -993,3 +993,99 @@ button.small {
 .floating-message-button:active {
   transform: scale(0.95);
 }
+
+/* Messages Center Styles */
+.messages-center {
+  display: grid;
+  gap: 24px;
+}
+
+.compose-section {
+  margin-bottom: 24px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 20px;
+  font-style: italic;
+}
+
+.messages-list {
+  display: grid;
+  gap: 16px;
+}
+
+.message-item {
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(79, 89, 109, 0.14);
+  display: grid;
+  gap: 12px;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.message-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.message-meta strong {
+  color: var(--text);
+}
+
+.message-date {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.sent {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+}
+
+.status-badge.draft {
+  background: rgba(156, 163, 175, 0.1);
+  color: #6b7280;
+}
+
+.status-badge.scheduled {
+  background: rgba(251, 191, 36, 0.1);
+  color: #d97706;
+}
+
+.message-subject {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.message-content {
+  color: var(--muted);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
