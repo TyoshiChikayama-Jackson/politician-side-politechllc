@@ -17,8 +17,9 @@ import { PoliticianEvents } from './pages/politician/PoliticianEvents';
 import { PoliticianAds } from './pages/politician/PoliticianAds';
 import { PoliticianPolls } from './pages/politician/PoliticianPolls';
 import { PoliticianSpeech } from './pages/politician/PoliticianSpeech';
+import { PoliticiansLandingPage } from './pages/PoliticiansLandingPage';
 
-function App() {
+function Dashboard() {
   const [activeView, setActiveView] = useState<PoliticianView>('overview');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -42,22 +43,36 @@ function App() {
   }, [activeView]);
 
   return (
+    <div className="pol-app-shell">
+      <PoliticianSidebar
+        active={activeView}
+        onSelect={setActiveView}
+        collapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed((v) => !v)}
+      />
+      <main className={`pol-main${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
+        <div className="pol-page">
+          {content}
+        </div>
+      </main>
+      <ThemeToggle />
+      <PoliAIWidget />
+    </div>
+  );
+}
+
+function Router() {
+  const path = window.location.pathname;
+  if (path === '/politicians' || path === '/politicians/') {
+    return <PoliticiansLandingPage />;
+  }
+  return <Dashboard />;
+}
+
+function App() {
+  return (
     <ThemeProvider>
-      <div className="pol-app-shell">
-        <PoliticianSidebar
-          active={activeView}
-          onSelect={setActiveView}
-          collapsed={sidebarCollapsed}
-          onToggleCollapse={() => setSidebarCollapsed((v) => !v)}
-        />
-        <main className={`pol-main${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
-          <div className="pol-page">
-            {content}
-          </div>
-        </main>
-        <ThemeToggle />
-        <PoliAIWidget />
-      </div>
+      <Router />
     </ThemeProvider>
   );
 }
