@@ -76,7 +76,8 @@ export function PoliticianVolunteers() {
 
       {tab === 'roster' && (
         <div className="pol-sidebar-layout">
-          <div>
+          {/* Left column wrapper — min-width + overflow so long names don't blow out the column */}
+          <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div className="pol-search-bar">
               <div className="pol-search-wrapper" style={{ flex: 1 }}>
                 <span className="pol-search-icon">🔍</span>
@@ -108,7 +109,7 @@ export function PoliticianVolunteers() {
             </div>
           </div>
 
-          <div>
+          <div style={{ minWidth: 0 }}>
             {selectedVolunteer ? (
               <div className="pol-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>

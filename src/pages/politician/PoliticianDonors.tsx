@@ -383,8 +383,8 @@ export function PoliticianDonors() {
       {/* CRM Tab */}
       {tab === 'crm' && (
         <div className="pol-sidebar-layout">
-          {/* Donor List */}
-          <div>
+          {/* Donor List — left column; min-width prevents long names from overflowing the 320px track */}
+          <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div className="pol-search-bar">
               <div className="pol-search-wrapper">
                 <span className="pol-search-icon">🔍</span>
@@ -438,8 +438,8 @@ export function PoliticianDonors() {
             </div>
           </div>
 
-          {/* Donor Detail */}
-          <div>
+          {/* Donor Detail — minWidth: 0 prevents the right column from overflowing its grid track */}
+          <div style={{ minWidth: 0 }}>
             {selectedDonor ? (
               <div className="pol-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>

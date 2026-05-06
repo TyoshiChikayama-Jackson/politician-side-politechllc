@@ -165,8 +165,8 @@ export function PoliticianQuestionnaire() {
           ))}
         </div>
 
-        {/* Detail Panel */}
-        <div>
+        {/* Detail Panel — minWidth: 0 prevents content from overflowing the grid column */}
+        <div style={{ minWidth: 0 }}>
           {selectedStance ? (
             <div className="pol-card">
               <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>

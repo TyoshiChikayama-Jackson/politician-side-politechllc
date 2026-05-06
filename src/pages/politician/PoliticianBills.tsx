@@ -147,7 +147,7 @@ export function PoliticianBills() {
           )}
         </div>
 
-        <div>
+        <div style={{ minWidth: 0 }}>
           {selectedBill ? (
             <div className="pol-card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>

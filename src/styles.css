@@ -1266,6 +1266,8 @@ button.small {
   min-height: 100vh;
   transition: margin-left 0.25s ease;
   background: var(--bg);
+  /* Prevent child content from creating horizontal scrollbars */
+  overflow-x: hidden;
 }
 
 .pol-main.sidebar-collapsed {
@@ -1275,6 +1277,9 @@ button.small {
 .pol-page {
   padding: 32px;
   max-width: 1300px;
+  /* Ensure the page container is a proper block-formatting context
+     so floats and absolutely-positioned descendants don't escape */
+  overflow: hidden;
 }
 
 /* ─── Gradient Page Header ───────────────────────────────────────────────── */
@@ -1478,24 +1483,52 @@ button.pol-btn-sm {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* align-items: start prevents a tall card in column 1 from
+     force-stretching column 2 to the same height, which can make
+     absolutely-positioned or min-height content inside column 2
+     appear to overflow or overlap */
+  align-items: start;
 }
 
 .pol-grid-3 {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
 }
 
 .pol-grid-auto {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: start;
 }
 
 .pol-sidebar-layout {
   display: grid;
   gap: 20px;
   grid-template-columns: 320px minmax(0, 1fr);
+  /* align-items: start prevents the shorter column from being
+     force-stretched to match the taller one, which is the root cause
+     of the "panel overlapping" visual on Donors, Bills, Volunteers,
+     Questionnaire, and Communications inbox */
+  align-items: start;
+}
+
+/* Left panel inside a sidebar layout — scrolls internally so it
+   never pushes the layout taller than the viewport */
+.pol-sidebar-layout > :first-child {
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+/* Right panel — also independently scrollable */
+.pol-sidebar-layout > :last-child {
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+  /* min-width: 0 is already guaranteed by minmax(0,1fr) in the grid,
+     but be explicit for clarity */
+  min-width: 0;
 }
 
 /* ─── Content Cards ──────────────────────────────────────────────────────── */
@@ -1606,6 +1639,9 @@ button.pol-btn-sm {
 .pol-record-list {
   display: grid;
   gap: 10px;
+  /* Prevents long text inside list items from blowing out the
+     column width in a grid or flex parent */
+  min-width: 0;
 }
 
 .pol-record-item {
@@ -1619,6 +1655,10 @@ button.pol-btn-sm {
   gap: 12px;
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease;
+  /* Prevents the item itself from overflowing the grid column */
+  min-width: 0;
+  /* Ensure the item never breaks out of its column when text is long */
+  overflow: hidden;
 }
 
 .pol-record-item:hover {

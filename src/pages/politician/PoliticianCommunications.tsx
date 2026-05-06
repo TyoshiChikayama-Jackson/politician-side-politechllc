@@ -155,6 +155,7 @@ export function PoliticianCommunications() {
 
       {tab === 'inbox' && (
         <div className="pol-sidebar-layout">
+          {/* Left panel — message list; scrolls independently */}
           <div className="pol-record-list">
             {messages.map((msg) => (
               <div
@@ -177,7 +178,8 @@ export function PoliticianCommunications() {
             ))}
           </div>
 
-          <div>
+          {/* Right panel — detail pane; sits alongside list, never underneath */}
+          <div style={{ minWidth: 0 }}>
             {selectedMessage ? (
               <div className="pol-card">
                 <div style={{ marginBottom: 20 }}>
