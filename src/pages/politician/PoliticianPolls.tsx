@@ -5,12 +5,12 @@ import { demoSurveys } from '../../data/politicianData';
 type View = 'library' | 'create';
 type CreateStep = 1 | 2 | 3;
 
-const QUESTION_TYPES: { value: QuestionType; label: string; icon: string }[] = [
-  { value: 'multiple-choice', label: 'Multiple Choice', icon: '⚪' },
-  { value: 'yes-no', label: 'Yes / No', icon: '✅' },
-  { value: 'rating', label: 'Rating (1–5)', icon: '⭐' },
-  { value: 'open-text', label: 'Open Text', icon: '✏️' },
-  { value: 'ranking', label: 'Ranking', icon: '🔢' },
+const QUESTION_TYPES: { value: QuestionType; label: string }[] = [
+  { value: 'multiple-choice', label: 'Multiple Choice' },
+  { value: 'yes-no', label: 'Yes / No' },
+  { value: 'rating', label: 'Rating (1–5)' },
+  { value: 'open-text', label: 'Open Text' },
+  { value: 'ranking', label: 'Ranking' },
 ];
 
 const STATUS_COLORS: Record<Survey['status'], string> = {
@@ -102,14 +102,14 @@ function SurveyResultsPanel({ survey }: { survey: Survey }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
           <div className="info-label">AI-Extracted Themes</div>
           <button className="pol-ai-btn pol-btn-sm" onClick={extractThemes} disabled={aiLoading}>
-            {aiLoading ? '⏳ Analyzing...' : '✨ Extract Themes'}
+            {aiLoading ? 'Analyzing...' : 'Extract Themes'}
           </button>
         </div>
         {themes.length > 0 ? (
           <div style={{ display: 'grid', gap: 8 }}>
             {themes.map((theme, i) => (
               <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 14px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--purple-soft, #8B7FF0)', fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--color-brand, #6B5DE6)', fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
                 <span style={{ fontSize: '0.88rem', color: 'var(--text)' }}>{theme}</span>
               </div>
             ))}
@@ -124,14 +124,14 @@ function SurveyResultsPanel({ survey }: { survey: Survey }) {
       {survey.shareLink && (
         <div style={{ padding: '12px 16px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)', marginBottom: 16 }}>
           <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 4 }}>SURVEY LINK</div>
-          <div style={{ fontWeight: 600, color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.88rem' }}>{survey.shareLink}</div>
+          <div style={{ fontWeight: 600, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.88rem' }}>{survey.shareLink}</div>
         </div>
       )}
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-        <button className="pol-btn-secondary pol-btn-sm">📤 Export Results</button>
-        <button className="pol-btn-secondary pol-btn-sm">📊 Download CSV</button>
-        {survey.status === 'active' && <button className="pol-btn-secondary pol-btn-sm">🔗 Share Survey</button>}
+        <button className="pol-btn-secondary pol-btn-sm">Export Results</button>
+        <button className="pol-btn-secondary pol-btn-sm">Download CSV</button>
+        {survey.status === 'active' && <button className="pol-btn-secondary pol-btn-sm">Share Survey</button>}
         {survey.status === 'active' && <button className="pol-btn-ghost pol-btn-sm">Close Survey</button>}
       </div>
     </div>
@@ -232,7 +232,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
   return (
     <div className="pol-card">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <h3 style={{ margin: 0 }}>📊 Survey Builder</h3>
+        <h3 style={{ margin: 0 }}>Survey Builder</h3>
         <button className="pol-btn-ghost pol-btn-sm" onClick={onCancel}>← Back to Library</button>
       </div>
 
@@ -243,7 +243,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 24 }}>
         {['1. Setup', '2. Questions', '3. Distribute'].map((label, i) => (
-          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--purple-soft, #8B7FF0)' : 'var(--muted)' }}>{label}</span>
+          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #6B5DE6)' : 'var(--muted)' }}>{label}</span>
         ))}
       </div>
 
@@ -273,7 +273,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
             <h4 style={{ margin: 0 }}>Question Builder</h4>
             <button className="pol-ai-btn pol-btn-sm" onClick={suggestQuestions} disabled={aiLoading}>
-              {aiLoading ? '⏳ Suggesting...' : '✨ AI Suggest Questions'}
+              {aiLoading ? 'Suggesting...' : 'AI Suggest Questions'}
             </button>
           </div>
 
@@ -314,7 +314,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
                       {q.options && q.options.length > 0 && (
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
                           {q.options.map((opt) => (
-                            <span key={opt} style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--purple-soft, #8B7FF0)' }}>{opt}</span>
+                            <span key={opt} style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--color-brand, #6B5DE6)' }}>{opt}</span>
                           ))}
                         </div>
                       )}
@@ -340,7 +340,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
               <div className="pol-field-group" style={{ flex: 1 }}>
                 <label>Question Type</label>
                 <select value={newQ.type} onChange={(e) => setNewQ((q) => ({ ...q, type: e.target.value as QuestionType }))}>
-                  {QUESTION_TYPES.map((t) => <option key={t.value} value={t.value}>{t.icon} {t.label}</option>)}
+                  {QUESTION_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
                 </select>
               </div>
               <div className="pol-field-group" style={{ flex: '0 0 auto' }}>
@@ -383,13 +383,12 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
           </p>
           <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
             {[
-              { icon: '🔗', label: 'Share Link', desc: 'Add survey URL to your website and bio links' },
-              { icon: '📧', label: 'Email Blast', desc: 'Send to your constituent email list' },
-              { icon: '📱', label: 'SMS Outreach', desc: 'Text message to supporters and volunteers' },
-              { icon: '📘', label: 'Social Media', desc: 'Post on Facebook, Instagram, and Twitter/X' },
-            ].map(({ icon, label, desc }) => (
+              { label: 'Share Link', desc: 'Add survey URL to your website and bio links' },
+              { label: 'Email Campaign', desc: 'Send to your constituent email list' },
+              { label: 'SMS Outreach', desc: 'Text message to supporters and volunteers' },
+              { label: 'Social Media', desc: 'Post on Facebook, Instagram, and Twitter/X' },
+            ].map(({ label, desc }) => (
               <div key={label} style={{ padding: '14px 16px', borderRadius: 10, border: '1px solid var(--border)', display: 'flex', gap: 12, alignItems: 'center' }}>
-                <span style={{ fontSize: '1.4rem' }}>{icon}</span>
                 <div>
                   <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{label}</div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>{desc}</div>
@@ -400,10 +399,10 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             <button className="pol-btn-ghost pol-btn-sm" onClick={() => setStep(2)}>← Back</button>
-            <button className="pol-btn-secondary pol-btn-sm" onClick={handleSave}>💾 Save as Draft</button>
+            <button className="pol-btn-secondary pol-btn-sm" onClick={handleSave}>Save as Draft</button>
             <button className="pol-btn-primary pol-btn-sm" onClick={() => {
               handleSave();
-            }}>🚀 Publish Survey</button>
+            }}>Publish Survey</button>
           </div>
         </div>
       )}
@@ -429,11 +428,13 @@ export function PoliticianPolls() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>📊 Polls & Survey Builder</h1>
-        <p>Create constituent surveys, collect responses, and use AI to extract key themes. Understand what District 42 voters care about most.</p>
+        <div className="pol-header-left">
+          <h1>Polls &amp; Surveys</h1>
+          <p>Create constituent surveys, collect responses, and use AI to extract key themes.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm" onClick={() => setView('create')}>+ Create Survey</button>
-          {view === 'create' && <button className="pol-btn-ghost pol-btn-sm" onClick={() => setView('library')}>← Back to Library</button>}
+          {view === 'create' && <button className="pol-btn-ghost pol-btn-sm" onClick={() => setView('library')}>Back to Library</button>}
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setView('create')}>Create Survey</button>
         </div>
       </div>
 
@@ -485,7 +486,7 @@ export function PoliticianPolls() {
                     {survey.createdAt && <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 2 }}>Created {survey.createdAt}</div>}
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                    <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>{survey.responseCount}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{survey.responseCount}</div>
                     <div style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>responses</div>
                   </div>
                 </div>
@@ -506,9 +507,9 @@ export function PoliticianPolls() {
             ) : (
               <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                 <div>
-                  <div style={{ fontSize: '3rem', marginBottom: 12 }}>📊</div>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                   <p>Select a survey to view results and AI-extracted themes.</p>
-                  <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setView('create')}>+ Create Your First Survey</button>
+                  <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setView('create')}>Create Your First Survey</button>
                 </div>
               </div>
             )}

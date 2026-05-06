@@ -19,15 +19,6 @@ const PLATFORM_CHAR_LIMITS: Record<AdPlatform, { headline: number; body: number 
   'TV/Radio': { headline: 100, body: 800 },
 };
 
-const PLATFORM_ICONS: Record<AdPlatform, string> = {
-  Facebook: '📘',
-  Instagram: '📸',
-  Google: '🔍',
-  'Twitter/X': '🐦',
-  'Direct Mail': '✉️',
-  Email: '📧',
-  'TV/Radio': '📺',
-};
 
 const STATUS_COLORS: Record<AdCampaign['status'], string> = {
   draft: 'pending',
@@ -45,7 +36,7 @@ function CharCounter({ current, max }: { current: number; max: number }) {
 function ComplianceBanner() {
   return (
     <div style={{ padding: '10px 16px', borderRadius: 10, background: 'rgba(107,93,230,0.08)', border: '1px solid var(--navy-border)', fontSize: '0.82rem', color: 'var(--text)', lineHeight: 1.5, marginBottom: 16 }}>
-      <strong>📋 FEC Compliance Notice:</strong> All political advertisements must include a paid-for disclaimer ("Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer."). Digital ads must also include the name of the political committee. Ensure all generated copy includes required attribution before publication.
+      <strong>FEC Compliance Notice:</strong> All political advertisements must include a paid-for disclaimer ("Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer."). Digital ads must also include the name of the political committee. Ensure all generated copy includes required attribution before publication.
     </div>
   );
 }
@@ -109,7 +100,6 @@ function AdLibrary({
               >
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 4, flexWrap: 'wrap' }}>
-                    <span>{PLATFORM_ICONS[ad.platform]}</span>
                     <span style={{ fontSize: '0.78rem', color: 'var(--muted)', fontWeight: 600 }}>{ad.platform}</span>
                     <span className={`pol-badge ${STATUS_COLORS[ad.status]}`}>{ad.status}</span>
                     {!ad.complianceApproved && <span className="pol-badge failed" style={{ fontSize: '0.7rem' }}>Needs Review</span>}
@@ -118,7 +108,7 @@ function AdLibrary({
                   <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 2 }}>{ad.goal} · {ad.variants.length} variants</div>
                 </div>
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  {ad.impressions != null && <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>{ad.impressions.toLocaleString()} impr.</div>}
+                  {ad.impressions != null && <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{ad.impressions.toLocaleString()} impr.</div>}
                 </div>
               </div>
             ))}
@@ -133,7 +123,6 @@ function AdLibrary({
             <div className="pol-card">
               <div style={{ marginBottom: 16 }}>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-                  <span>{PLATFORM_ICONS[selectedAd.platform]}</span>
                   <span className="pol-badge in-progress">{selectedAd.platform}</span>
                   <span className={`pol-badge ${STATUS_COLORS[selectedAd.status]}`}>{selectedAd.status}</span>
                   {!selectedAd.complianceApproved && <span className="pol-badge failed">Compliance Pending</span>}
@@ -187,17 +176,17 @@ function AdLibrary({
               </div>
 
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                <button className="pol-btn-secondary pol-btn-sm">📋 Copy Copy</button>
-                <button className="pol-btn-secondary pol-btn-sm">📤 Export</button>
-                <button className="pol-btn-secondary pol-btn-sm">✅ Mark Approved</button>
+                <button className="pol-btn-secondary pol-btn-sm">Copy Text</button>
+                <button className="pol-btn-secondary pol-btn-sm">Export</button>
+                <button className="pol-btn-secondary pol-btn-sm">Mark Approved</button>
               </div>
             </div>
           ) : (
             <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
               <div>
-                <div style={{ fontSize: '3rem', marginBottom: 12 }}>📢</div>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
                 <p>Select an ad campaign to review variants and performance.</p>
-                <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={onCreateNew}>+ Create New Ad</button>
+                <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={onCreateNew}>Create New Ad</button>
               </div>
             </div>
           )}
@@ -297,7 +286,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
   return (
     <div className="pol-card">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <h3 style={{ margin: 0 }}>✨ Ad Creative Generator</h3>
+        <h3 style={{ margin: 0 }}>Ad Creative Generator</h3>
         <button className="pol-btn-ghost pol-btn-sm" onClick={onCancel}>← Back to Library</button>
       </div>
 
@@ -309,7 +298,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 24 }}>
         {['1. Setup', '2. Generate', '3. Review', '4. Save'].map((label, i) => (
-          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--purple-soft, #8B7FF0)' : 'var(--muted)' }}>{label}</span>
+          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #6B5DE6)' : 'var(--muted)' }}>{label}</span>
         ))}
       </div>
 
@@ -324,7 +313,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
             <div className="pol-field-group">
               <label>Platform</label>
               <select value={form.platform} onChange={(e) => setForm((f) => ({ ...f, platform: e.target.value as AdPlatform }))}>
-                {PLATFORMS.map((p) => <option key={p} value={p}>{PLATFORM_ICONS[p]} {p}</option>)}
+                {PLATFORMS.map((p) => <option key={p} value={p}>{p}</option>)}
               </select>
             </div>
             <div className="pol-field-group">
@@ -353,7 +342,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
             <input type="number" value={form.budget} onChange={(e) => setForm((f) => ({ ...f, budget: e.target.value }))} placeholder="$" />
           </div>
           <div style={{ padding: '10px 14px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)', fontSize: '0.82rem', color: 'var(--text)', marginBottom: 20 }}>
-            <strong>{PLATFORM_ICONS[form.platform]} {form.platform} character limits:</strong> Headline: {limits.headline} chars · Body: {limits.body} chars
+            <strong>{form.platform} character limits:</strong> Headline: {limits.headline} chars · Body: {limits.body} chars
           </div>
           <button className="pol-btn-primary pol-btn-sm" disabled={!form.name || !form.keyMessage} onClick={() => setStep(2)}>
             Next: Generate Variants →
@@ -363,7 +352,6 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
 
       {step === 2 && (
         <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-          <div style={{ fontSize: '3rem', marginBottom: 16 }}>✨</div>
           <h4 style={{ marginBottom: 8 }}>Ready to Generate 3 Ad Variants</h4>
           <p style={{ color: 'var(--muted)', marginBottom: 8, fontSize: '0.9rem' }}>
             Platform: <strong>{form.platform}</strong> · Goal: <strong>{form.goal}</strong> · Tone: <strong>{form.tone}</strong>
@@ -375,7 +363,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
             <button className="pol-btn-ghost pol-btn-sm" onClick={() => setStep(1)}>← Back</button>
             <button className="pol-ai-btn" onClick={generateVariants} disabled={generating}>
-              {generating ? '⏳ Generating...' : '✨ Generate 3 Variants with AI'}
+              {generating ? 'Generating...' : 'Generate 3 Variants with AI'}
             </button>
           </div>
           {generating && (
@@ -397,7 +385,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
             {variants.map((variant, i) => (
               <div key={variant.id} style={{ padding: '16px 18px', borderRadius: 12, border: '1px solid var(--border)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                  <strong style={{ fontSize: '0.9rem', color: 'var(--purple-soft, #8B7FF0)' }}>{variant.label}</strong>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--color-brand, #6B5DE6)' }}>{variant.label}</strong>
                 </div>
                 <div className="pol-field-group" style={{ marginBottom: 10 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -463,7 +451,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
             <div className="info-label" style={{ marginBottom: 8 }}>Campaign Summary</div>
             <div style={{ display: 'grid', gap: 6, fontSize: '0.88rem' }}>
               <div><strong>Name:</strong> {form.name}</div>
-              <div><strong>Platform:</strong> {PLATFORM_ICONS[form.platform]} {form.platform}</div>
+              <div><strong>Platform:</strong> {form.platform}</div>
               <div><strong>Goal:</strong> {form.goal}</div>
               <div><strong>Variants:</strong> {variants.length} ad copies</div>
               {form.budget && <div><strong>Budget:</strong> ${Number(form.budget).toLocaleString()}</div>}
@@ -471,8 +459,8 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             <button className="pol-btn-ghost pol-btn-sm" onClick={() => setStep(3)}>← Back</button>
-            <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>💾 Save to Library</button>
-            <button className="pol-btn-secondary pol-btn-sm">📤 Export as PDF</button>
+            <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>Save to Library</button>
+            <button className="pol-btn-secondary pol-btn-sm">Export as PDF</button>
           </div>
         </div>
       )}
@@ -493,11 +481,13 @@ export function PoliticianAds() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>📢 Ad Creative Generator</h1>
-        <p>Generate AI-powered political ad copy for any platform. Review 3 variants, edit to fit character limits, and export with FEC compliance notices.</p>
+        <div className="pol-header-left">
+          <h1>Ad Creator</h1>
+          <p>Generate AI-powered political ad copy for any platform. Review 3 variants, edit to fit character limits, and export with FEC compliance notices.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm" onClick={() => setView('create')}>+ Create New Ad</button>
-          {view === 'create' && <button className="pol-btn-ghost pol-btn-sm" onClick={() => setView('library')}>← Back to Library</button>}
+          {view === 'create' && <button className="pol-btn-ghost pol-btn-sm" onClick={() => setView('library')}>Back to Library</button>}
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setView('create')}>Create New Ad</button>
         </div>
       </div>
 

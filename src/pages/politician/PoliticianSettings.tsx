@@ -63,20 +63,22 @@ export function PoliticianSettings() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>⚙️ Settings & Account</h1>
-        <p>Manage your profile, campaign registration, staff access, and notification preferences.</p>
+        <div className="pol-header-left">
+          <h1>Settings</h1>
+          <p>Manage your profile, campaign registration, staff access, and notification preferences.</p>
+        </div>
       </div>
 
       {savedToast && (
-        <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 999, padding: '14px 20px', borderRadius: 14, background: '#1a1f3c', color: 'white', border: '1px solid rgba(107,93,230,0.3)', boxShadow: '0 8px 32px rgba(15,23,42,0.22)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          ✅ Changes saved successfully.
+        <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 999, padding: '14px 20px', borderRadius: 8, background: 'var(--color-success, #16A34A)', color: 'white', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', gap: 10 }}>
+          Changes saved successfully.
         </div>
       )}
 
       <div className="pol-tab-row" style={{ flexWrap: 'wrap' }}>
         {(['profile', 'campaign', 'staff', 'notifications', 'security', 'billing'] as Tab[]).map((t) => (
           <button key={t} className={`pol-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'profile' ? '👤 Profile' : t === 'campaign' ? '🏛️ Campaign Info' : t === 'staff' ? '👥 Staff Access' : t === 'notifications' ? '🔔 Notifications' : t === 'security' ? '🔒 Security' : '💳 Billing'}
+            {t === 'profile' ? 'Profile' : t === 'campaign' ? 'Campaign Info' : t === 'staff' ? 'Staff Access' : t === 'notifications' ? 'Notifications' : t === 'security' ? 'Security' : 'Billing'}
           </button>
         ))}
       </div>
@@ -89,7 +91,7 @@ export function PoliticianSettings() {
               <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--grad-purple, linear-gradient(135deg, #6B5DE6, #4F46E5))', display: 'grid', placeItems: 'center', fontSize: '1.8rem', margin: '0 auto 12px', color: 'white', fontWeight: 700 }}>
                 M
               </div>
-              <button className="pol-btn-ghost pol-btn-sm">📷 Upload Photo</button>
+              <button className="pol-btn-ghost pol-btn-sm">Upload Photo</button>
             </div>
 
             {[
@@ -274,8 +276,8 @@ export function PoliticianSettings() {
           <div className="pol-card">
             <h3>Two-Factor Authentication</h3>
             <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 20 }}>Protect your campaign account with an additional verification step.</p>
-            <div style={{ padding: '16px', borderRadius: 12, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', marginBottom: 16 }}>
-              <span style={{ color: '#34d399', fontWeight: 600 }}>✓ 2FA is currently enabled</span>
+            <div style={{ padding: '16px', borderRadius: 8, background: 'var(--color-success-bg, #F0FDF4)', border: '1px solid rgba(22,163,74,0.25)', marginBottom: 16 }}>
+              <span style={{ color: 'var(--color-success, #16A34A)', fontWeight: 600 }}>2FA is currently enabled</span>
             </div>
             <button className="pol-btn-ghost pol-btn-sm">Manage 2FA Settings</button>
           </div>
@@ -283,10 +285,10 @@ export function PoliticianSettings() {
             <h3>Data Export (Compliance)</h3>
             <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 20 }}>Download all your campaign data for compliance, audit, or migration purposes.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <button className="pol-btn-secondary pol-btn-sm">📥 Export All Donor Data</button>
-              <button className="pol-btn-secondary pol-btn-sm">📥 Export All Contributions</button>
-              <button className="pol-btn-secondary pol-btn-sm">📥 Export All Expenses</button>
-              <button className="pol-btn-secondary pol-btn-sm">📥 Full Account Export (ZIP)</button>
+              <button className="pol-btn-secondary pol-btn-sm">Export All Donor Data</button>
+              <button className="pol-btn-secondary pol-btn-sm">Export All Contributions</button>
+              <button className="pol-btn-secondary pol-btn-sm">Export All Expenses</button>
+              <button className="pol-btn-secondary pol-btn-sm">Full Account Export (ZIP)</button>
             </div>
           </div>
         </div>
@@ -297,18 +299,18 @@ export function PoliticianSettings() {
           <h3>PoliTech Subscription</h3>
           <div style={{ padding: '20px 24px', borderRadius: 14, background: 'var(--navy-card, #1e2444)', border: '1px solid var(--navy-border)', marginBottom: 20 }}>
             <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>Current Plan</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--purple-soft, #8B7FF0)', marginBottom: 4 }}>Professional</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-brand, #6B5DE6)', marginBottom: 4 }}>Professional</div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.88rem' }}>$149/month · Billed monthly</div>
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.82rem', marginTop: 8 }}>Next billing: June 1, 2026</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <button className="pol-btn-primary pol-btn-sm">⬆️ Upgrade Plan</button>
+            <button className="pol-btn-primary pol-btn-sm">Upgrade Plan</button>
             <button className="pol-btn-ghost pol-btn-sm">Update Payment Method</button>
             <button className="pol-btn-ghost pol-btn-sm">View Invoice History</button>
             <button className="pol-btn-danger pol-btn-sm">Cancel Subscription</button>
           </div>
           <p style={{ color: 'var(--muted)', fontSize: '0.82rem', marginTop: 16 }}>
-            Need help? Contact <a href="mailto:support@politechllc.com" style={{ color: 'var(--purple-soft, #8B7FF0)' }}>support@politechllc.com</a>
+            Need help? Contact <a href="mailto:support@politechllc.com" style={{ color: 'var(--color-brand, #6B5DE6)' }}>support@politechllc.com</a>
           </p>
         </div>
       )}

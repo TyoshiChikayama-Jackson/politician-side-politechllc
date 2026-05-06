@@ -33,13 +33,14 @@ export function PoliticianVolunteers() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>🤝 Volunteer Management</h1>
-        <p>Recruit, schedule, and recognize your volunteer team. Track hours and keep your ground game organized.</p>
+        <div className="pol-header-left">
+          <h1>Volunteers</h1>
+          <p>Recruit, schedule, and track your volunteer team. Manage shifts and keep your ground game organized.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm">+ Add Volunteer</button>
-          <button className="pol-btn-secondary pol-btn-sm">+ Create Shift</button>
-          <button className="pol-btn-secondary pol-btn-sm">📤 Export List</button>
-          <button className="pol-btn-secondary pol-btn-sm">📋 Recruitment Form</button>
+          <button className="pol-btn-secondary pol-btn-sm">Export List</button>
+          <button className="pol-btn-secondary pol-btn-sm">Create Shift</button>
+          <button className="pol-btn-primary pol-btn-sm">Add Volunteer</button>
         </div>
       </div>
 
@@ -69,7 +70,7 @@ export function PoliticianVolunteers() {
       <div className="pol-tab-row">
         {(['roster', 'shifts', 'leaderboard'] as Tab[]).map((t) => (
           <button key={t} className={`pol-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'roster' ? '👥 Volunteer Roster' : t === 'shifts' ? '🗓️ Shifts' : '🏆 Leaderboard'}
+            {t === 'roster' ? 'Roster' : t === 'shifts' ? 'Shifts' : 'Leaderboard'}
           </button>
         ))}
       </div>
@@ -80,7 +81,6 @@ export function PoliticianVolunteers() {
           <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div className="pol-search-bar">
               <div className="pol-search-wrapper" style={{ flex: 1 }}>
-                <span className="pol-search-icon">🔍</span>
                 <input className="pol-search-input" placeholder="Search volunteers..." value={search} onChange={(e) => setSearch(e.target.value)} />
               </div>
             </div>
@@ -101,7 +101,7 @@ export function PoliticianVolunteers() {
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>{v.totalHours}h</div>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{v.totalHours}h</div>
                     <span className={`pol-badge ${v.status}`} style={{ marginTop: 4, display: 'inline-flex' }}>{v.status}</span>
                   </div>
                 </div>
@@ -157,15 +157,15 @@ export function PoliticianVolunteers() {
                 </div>
 
                 <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-                  <button className="pol-btn-secondary pol-btn-sm">📧 Send Email</button>
-                  <button className="pol-btn-secondary pol-btn-sm">💬 Send SMS</button>
-                  <button className="pol-btn-secondary pol-btn-sm">🗓️ Assign to Shift</button>
+                  <button className="pol-btn-secondary pol-btn-sm">Send Email</button>
+                  <button className="pol-btn-secondary pol-btn-sm">Send SMS</button>
+                  <button className="pol-btn-secondary pol-btn-sm">Assign to Shift</button>
                 </div>
               </div>
             ) : (
               <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                 <div>
-                  <div style={{ fontSize: '3rem', marginBottom: 12 }}>🤝</div>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: 12 }} aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                   <p>Select a volunteer to view their profile, hours, and activity history.</p>
                 </div>
               </div>
@@ -183,9 +183,9 @@ export function PoliticianVolunteers() {
                 <span className="pol-badge in-progress">{shift.type.replace('-', ' ')}</span>
               </div>
               <div style={{ display: 'grid', gap: 8, fontSize: '0.88rem', color: 'var(--muted)', marginBottom: 16 }}>
-                <div>📅 {shift.date} · {shift.startTime} – {shift.endTime}</div>
-                <div>📍 {shift.location}</div>
-                <div>👥 {shift.assignedVolunteerIds.length} / {shift.capacity} volunteers</div>
+                <div>{shift.date} · {shift.startTime} – {shift.endTime}</div>
+                <div>{shift.location}</div>
+                <div>{shift.assignedVolunteerIds.length} / {shift.capacity} volunteers</div>
               </div>
               <div style={{ marginBottom: 12 }}>
                 <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 6 }}>Assigned Volunteers:</div>
@@ -193,7 +193,7 @@ export function PoliticianVolunteers() {
                   {shift.assignedVolunteerIds.map((vid) => {
                     const vol = volunteers.find((v) => v.id === vid);
                     return vol ? (
-                      <span key={vid} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim, rgba(107,93,230,0.12))', color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.8rem' }}>
+                      <span key={vid} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim, rgba(107,93,230,0.12))', color: 'var(--color-brand, #6B5DE6)', fontSize: '0.8rem' }}>
                         {vol.firstName} {vol.lastName} ({Object.values(shift.hoursLogged)[shift.assignedVolunteerIds.indexOf(vid)]}h)
                       </span>
                     ) : null;
@@ -214,12 +214,12 @@ export function PoliticianVolunteers() {
 
       {tab === 'leaderboard' && (
         <div className="pol-card">
-          <h3>🏆 Volunteer Leaderboard — Top Contributors</h3>
+          <h3>Volunteer Leaderboard — Top Contributors</h3>
           <p style={{ color: 'var(--muted)', marginBottom: 20, fontSize: '0.9rem' }}>Recognizing our most dedicated team members by hours contributed.</p>
           <div className="pol-record-list">
             {sorted.map((v, i) => (
               <div key={v.id} className="pol-record-item" style={{ cursor: 'default' }}>
-                <div style={{ width: 32, height: 32, borderRadius: '50%', background: i === 0 ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : i === 1 ? 'linear-gradient(135deg, #94a3b8, #64748b)' : i === 2 ? 'linear-gradient(135deg, #b45309, #92400e)' : 'var(--purple-dim)', display: 'grid', placeItems: 'center', fontWeight: 700, color: i < 3 ? 'white' : 'var(--purple-soft, #8B7FF0)', fontSize: '0.85rem', flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: i === 0 ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : i === 1 ? 'linear-gradient(135deg, #94a3b8, #64748b)' : i === 2 ? 'linear-gradient(135deg, #b45309, #92400e)' : 'var(--purple-dim)', display: 'grid', placeItems: 'center', fontWeight: 700, color: i < 3 ? 'white' : 'var(--color-brand, #6B5DE6)', fontSize: '0.85rem', flexShrink: 0 }}>
                   #{i + 1}
                 </div>
                 <div style={{ flex: 1 }}>
@@ -227,7 +227,7 @@ export function PoliticianVolunteers() {
                   <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{v.skills.join(', ')}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--purple-soft, #8B7FF0)' }}>{v.totalHours}h</div>
+                  <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--color-brand, #6B5DE6)' }}>{v.totalHours}h</div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>since {v.joinDate}</div>
                 </div>
               </div>

@@ -130,12 +130,14 @@ export function PoliticianExpenses() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>📊 Expenses & Budget Tracking</h1>
-        <p>Track every campaign expenditure, manage budgets, and auto-populate Schedule B for FEC filings.</p>
+        <div className="pol-header-left">
+          <h1>Expenses & Budget</h1>
+          <p>Track every campaign expenditure, manage budgets, and auto-populate Schedule B for FEC filings.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAdd(true)}>+ Add Expense</button>
-          <button className="pol-btn-secondary pol-btn-sm">📄 Export Schedule B</button>
-          <button className="pol-btn-secondary pol-btn-sm">📥 Upload Receipt</button>
+          <button className="pol-btn-secondary pol-btn-sm">Export Schedule B</button>
+          <button className="pol-btn-secondary pol-btn-sm">Upload Receipt</button>
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAdd(true)}>Add Expense</button>
         </div>
       </div>
 
@@ -165,7 +167,7 @@ export function PoliticianExpenses() {
       <div className="pol-tab-row">
         {(['expenses', 'budget', 'reports'] as Tab[]).map((t) => (
           <button key={t} className={`pol-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'expenses' ? '🧾 Expense Ledger' : t === 'budget' ? '📊 Budget Builder' : '📄 Reports'}
+            {t === 'expenses' ? 'Expense Ledger' : t === 'budget' ? 'Budget' : 'Reports'}
           </button>
         ))}
       </div>
@@ -256,7 +258,7 @@ export function PoliticianExpenses() {
                   </div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 6, display: 'flex', justifyContent: 'space-between' }}>
                     <span>{Math.round(pct)}% used</span>
-                    <span>{isOver ? '⚠️ Over budget' : `$${(line.budgeted - actualSpent).toLocaleString()} remaining`}</span>
+                    <span style={{ color: isOver ? 'var(--color-danger)' : undefined }}>{isOver ? 'Over budget' : `$${(line.budgeted - actualSpent).toLocaleString()} remaining`}</span>
                   </div>
                 </div>
               );
@@ -267,7 +269,7 @@ export function PoliticianExpenses() {
 
       {tab === 'reports' && (
         <div className="pol-card">
-          <h3>📋 Schedule B — Itemized Disbursements</h3>
+          <h3>Schedule B — Itemized Disbursements</h3>
           <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 16 }}>Auto-populated from approved expense records for FEC filing.</p>
           <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
             <button className="pol-btn-primary pol-btn-sm">Download CSV</button>

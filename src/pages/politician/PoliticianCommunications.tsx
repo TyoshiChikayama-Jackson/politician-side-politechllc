@@ -33,7 +33,7 @@ function AIDraftButton({ onDraft, topic }: { onDraft: (text: string) => void; to
 
   return (
     <button className="pol-ai-btn" onClick={handleClick} disabled={loading}>
-      {loading ? '⏳' : '✨'} {loading ? 'Drafting...' : 'AI Suggest Reply'}
+      {loading ? 'Drafting...' : 'AI Suggest Reply'}
     </button>
   );
 }
@@ -114,11 +114,13 @@ export function PoliticianCommunications() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>📬 Communications Hub</h1>
-        <p>Manage constituent messages, send email blasts, and publish posts to the PoliTech public feed.</p>
+        <div className="pol-header-left">
+          <h1>Communications</h1>
+          <p>Manage constituent messages, send email campaigns, and publish posts to the PoliTech public feed.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm" onClick={() => setTab('email-blast')}>✉️ New Email Blast</button>
-          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTab('polifeed')}>📝 New Post</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTab('polifeed')}>New Post</button>
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setTab('email-blast')}>New Email Campaign</button>
         </div>
       </div>
 
@@ -148,7 +150,7 @@ export function PoliticianCommunications() {
       <div className="pol-tab-row">
         {(['inbox', 'email-blast', 'polifeed', 'history'] as Tab[]).map((t) => (
           <button key={t} className={`pol-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'inbox' ? `📥 Inbox${unreadCount > 0 ? ` (${unreadCount})` : ''}` : t === 'email-blast' ? '✉️ Email Blast' : t === 'polifeed' ? '📡 PoliFeed' : '📜 History'}
+            {t === 'inbox' ? `Inbox${unreadCount > 0 ? ` (${unreadCount})` : ''}` : t === 'email-blast' ? 'Email Campaign' : t === 'polifeed' ? 'PoliFeed' : 'History'}
           </button>
         ))}
       </div>
@@ -194,7 +196,7 @@ export function PoliticianCommunications() {
 
                 {selectedMessage.replyBody ? (
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#34d399', marginBottom: 8 }}>✓ Replied {selectedMessage.repliedAt ? new Date(selectedMessage.repliedAt).toLocaleDateString() : ''}</div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#16A34A', marginBottom: 8 }}>Replied {selectedMessage.repliedAt ? new Date(selectedMessage.repliedAt).toLocaleDateString() : ''}</div>
                     <div style={{ padding: '14px 16px', borderRadius: 12, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)', fontSize: '0.9rem', color: 'var(--text)' }}>
                       {selectedMessage.replyBody}
                     </div>
@@ -230,7 +232,7 @@ export function PoliticianCommunications() {
             ) : (
               <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                 <div>
-                  <div style={{ fontSize: '3rem', marginBottom: 12 }}>📬</div>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                   <p>Select a message to read and reply.</p>
                 </div>
               </div>
@@ -242,7 +244,7 @@ export function PoliticianCommunications() {
       {tab === 'email-blast' && (
         <div className="pol-grid-2">
           <div className="pol-card">
-            <h3>✉️ Compose Email Blast</h3>
+            <h3>Compose Email Campaign</h3>
             <div className="pol-field-group">
               <label>Target Audience</label>
               <select value={blastTarget} onChange={(e) => setBlastTarget(e.target.value)}>
@@ -259,7 +261,7 @@ export function PoliticianCommunications() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
               <label style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--text)' }}>Email Body</label>
               <button className="pol-ai-btn" onClick={generateBlastDraft} disabled={aiDraftLoading || !blastSubject.trim()}>
-                {aiDraftLoading ? '⏳' : '✨'} AI Draft
+                {aiDraftLoading ? 'Drafting...' : 'AI Draft'}
               </button>
             </div>
             <textarea
@@ -269,13 +271,13 @@ export function PoliticianCommunications() {
               style={{ width: '100%', minHeight: 220, border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', background: 'var(--surface)', color: 'var(--text)', fontSize: '0.92rem', resize: 'vertical', marginBottom: 16 }}
             />
             <div style={{ display: 'flex', gap: 10 }}>
-              <button className="pol-btn-primary pol-btn-sm" disabled={!blastSubject.trim() || !blastBody.trim()}>📤 Send Blast</button>
-              <button className="pol-btn-secondary pol-btn-sm">💾 Save Draft</button>
-              <button className="pol-btn-secondary pol-btn-sm">🕐 Schedule</button>
+              <button className="pol-btn-primary pol-btn-sm" disabled={!blastSubject.trim() || !blastBody.trim()}>Send Campaign</button>
+              <button className="pol-btn-secondary pol-btn-sm">Save Draft</button>
+              <button className="pol-btn-secondary pol-btn-sm">Schedule</button>
             </div>
           </div>
           <div className="pol-card">
-            <h3>👁️ Preview</h3>
+            <h3>Preview</h3>
             <div style={{ padding: '20px', border: '1px solid var(--border)', borderRadius: 12, minHeight: 300, background: 'var(--surfaceSoft, #f1f5f9)' }}>
               {blastSubject && <div style={{ fontWeight: 800, fontSize: '1.05rem', marginBottom: 12 }}>{blastSubject}</div>}
               {blastBody ? (
@@ -294,7 +296,7 @@ export function PoliticianCommunications() {
       {tab === 'polifeed' && (
         <div className="pol-grid-2">
           <div className="pol-card">
-            <h3>📡 Compose PoliFeed Post</h3>
+            <h3>Compose PoliFeed Post</h3>
             <div className="pol-field-group">
               <label>Post Body</label>
               <textarea
@@ -321,14 +323,14 @@ export function PoliticianCommunications() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
-              <button className="pol-btn-primary pol-btn-sm" onClick={publishPost} disabled={!postBody.trim()}>📡 Publish Now</button>
-              <button className="pol-btn-secondary pol-btn-sm">💾 Save Draft</button>
-              <button className="pol-btn-secondary pol-btn-sm">🕐 Schedule</button>
+              <button className="pol-btn-primary pol-btn-sm" onClick={publishPost} disabled={!postBody.trim()}>Publish Now</button>
+              <button className="pol-btn-secondary pol-btn-sm">Save Draft</button>
+              <button className="pol-btn-secondary pol-btn-sm">Schedule</button>
             </div>
           </div>
 
           <div className="pol-card">
-            <h3>📋 Recent Posts</h3>
+            <h3>Recent Posts</h3>
             <div className="pol-record-list">
               {posts.slice(0, 5).map((post) => (
                 <div key={post.id} className="pol-record-item" style={{ cursor: 'default', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -343,10 +345,10 @@ export function PoliticianCommunications() {
                     {post.body.slice(0, 100)}{post.body.length > 100 ? '...' : ''}
                   </p>
                   <div style={{ display: 'flex', gap: 12, fontSize: '0.8rem', color: 'var(--muted)' }}>
-                    <span>👁 {post.views.toLocaleString()}</span>
-                    <span>❤️ {post.likes}</span>
-                    <span>🔁 {post.shares}</span>
-                    <span>💬 {post.comments}</span>
+                    <span>{post.views.toLocaleString()} views</span>
+                    <span>{post.likes} likes</span>
+                    <span>{post.shares} shares</span>
+                    <span>{post.comments} comments</span>
                   </div>
                 </div>
               ))}
@@ -357,7 +359,7 @@ export function PoliticianCommunications() {
 
       {tab === 'history' && (
         <div className="pol-card">
-          <h3>📜 Communication History</h3>
+          <h3>Communication History</h3>
           <div style={{ overflowX: 'auto' }}>
             <table className="data-table">
               <thead>

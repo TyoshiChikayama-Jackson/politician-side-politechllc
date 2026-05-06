@@ -2,15 +2,6 @@ import { useState } from 'react';
 import type { PolicyStance } from '../../types';
 import { demoPolicyStances } from '../../data/politicianData';
 
-const CATEGORY_ICONS: Record<string, string> = {
-  Economy: '💼',
-  Education: '📚',
-  Healthcare: '🏥',
-  Infrastructure: '🏗️',
-  Environment: '🌱',
-  'Public Safety': '🛡️',
-  Housing: '🏠',
-};
 
 const STATUS_OPTIONS: PolicyStance['status'][] = ['answered', 'in-review', 'no-comment'];
 
@@ -37,7 +28,7 @@ function AIDraftButton({ question, onDraft }: { question: string; onDraft: (text
 
   return (
     <button className="pol-ai-btn pol-btn-sm" onClick={handleClick} disabled={loading}>
-      {loading ? '⏳' : '✨'} {loading ? 'Drafting...' : 'AI Draft Answer'}
+      {loading ? 'Drafting...' : 'AI Draft Answer'}
     </button>
   );
 }
@@ -92,10 +83,12 @@ export function PoliticianQuestionnaire() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>🗳️ Policy Stances & Questionnaire</h1>
-        <p>Answer the PoliTech standardized questionnaire. Your responses appear on your public profile and inform PoliAI.</p>
+        <div className="pol-header-left">
+          <h1>Policy Stances</h1>
+          <p>Answer the PoliTech standardized questionnaire. Your responses appear on your public profile and inform PoliAI.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-secondary pol-btn-sm">👁️ Preview Public Profile</button>
+          <button className="pol-btn-secondary pol-btn-sm">Preview Public Profile</button>
         </div>
       </div>
 
@@ -130,7 +123,7 @@ export function PoliticianQuestionnaire() {
             className={filterCategory === cat ? 'pol-btn-primary pol-btn-sm' : 'pol-btn-ghost pol-btn-sm'}
             onClick={() => setFilterCategory(cat)}
           >
-            {CATEGORY_ICONS[cat] || ''} {cat}
+            {cat}
           </button>
         ))}
       </div>
@@ -146,7 +139,6 @@ export function PoliticianQuestionnaire() {
             >
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
-                  <span style={{ fontSize: '0.95rem' }}>{CATEGORY_ICONS[stance.category] || '❓'}</span>
                   <span style={{ fontSize: '0.78rem', color: 'var(--muted)', fontWeight: 600 }}>{stance.category.toUpperCase()}</span>
                 </div>
                 <div style={{ fontSize: '0.9rem', color: 'var(--text)', lineHeight: 1.4, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
@@ -170,7 +162,6 @@ export function PoliticianQuestionnaire() {
           {selectedStance ? (
             <div className="pol-card">
               <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
-                <span style={{ fontSize: '1.2rem' }}>{CATEGORY_ICONS[selectedStance.category] || '❓'}</span>
                 <span className="pol-badge in-progress">{selectedStance.category}</span>
                 <span className={`pol-badge ${selectedStance.status === 'answered' ? 'passed' : selectedStance.status === 'in-review' ? 'warning' : 'pending'}`}>
                   {selectedStance.status}
@@ -186,7 +177,7 @@ export function PoliticianQuestionnaire() {
                     <AIDraftButton question={selectedStance.question} onDraft={(draft) => { setEditAnswer(draft); setEditMode(true); }} />
                   )}
                   <button className="pol-btn-ghost pol-btn-sm" onClick={() => setEditMode(!editMode)}>
-                    {editMode ? 'Cancel' : '✏️ Edit'}
+                    {editMode ? 'Cancel' : 'Edit'}
                   </button>
                 </div>
               </div>
@@ -246,7 +237,7 @@ export function PoliticianQuestionnaire() {
           ) : (
             <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
               <div>
-                <div style={{ fontSize: '3rem', marginBottom: 12 }}>🗳️</div>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 <p>Select a question to view or edit your policy stance.</p>
                 <p style={{ fontSize: '0.85rem' }}>Use AI Draft to quickly generate thoughtful answers based on your record.</p>
               </div>

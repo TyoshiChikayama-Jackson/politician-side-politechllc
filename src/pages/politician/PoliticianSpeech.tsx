@@ -7,14 +7,6 @@ type CreateStep = 1 | 2 | 3 | 4;
 
 const SPEECH_TYPES: SpeechType[] = ['Full Speech', 'Talking Points', 'Press Statement', 'Debate Prep', 'Stump Speech', 'Social Caption'];
 const TONES = ['Formal', 'Conversational', 'Inspirational', 'Urgent', 'Empathetic'] as const;
-const TYPE_ICONS: Record<SpeechType, string> = {
-  'Full Speech': '🎤',
-  'Talking Points': '📝',
-  'Press Statement': '📰',
-  'Debate Prep': '⚖️',
-  'Stump Speech': '🏛️',
-  'Social Caption': '📱',
-};
 
 function wordCount(text: string): number {
   return text.trim() ? text.trim().split(/\s+/).length : 0;
@@ -84,12 +76,12 @@ function TeleprompterMode({ speech, onClose }: { speech: Speech; onClose: () => 
     }}>
       {/* Controls bar */}
       <div style={{ background: '#111', padding: '10px 24px', display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0, borderBottom: '1px solid #333' }}>
-        <span style={{ color: '#fff', fontWeight: 700, fontSize: '0.9rem' }}>🎤 Teleprompter</span>
+        <span style={{ color: '#fff', fontWeight: 700, fontSize: '0.9rem' }}>Teleprompter</span>
         <button
           onClick={() => setRunning((r) => !r)}
           style={{ padding: '6px 20px', borderRadius: 8, background: running ? '#dc2626' : '#16a34a', color: 'white', fontWeight: 700, border: 'none', cursor: 'pointer', fontSize: '0.88rem' }}
         >
-          {running ? '⏸ Pause' : '▶ Play'}
+          {running ? 'Pause' : 'Play'}
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#fff', fontSize: '0.85rem' }}>
           <span>Speed:</span>
@@ -213,7 +205,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
   return (
     <div className="pol-card">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <h3 style={{ margin: 0 }}>🎤 Speech Generator</h3>
+        <h3 style={{ margin: 0 }}>Speech Generator</h3>
         <button className="pol-btn-ghost pol-btn-sm" onClick={onCancel}>← Back to Library</button>
       </div>
 
@@ -224,7 +216,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 24 }}>
         {['1. Setup', '2. Generate', '3. Edit', '4. Save'].map((label, i) => (
-          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--purple-soft, #8B7FF0)' : 'var(--muted)' }}>{label}</span>
+          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #6B5DE6)' : 'var(--muted)' }}>{label}</span>
         ))}
       </div>
 
@@ -239,7 +231,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
             <div className="pol-field-group">
               <label>Type</label>
               <select value={form.type} onChange={(e) => setForm((f) => ({ ...f, type: e.target.value as SpeechType }))}>
-                {SPEECH_TYPES.map((t) => <option key={t} value={t}>{TYPE_ICONS[t]} {t}</option>)}
+                {SPEECH_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
             <div className="pol-field-group">
@@ -274,7 +266,6 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
 
       {step === 2 && (
         <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-          <div style={{ fontSize: '3rem', marginBottom: 16 }}>{TYPE_ICONS[form.type]}</div>
           <h4 style={{ marginBottom: 8 }}>Ready to Generate {form.type}</h4>
           <p style={{ color: 'var(--muted)', marginBottom: 24, fontSize: '0.88rem', maxWidth: 400, margin: '0 auto 24px' }}>
             Claude AI will draft a {form.tone.toLowerCase()}, {form.type.toLowerCase()} on "{form.topic}" tailored for {form.audience || 'your audience'}.
@@ -282,7 +273,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
             <button className="pol-btn-ghost pol-btn-sm" onClick={() => setStep(1)}>← Back</button>
             <button className="pol-ai-btn" onClick={generateSpeech} disabled={generating}>
-              {generating ? '⏳ Writing...' : '✨ Generate with AI'}
+              {generating ? 'Writing...' : 'Generate with AI'}
             </button>
           </div>
           {generating && (
@@ -304,7 +295,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
             <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
               <span style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>{wc} words · ~{mins} min</span>
               <button className="pol-ai-btn pol-btn-sm" onClick={generateSpeech} disabled={generating}>
-                {generating ? '⏳' : '✨'} Regenerate
+                {generating ? 'Regenerating...' : 'Regenerate'}
               </button>
             </div>
           </div>
@@ -327,7 +318,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
             }}
           />
           <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(107,93,230,0.08)', border: '1px solid var(--navy-border)', fontSize: '0.8rem', color: 'var(--muted)', marginBottom: 16 }}>
-            <strong>📋 Compliance reminder:</strong> Include "Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer." at the end of all public-facing speech documents.
+            <strong>Compliance reminder:</strong> Include "Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer." at the end of all public-facing speech documents.
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             <button className="pol-btn-ghost pol-btn-sm" onClick={() => setStep(2)}>← Back</button>
@@ -342,7 +333,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
           <div style={{ padding: '16px 18px', borderRadius: 12, border: '1px solid var(--border)', marginBottom: 20 }}>
             <div className="info-label" style={{ marginBottom: 8 }}>Summary</div>
             <div style={{ display: 'grid', gap: 6, fontSize: '0.88rem' }}>
-              <div><strong>Type:</strong> {TYPE_ICONS[form.type]} {form.type}</div>
+              <div><strong>Type:</strong> {form.type}</div>
               <div><strong>Topic:</strong> {form.topic}</div>
               <div><strong>Audience:</strong> {form.audience || '—'}</div>
               <div><strong>Tone:</strong> {form.tone}</div>
@@ -351,8 +342,8 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             <button className="pol-btn-ghost pol-btn-sm" onClick={() => setStep(3)}>← Back</button>
-            <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>💾 Save to Library</button>
-            <button className="pol-btn-secondary pol-btn-sm">📤 Export as PDF</button>
+            <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>Save to Library</button>
+            <button className="pol-btn-secondary pol-btn-sm">Export as PDF</button>
           </div>
         </div>
       )}
@@ -383,18 +374,17 @@ function SpeechEditor({ speech, onUpdate, onClose }: { speech: Speech; onUpdate:
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
         <div>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 6 }}>
-            <span>{TYPE_ICONS[speech.type]}</span>
             <span className="pol-badge in-progress">{speech.type}</span>
             <span className="pol-badge pending">{speech.tone}</span>
           </div>
           <h3 style={{ margin: 0 }}>{speech.title}</h3>
           <div style={{ color: 'var(--muted)', fontSize: '0.85rem', marginTop: 4 }}>
-            {speech.audience && <span>👥 {speech.audience} · </span>}
+            {speech.audience && <span>{speech.audience} · </span>}
             <span>{wc} words · ~{mins} min</span>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTeleprompter(true)}>🖥️ Teleprompter</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTeleprompter(true)}>Teleprompter</button>
           <button className="pol-btn-ghost pol-btn-sm" onClick={onClose}>✕</button>
         </div>
       </div>
@@ -427,16 +417,16 @@ function SpeechEditor({ speech, onUpdate, onClose }: { speech: Speech; onUpdate:
           <div className="info-label" style={{ marginBottom: 8 }}>Key Points</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {speech.keyPoints.map((p, i) => (
-              <span key={i} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.78rem' }}>{p}</span>
+              <span key={i} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--color-brand, #6B5DE6)', fontSize: '0.78rem' }}>{p}</span>
             ))}
           </div>
         </div>
       )}
 
       <div style={{ display: 'flex', gap: 10 }}>
-        <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>💾 Save Changes</button>
-        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTeleprompter(true)}>🖥️ Launch Teleprompter</button>
-        <button className="pol-btn-secondary pol-btn-sm">📤 Export</button>
+        <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>Save Changes</button>
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTeleprompter(true)}>Launch Teleprompter</button>
+        <button className="pol-btn-secondary pol-btn-sm">Export</button>
         <button className="pol-btn-ghost pol-btn-sm" onClick={onClose}>Cancel</button>
       </div>
     </div>
@@ -477,11 +467,13 @@ export function PoliticianSpeech() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>🎤 Speech & Talking Points Generator</h1>
-        <p>Generate AI-powered speeches, talking points, and press statements. Edit, practice with the teleprompter, and export for any occasion.</p>
+        <div className="pol-header-left">
+          <h1>Speech Writer</h1>
+          <p>Generate AI-powered speeches, talking points, and press statements. Edit, practice with the teleprompter, and export for any occasion.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm" onClick={() => setView('create')}>+ New Speech</button>
-          {view === 'create' && <button className="pol-btn-ghost pol-btn-sm" onClick={() => setView('library')}>← Back to Library</button>}
+          {view === 'create' && <button className="pol-btn-ghost pol-btn-sm" onClick={() => setView('library')}>Back to Library</button>}
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setView('create')}>New Speech</button>
         </div>
       </div>
 
@@ -530,7 +522,7 @@ export function PoliticianSpeech() {
                 className={filterType === t ? 'pol-btn-primary pol-btn-sm' : 'pol-btn-ghost pol-btn-sm'}
                 onClick={() => setFilterType(t)}
               >
-                {TYPE_ICONS[t]} {t}
+                {t}
               </button>
             ))}
           </div>
@@ -549,7 +541,6 @@ export function PoliticianSpeech() {
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 4, flexWrap: 'wrap' }}>
-                        <span style={{ fontSize: '1rem' }}>{TYPE_ICONS[sp.type]}</span>
                         <span style={{ fontSize: '0.78rem', color: 'var(--muted)', fontWeight: 600 }}>{sp.type}</span>
                         <span className="pol-badge pending" style={{ fontSize: '0.7rem' }}>{sp.tone}</span>
                       </div>
@@ -559,13 +550,14 @@ export function PoliticianSpeech() {
                       </div>
                     </div>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.88rem' }}>~{sp.estimatedMinutes}min</div>
+                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.88rem' }}>~{sp.estimatedMinutes}min</div>
                       <button
                         className="pol-btn-ghost pol-btn-sm"
                         style={{ marginTop: 4, fontSize: '0.72rem' }}
                         onClick={(e) => { e.stopPropagation(); setTeleprompterSpeech(sp); }}
+                        title="Launch Teleprompter"
                       >
-                        🖥️
+                        TLP
                       </button>
                     </div>
                   </div>
@@ -583,10 +575,10 @@ export function PoliticianSpeech() {
               ) : (
                 <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                   <div>
-                    <div style={{ fontSize: '3rem', marginBottom: 12 }}>🎤</div>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
                     <p>Select a speech to edit or launch in teleprompter mode.</p>
-                    <p style={{ fontSize: '0.85rem' }}>Use the 🖥️ button on any speech for instant teleprompter mode.</p>
-                    <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setView('create')}>+ Generate New Speech</button>
+                    <p style={{ fontSize: '0.85rem' }}>Use the TLP button on any speech for instant teleprompter mode.</p>
+                    <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setView('create')}>Generate New Speech</button>
                   </div>
                 </div>
               )}

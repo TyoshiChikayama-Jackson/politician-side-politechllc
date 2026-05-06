@@ -7,17 +7,6 @@ type DetailTab = 'overview' | 'rsvps' | 'revenue' | 'public-page';
 
 const EVENT_TYPES: EventType[] = ['Fundraiser', 'Town Hall', 'Canvassing', 'Phone Bank', 'Rally', 'Meet & Greet', 'Debate', 'Other'];
 
-const TYPE_ICONS: Record<EventType, string> = {
-  Fundraiser: '💰',
-  'Town Hall': '🏛️',
-  Canvassing: '🚶',
-  'Phone Bank': '📞',
-  Rally: '📢',
-  'Meet & Greet': '🤝',
-  Debate: '⚖️',
-  Other: '📅',
-};
-
 const STATUS_COLORS: Record<CampaignEvent['status'], string> = {
   draft: 'pending',
   published: 'in-progress',
@@ -91,8 +80,8 @@ function CalendarView({ events }: { events: CampaignEvent[] }) {
               <>
                 <div style={{ fontSize: '0.8rem', fontWeight: day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear() ? 800 : 500, color: 'var(--text)', marginBottom: 4 }}>{day}</div>
                 {(eventsByDay[day] || []).map((evt) => (
-                  <div key={evt.id} style={{ fontSize: '0.68rem', background: 'var(--purple-dim)', color: 'var(--purple-soft, #8B7FF0)', borderRadius: 4, padding: '2px 4px', marginBottom: 2, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                    {TYPE_ICONS[evt.type]} {evt.title}
+                  <div key={evt.id} style={{ fontSize: '0.68rem', background: 'var(--purple-dim)', color: 'var(--color-brand, #6B5DE6)', borderRadius: 4, padding: '2px 4px', marginBottom: 2, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                    {evt.title}
                   </div>
                 ))}
               </>
@@ -179,7 +168,7 @@ function NewEventForm({ onSave, onCancel }: { onSave: (evt: CampaignEvent) => vo
         <div className="pol-field-group">
           <label>Event Type</label>
           <select value={form.type} onChange={(e) => setForm((f) => ({ ...f, type: e.target.value as EventType }))}>
-            {EVENT_TYPES.map((t) => <option key={t} value={t}>{TYPE_ICONS[t]} {t}</option>)}
+            {EVENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
         </div>
         <div className="pol-field-group">
@@ -257,7 +246,7 @@ function NewEventForm({ onSave, onCancel }: { onSave: (evt: CampaignEvent) => vo
           </div>
           {tiers.some((t) => !t.fecCompliant) && (
             <div style={{ marginTop: 12, padding: '10px 14px', borderRadius: 10, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)', fontSize: '0.85rem', color: '#ef4444' }}>
-              ⚠️ One or more ticket tiers have a price that may trigger FEC review. Contributions above $3,000 may exceed Indiana state limits. Consult your campaign treasurer.
+              One or more ticket tiers have a price that may trigger FEC review. Contributions above $3,000 may exceed Indiana state limits. Consult your campaign treasurer.
             </div>
           )}
         </div>
@@ -281,15 +270,14 @@ function EventDetail({ event }: { event: CampaignEvent }) {
     <div className="pol-card">
       <div style={{ marginBottom: 16 }}>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-          <span style={{ fontSize: '1.2rem' }}>{TYPE_ICONS[event.type]}</span>
           <span className="pol-badge in-progress">{event.type}</span>
           <StatusBadge status={event.status} />
           {!event.isPublic && <span className="pol-badge pending">Private</span>}
         </div>
         <h3 style={{ margin: 0 }}>{event.title}</h3>
         <div style={{ color: 'var(--muted)', fontSize: '0.88rem', marginTop: 6 }}>
-          📅 {event.date} · {event.startTime}{event.endTime ? ` – ${event.endTime}` : ''}<br />
-          📍 {event.location}{event.address ? `, ${event.address}` : ''}
+          {event.date} · {event.startTime}{event.endTime ? ` – ${event.endTime}` : ''}<br />
+          {event.location}{event.address ? `, ${event.address}` : ''}
         </div>
       </div>
 
@@ -352,7 +340,7 @@ function EventDetail({ event }: { event: CampaignEvent }) {
                       {tier.description && <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{tier.description}</div>}
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>${tier.price === 0 ? 'Free' : tier.price.toLocaleString()}</div>
+                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${tier.price === 0 ? 'Free' : tier.price.toLocaleString()}</div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>{tier.sold}/{tier.capacity} sold</div>
                     </div>
                   </div>
@@ -363,8 +351,8 @@ function EventDetail({ event }: { event: CampaignEvent }) {
 
           <div style={{ display: 'flex', gap: 8, marginTop: 20, flexWrap: 'wrap' }}>
             <button className="pol-btn-primary pol-btn-sm">Edit Event</button>
-            <button className="pol-btn-secondary pol-btn-sm">📤 Export RSVPs</button>
-            {event.status === 'published' && <button className="pol-btn-secondary pol-btn-sm">🔗 Copy Event Link</button>}
+            <button className="pol-btn-secondary pol-btn-sm">Export RSVPs</button>
+            {event.status === 'published' && <button className="pol-btn-secondary pol-btn-sm">Copy Event Link</button>}
           </div>
         </div>
       )}
@@ -373,7 +361,6 @@ function EventDetail({ event }: { event: CampaignEvent }) {
         <div>
           {event.rsvps.length === 0 ? (
             <div style={{ textAlign: 'center', padding: 32, color: 'var(--muted)' }}>
-              <div style={{ fontSize: '2rem', marginBottom: 8 }}>📋</div>
               <p>No RSVPs recorded yet. Share the event link to start collecting registrations.</p>
             </div>
           ) : (
@@ -385,7 +372,7 @@ function EventDetail({ event }: { event: CampaignEvent }) {
                     <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{rsvp.email}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    {rsvp.amountPaid > 0 && <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>${rsvp.amountPaid.toLocaleString()}</div>}
+                    {rsvp.amountPaid > 0 && <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${rsvp.amountPaid.toLocaleString()}</div>}
                     <span className={`pol-badge ${rsvp.status === 'confirmed' ? 'passed' : rsvp.status === 'waitlist' ? 'warning' : 'failed'}`}>{rsvp.status}</span>
                   </div>
                 </div>
@@ -411,7 +398,7 @@ function EventDetail({ event }: { event: CampaignEvent }) {
                       <strong>{tier.name}</strong>
                       <div style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>{tier.sold} × ${tier.price.toLocaleString()}</div>
                     </div>
-                    <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>${tierRevenue.toLocaleString()}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${tierRevenue.toLocaleString()}</div>
                   </div>
                 );
               })}
@@ -428,7 +415,7 @@ function EventDetail({ event }: { event: CampaignEvent }) {
             <div>
               <div style={{ padding: '14px 16px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)', marginBottom: 16 }}>
                 <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 4 }}>PUBLIC EVENT URL</div>
-                <div style={{ fontWeight: 600, color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.9rem' }}>
+                <div style={{ fontWeight: 600, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.9rem' }}>
                   williamsd42.com/events/{event.id}
                 </div>
               </div>
@@ -436,8 +423,8 @@ function EventDetail({ event }: { event: CampaignEvent }) {
                 <h4 style={{ margin: '0 0 8px' }}>Preview: Public Event Page</h4>
                 <h2 style={{ margin: '0 0 8px', fontSize: '1.3rem' }}>{event.title}</h2>
                 <p style={{ color: 'var(--muted)', fontSize: '0.88rem', margin: '0 0 8px' }}>
-                  📅 {event.date} · {event.startTime}<br />
-                  📍 {event.location}
+                  {event.date} · {event.startTime}<br />
+                  {event.location}
                 </p>
                 <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--text)' }}>{event.description}</p>
                 <div style={{ marginTop: 12, display: 'inline-block', padding: '8px 20px', borderRadius: 999, background: 'var(--grad-purple)', color: 'white', fontWeight: 700, fontSize: '0.9rem' }}>
@@ -448,14 +435,13 @@ function EventDetail({ event }: { event: CampaignEvent }) {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="pol-btn-secondary pol-btn-sm">🔗 Copy Link</button>
-                <button className="pol-btn-secondary pol-btn-sm">📤 Share on Social</button>
-                <button className="pol-btn-secondary pol-btn-sm">📧 Email to List</button>
+                <button className="pol-btn-secondary pol-btn-sm">Copy Link</button>
+                <button className="pol-btn-secondary pol-btn-sm">Share on Social</button>
+                <button className="pol-btn-secondary pol-btn-sm">Email to List</button>
               </div>
             </div>
           ) : (
             <div style={{ textAlign: 'center', padding: 32, color: 'var(--muted)' }}>
-              <div style={{ fontSize: '2rem', marginBottom: 8 }}>🔒</div>
               <p>This event is set to Private. Change visibility to Public to enable the public event page.</p>
             </div>
           )}
@@ -494,12 +480,14 @@ export function PoliticianEvents() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>📅 Event Management</h1>
-        <p>Create, manage, and track fundraisers, town halls, canvassing events, and more. Monitor RSVPs and revenue in one place.</p>
+        <div className="pol-header-left">
+          <h1>Events</h1>
+          <p>Create, manage, and track fundraisers, town halls, canvassing events, and more. Monitor RSVPs and revenue in one place.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm" onClick={() => setTab('new')}>+ Create Event</button>
-          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTab('calendar')}>📆 Calendar View</button>
-          <button className="pol-btn-secondary pol-btn-sm">📤 Export All</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTab('calendar')}>Calendar View</button>
+          <button className="pol-btn-secondary pol-btn-sm">Export All</button>
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setTab('new')}>Create Event</button>
         </div>
       </div>
 
@@ -529,10 +517,10 @@ export function PoliticianEvents() {
       <div className="pol-tab-row">
         {(['list', 'calendar'] as const).map((t) => (
           <button key={t} className={`pol-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'list' ? '📋 Event List' : '📆 Calendar'}
+            {t === 'list' ? 'Event List' : 'Calendar'}
           </button>
         ))}
-        {tab === 'new' && <button className="pol-tab active">✏️ New Event</button>}
+        {tab === 'new' && <button className="pol-tab active">New Event</button>}
       </div>
 
       {tab === 'new' && (
@@ -579,18 +567,17 @@ export function PoliticianEvents() {
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 4, flexWrap: 'wrap' }}>
-                        <span style={{ fontSize: '1rem' }}>{TYPE_ICONS[evt.type]}</span>
-                        <span style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.82rem' }}>{evt.type}</span>
+                        <span style={{ fontWeight: 600, color: 'var(--color-gray-600, #4B5563)', fontSize: '0.82rem' }}>{evt.type}</span>
                         <StatusBadge status={evt.status} />
                         {!evt.isPublic && <span className="pol-badge pending" style={{ fontSize: '0.7rem' }}>Private</span>}
                       </div>
                       <div style={{ fontWeight: 600, fontSize: '0.92rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{evt.title}</div>
                       <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 4 }}>
-                        📅 {evt.date} · 📍 {evt.location}
+                        {evt.date} · {evt.location}
                       </div>
                     </div>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>{evt.rsvpCount} RSVPs</div>
+                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{evt.rsvpCount} RSVPs</div>
                       {evt.totalRevenue > 0 && <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>${evt.totalRevenue.toLocaleString()}</div>}
                     </div>
                   </div>
@@ -604,9 +591,9 @@ export function PoliticianEvents() {
               ) : (
                 <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                   <div>
-                    <div style={{ fontSize: '3rem', marginBottom: 12 }}>📅</div>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                     <p>Select an event to view details, RSVPs, and revenue breakdown.</p>
-                    <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setTab('new')}>+ Create Your First Event</button>
+                    <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setTab('new')}>Create Your First Event</button>
                   </div>
                 </div>
               )}

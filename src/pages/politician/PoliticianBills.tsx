@@ -40,7 +40,7 @@ function AISummarizeButton({ bill, onSummary }: { bill: Bill; onSummary: (s: str
 
   return (
     <button className="pol-ai-btn pol-btn-sm" onClick={handleClick} disabled={loading}>
-      {loading ? '⏳' : '✨'} AI Summarize
+      {loading ? 'Generating...' : 'Plain English Summary'}
     </button>
   );
 }
@@ -80,7 +80,7 @@ export function PoliticianBills() {
     >
       <div style={{ flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-          <span style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.88rem' }}>{bill.number}</span>
+          <span style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.88rem' }}>{bill.number}</span>
           {bill.sponsored && <span className="pol-badge major">Sponsored</span>}
         </div>
         <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--text)', marginBottom: 4 }}>{bill.title}</div>
@@ -96,11 +96,13 @@ export function PoliticianBills() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>📋 Bills & Legislative Tracker</h1>
-        <p>Track your sponsored bills, voting record, and add public statements to maintain transparency with constituents.</p>
+        <div className="pol-header-left">
+          <h1>Bills &amp; Legislation</h1>
+          <p>Track your sponsored bills, voting record, and add public statements to maintain transparency with constituents.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm">+ Add Bill</button>
-          <button className="pol-btn-secondary pol-btn-sm">🔗 Sync IGA Database</button>
+          <button className="pol-btn-secondary pol-btn-sm">Sync IGA Database</button>
+          <button className="pol-btn-primary pol-btn-sm">Add Bill</button>
         </div>
       </div>
 
@@ -130,7 +132,7 @@ export function PoliticianBills() {
       <div className="pol-tab-row">
         {(['sponsored', 'voting-record', 'upcoming'] as Tab[]).map((t) => (
           <button key={t} className={`pol-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'sponsored' ? '📌 Sponsored Bills' : t === 'voting-record' ? '🗳️ Voting Record' : '📅 Upcoming Votes'}
+            {t === 'sponsored' ? 'Sponsored Bills' : t === 'voting-record' ? 'Voting Record' : 'Upcoming Votes'}
           </button>
         ))}
       </div>
@@ -153,7 +155,7 @@ export function PoliticianBills() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
                 <div>
                   <div style={{ display: 'flex', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
-                    <span style={{ fontWeight: 800, color: 'var(--purple-soft, #8B7FF0)', fontSize: '1.05rem' }}>{selectedBill.number}</span>
+                    <span style={{ fontWeight: 800, color: 'var(--color-brand, #6B5DE6)', fontSize: '1.05rem' }}>{selectedBill.number}</span>
                     {selectedBill.sponsored && <span className="pol-badge major">Sponsored</span>}
                     <BillStatusBadge status={selectedBill.status} />
                     {selectedBill.politicianVote && <VoteBadge vote={selectedBill.politicianVote} />}
@@ -179,7 +181,7 @@ export function PoliticianBills() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                   <h4 style={{ margin: 0, fontSize: '0.95rem' }}>Vote Rationale / Public Statement</h4>
                   <button className="pol-btn-ghost pol-btn-sm" onClick={() => setEditMode(!editMode)}>
-                    {editMode ? 'Cancel' : '✏️ Edit'}
+                    {editMode ? 'Cancel' : 'Edit'}
                   </button>
                 </div>
                 {editMode ? (
@@ -222,7 +224,7 @@ export function PoliticianBills() {
           ) : (
             <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
               <div>
-                <div style={{ fontSize: '3rem', marginBottom: 12 }}>📋</div>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                 <p>Select a bill to view details, add your vote rationale, and annotate constituent impacts.</p>
               </div>
             </div>

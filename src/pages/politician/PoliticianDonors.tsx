@@ -210,14 +210,16 @@ function AddContributionModal({ show, donor, onClose, onSave }: AddContributionM
 
           {hardStop && violation && (
             <div className="pol-violation-banner">
-              🚨 {violation}
-              <div style={{ fontWeight: 400, fontSize: '0.85rem', marginTop: 4 }}>This contribution cannot be saved. Process a refund for the over-limit portion.</div>
+              {violation}
+              <div style={{ fontWeight: 400, fontSize: '0.8rem', marginTop: 4 }}>This contribution cannot be saved. Process a refund for the over-limit portion.</div>
             </div>
           )}
           {!hardStop && violation && (
             <div className="pol-alert warning" style={{ marginBottom: 16 }}>
-              <span>⚠️</span>
-              <div><strong>Warning</strong><p style={{ margin: '3px 0 0' }}>{violation}</p></div>
+              <span className="pol-alert-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <div className="pol-alert-body"><strong>Warning</strong><p>{violation}</p></div>
             </div>
           )}
 
@@ -336,12 +338,14 @@ export function PoliticianDonors() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>💰 Donor Management & FEC Compliance</h1>
-        <p>Full donor CRM with real-time contribution limit enforcement and FEC reporting tools.</p>
+        <div className="pol-header-left">
+          <h1>Donor Management</h1>
+          <p>Donor CRM with real-time contribution limit enforcement and FEC reporting.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAddDonor(true)}>+ Add Donor</button>
-          <button className="pol-btn-secondary pol-btn-sm">📥 Import CSV</button>
-          <button className="pol-btn-secondary pol-btn-sm">📄 Export FEC Report</button>
+          <button className="pol-btn-secondary pol-btn-sm">Import CSV</button>
+          <button className="pol-btn-secondary pol-btn-sm">Export FEC Report</button>
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAddDonor(true)}>Add Donor</button>
         </div>
       </div>
 
@@ -375,7 +379,7 @@ export function PoliticianDonors() {
       <div className="pol-tab-row">
         {(['crm', 'contributions', 'compliance', 'reports'] as Tab[]).map((t) => (
           <button key={t} className={`pol-tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-            {t === 'crm' ? '👥 Donor CRM' : t === 'contributions' ? '💵 Contributions' : t === 'compliance' ? '⚖️ Compliance' : '📊 FEC Reports'}
+            {t === 'crm' ? 'Donor CRM' : t === 'contributions' ? 'Contributions' : t === 'compliance' ? 'Compliance' : 'FEC Reports'}
           </button>
         ))}
       </div>
@@ -387,7 +391,6 @@ export function PoliticianDonors() {
           <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div className="pol-search-bar">
               <div className="pol-search-wrapper">
-                <span className="pol-search-icon">🔍</span>
                 <input
                   className="pol-search-input"
                   placeholder="Search donors..."
@@ -426,7 +429,7 @@ export function PoliticianDonors() {
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                    <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.95rem' }}>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.95rem' }}>
                       ${donor.cycleTotal.toLocaleString()}
                     </div>
                     <span className={`pol-badge ${donor.status}`} style={{ marginTop: 4, display: 'inline-flex' }}>
@@ -509,15 +512,15 @@ export function PoliticianDonors() {
                       <div key={c.id} className={`pol-record-item${c.complianceStatus === 'violation' ? ' violation-row' : c.complianceStatus === 'warning' ? ' warning-row' : ''}`} style={{ cursor: 'default' }}>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text)' }}>${c.amount.toLocaleString()} · {c.method} · {c.date}</div>
-                          {c.violationReason && <div style={{ fontSize: '0.8rem', color: '#f87171', marginTop: 2 }}>⚠️ {c.violationReason}</div>}
-                          {c.isInKind && <div style={{ fontSize: '0.8rem', color: '#34d399', marginTop: 2 }}>In-kind: {c.inKindDescription}</div>}
+                          {c.violationReason && <div style={{ fontSize: '0.78rem', color: 'var(--color-danger)', marginTop: 2 }}>{c.violationReason}</div>}
+                          {c.isInKind && <div style={{ fontSize: '0.78rem', color: 'var(--color-success)', marginTop: 2 }}>In-kind: {c.inKindDescription}</div>}
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
                           <span className={`pol-badge ${c.complianceStatus}`}>{c.complianceStatus}</span>
                           {c.complianceStatus === 'violation' && c.refundStatus !== 'refunded' && (
                             <button className="pol-btn-danger pol-btn-sm" onClick={() => handleRefund(c.id)}>Process Refund</button>
                           )}
-                          {c.refundStatus === 'refunded' && <span style={{ fontSize: '0.78rem', color: '#34d399' }}>✓ Refunded</span>}
+                          {c.refundStatus === 'refunded' && <span style={{ fontSize: '0.78rem', color: 'var(--color-success)', fontWeight: 600 }}>Refunded</span>}
                         </div>
                       </div>
                     ))}
@@ -525,10 +528,10 @@ export function PoliticianDonors() {
                 )}
               </div>
             ) : (
-              <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
+              <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, textAlign: 'center' }}>
                 <div>
-                  <div style={{ fontSize: '3rem', marginBottom: 12 }}>👤</div>
-                  <p>Select a donor to view their profile, contribution history, and compliance status.</p>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-300)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: 12 }}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  <p style={{ color: 'var(--color-gray-500)', fontSize: '0.875rem', margin: 0 }}>Select a donor to view their profile, contribution history, and compliance status.</p>
                 </div>
               </div>
             )}
@@ -541,7 +544,7 @@ export function PoliticianDonors() {
         <div>
           {violationCount > 0 && (
             <div className="pol-violation-banner" style={{ marginBottom: 16 }}>
-              🚨 {violationCount} contribution(s) have compliance violations requiring action before filing.
+              {violationCount} contribution(s) have compliance violations requiring action before filing.
             </div>
           )}
           <div className="pol-card">
@@ -569,9 +572,9 @@ export function PoliticianDonors() {
                       <td>{c.jurisdictionType}</td>
                       <td><span className={`pol-badge ${c.complianceStatus}`}>{c.complianceStatus}</span></td>
                       <td>
-                        {c.refundStatus === 'refunded' ? <span style={{ color: '#34d399', fontSize: '0.82rem' }}>✓ Refunded</span> :
-                         c.refundStatus === 'pending' ? <span style={{ color: '#fbbf24', fontSize: '0.82rem' }}>Pending</span> :
-                         <span style={{ color: 'var(--muted)', fontSize: '0.82rem' }}>—</span>}
+                        {c.refundStatus === 'refunded' ? <span style={{ color: 'var(--color-success)', fontSize: '0.8rem', fontWeight: 600 }}>Refunded</span> :
+                         c.refundStatus === 'pending' ? <span style={{ color: 'var(--color-warning)', fontSize: '0.8rem' }}>Pending</span> :
+                         <span style={{ color: 'var(--color-gray-400)', fontSize: '0.8rem' }}>—</span>}
                       </td>
                       <td>
                         {c.complianceStatus === 'violation' && c.refundStatus !== 'refunded' && (
@@ -591,10 +594,10 @@ export function PoliticianDonors() {
       {tab === 'compliance' && (
         <div className="pol-grid-2">
           <div className="pol-card">
-            <h3>⚖️ Contribution Limit Status</h3>
+            <h3>Contribution Limit Status</h3>
             <div style={{ marginBottom: 16, padding: '12px 14px', background: 'var(--purple-dim, rgba(107,93,230,0.12))', borderRadius: 12, border: '1px solid var(--navy-border)' }}>
               <div style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>Indiana State Limit (Individual)</div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--purple-soft, #8B7FF0)' }}>${STATE_LIMIT.toLocaleString()}</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-brand, #6B5DE6)' }}>${STATE_LIMIT.toLocaleString()}</div>
             </div>
             <div className="pol-record-list">
               {donors.filter((d) => d.cycleTotal > 0).sort((a, b) => b.cycleTotal - a.cycleTotal).map((donor) => {
@@ -604,8 +607,8 @@ export function PoliticianDonors() {
                   <div key={donor.id} style={{ padding: '14px 0', borderBottom: '1px solid var(--border)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                       <span style={{ fontWeight: 600, fontSize: '0.92rem' }}>{donor.firstName} {donor.lastName}</span>
-                      <span style={{ fontWeight: 700, color: isOver ? '#f87171' : 'var(--purple-soft, #8B7FF0)', fontSize: '0.92rem' }}>
-                        ${donor.cycleTotal.toLocaleString()} {isOver && '⚠️'}
+                      <span style={{ fontWeight: 700, color: isOver ? '#f87171' : 'var(--color-brand, #6B5DE6)', fontSize: '0.92rem' }}>
+                        ${donor.cycleTotal.toLocaleString()} {isOver && '!'}
                       </span>
                     </div>
                     <div className="pol-progress-track">
@@ -625,31 +628,31 @@ export function PoliticianDonors() {
           </div>
 
           <div className="pol-card">
-            <h3>🚩 Compliance Checklist</h3>
+            <h3>Compliance Checklist</h3>
             <div className="pol-record-list">
               <div className={`pol-record-item${violationCount > 0 ? ' violation-row' : ''}`} style={{ cursor: 'default' }}>
-                <div>{violationCount > 0 ? '🔴' : '🟢'} Over-limit contributions</div>
+                <div style={{ fontSize: '0.875rem' }}>Over-limit contributions</div>
                 <span className={`pol-badge ${violationCount > 0 ? 'violation' : 'compliant'}`}>{violationCount} issues</span>
               </div>
               <div className={`pol-record-item${warningCount > 0 ? ' warning-row' : ''}`} style={{ cursor: 'default' }}>
-                <div>{warningCount > 0 ? '🟡' : '🟢'} Near-limit warnings</div>
+                <div style={{ fontSize: '0.875rem' }}>Near-limit warnings</div>
                 <span className={`pol-badge ${warningCount > 0 ? 'warning' : 'compliant'}`}>{warningCount} issues</span>
               </div>
               <div className="pol-record-item" style={{ cursor: 'default' }}>
-                <div>🟡 Missing employer/occupation (≥$200)</div>
+                <div style={{ fontSize: '0.875rem' }}>Missing employer/occupation (≥$200)</div>
                 <span className="pol-badge warning">2 donors</span>
               </div>
               <div className="pol-record-item" style={{ cursor: 'default' }}>
-                <div>🟢 Prohibited source checks</div>
+                <div style={{ fontSize: '0.875rem' }}>Prohibited source checks</div>
                 <span className="pol-badge compliant">All clear</span>
               </div>
               <div className="pol-record-item" style={{ cursor: 'default' }}>
-                <div>🟢 In-kind contributions documented</div>
+                <div style={{ fontSize: '0.875rem' }}>In-kind contributions documented</div>
                 <span className="pol-badge compliant">2 on file</span>
               </div>
             </div>
 
-            <h3 style={{ marginTop: 24 }}>📋 Audit Log</h3>
+            <h3 style={{ marginTop: 24 }}>Audit Log</h3>
             <div style={{ maxHeight: 240, overflowY: 'auto' }}>
               {contributions
                 .flatMap((c) => c.auditLog.map((e) => ({ ...e, donor: c.donorName, amount: c.amount })))
@@ -671,7 +674,7 @@ export function PoliticianDonors() {
       {tab === 'reports' && (
         <div className="pol-grid-2">
           <div className="pol-card">
-            <h3>📄 FEC Report Generator</h3>
+            <h3>FEC Report Generator</h3>
             <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 20 }}>Generate jurisdiction-specific filing reports from your contribution data.</p>
 
             <div className="pol-field-group">
@@ -722,16 +725,18 @@ export function PoliticianDonors() {
           </div>
 
           <div className="pol-card">
-            <h3>📅 Filing Deadline Calendar</h3>
+            <h3>Filing Deadline Calendar</h3>
             <div className="pol-record-list" style={{ marginBottom: 20 }}>
               {[
-                { label: 'Q2 Filing', date: '2024-07-15', daysOut: 71, severity: 'info' as const },
-                { label: 'Mid-Year Report', date: '2024-07-31', daysOut: 87, severity: 'info' as const },
-                { label: 'Q3 Filing', date: '2024-10-15', daysOut: 163, severity: 'info' as const },
-                { label: 'Year-End Report', date: '2025-01-31', daysOut: 271, severity: 'info' as const },
+                { label: 'Q2 Filing', date: '2024-07-15', daysOut: 71 },
+                { label: 'Mid-Year Report', date: '2024-07-31', daysOut: 87 },
+                { label: 'Q3 Filing', date: '2024-10-15', daysOut: 163 },
+                { label: 'Year-End Report', date: '2025-01-31', daysOut: 271 },
               ].map((item) => (
                 <div key={item.label} className={`pol-alert ${item.daysOut <= 30 ? 'danger' : item.daysOut <= 60 ? 'warning' : 'info'}`}>
-                  <span className="pol-alert-icon">📅</span>
+                  <span className="pol-alert-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  </span>
                   <div className="pol-alert-body">
                     <strong>{item.label} — Due {item.date}</strong>
                     <p>{item.daysOut} days away</p>

@@ -32,7 +32,7 @@ function SimpleBarChart({ data }: { data: { label: string; value: number; max: n
         <div key={item.label}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: '0.85rem' }}>
             <span style={{ color: 'var(--text)' }}>{item.label}</span>
-            <span style={{ fontWeight: 600, color: 'var(--purple-soft, #8B7FF0)' }}>{item.value}</span>
+            <span style={{ fontWeight: 600, color: 'var(--color-brand, #6B5DE6)' }}>{item.value}</span>
           </div>
           <div className="pol-progress-track">
             <div className="pol-progress-fill" style={{ width: `${(item.value / item.max) * 100}%` }} />
@@ -56,10 +56,12 @@ export function PoliticianAnalytics() {
   return (
     <div>
       <div className="pol-page-header">
-        <h1>📈 Analytics & Engagement Dashboard</h1>
-        <p>Deep insights into your donor base, campaign reach, volunteer activity, and PoliCred score.</p>
+        <div className="pol-header-left">
+          <h1>Analytics</h1>
+          <p>Insights into your donor base, campaign reach, volunteer activity, and PoliCred score.</p>
+        </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm">📄 Export PDF Report</button>
+          <button className="pol-btn-primary pol-btn-sm">Export PDF Report</button>
         </div>
       </div>
 
@@ -90,7 +92,7 @@ export function PoliticianAnalytics() {
       <div className="pol-grid-2" style={{ marginBottom: 24 }}>
         {/* Fundraising Over Time */}
         <div className="pol-card">
-          <h3>💰 Funds Raised by Month — 2024</h3>
+          <h3>Funds Raised by Month — 2024</h3>
           <div style={{ marginBottom: 20 }}>
             <SimpleBarChart
               data={MONTHLY_FUNDRAISING.map((m) => ({
@@ -135,7 +137,7 @@ export function PoliticianAnalytics() {
       <div className="pol-grid-3" style={{ marginBottom: 24 }}>
         {/* Donor Geography */}
         <div className="pol-card">
-          <h3>🗺️ Donor Geographic Distribution</h3>
+          <h3>Donor Geographic Distribution</h3>
           <div style={{ display: 'grid', gap: 10, marginBottom: 8 }}>
             {COUNTY_DATA.map((county) => (
               <div key={county.county} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', borderRadius: 10, border: '1px solid var(--border)', background: 'var(--surface)' }}>
@@ -143,7 +145,7 @@ export function PoliticianAnalytics() {
                   <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{county.county} Co.</div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>{county.donors} donor{county.donors !== 1 ? 's' : ''}</div>
                 </div>
-                <div style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)', fontSize: '0.92rem' }}>
+                <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.92rem' }}>
                   ${county.amount.toLocaleString()}
                 </div>
               </div>
@@ -154,7 +156,7 @@ export function PoliticianAnalytics() {
 
         {/* PoliFeed Performance */}
         <div className="pol-card">
-          <h3>📡 PoliFeed Post Performance</h3>
+          <h3>PoliFeed Post Performance</h3>
           <div className="pol-record-list">
             {demoCampaignPosts.filter((p) => p.status === 'published').map((post) => (
               <div key={post.id} style={{ padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
@@ -162,10 +164,10 @@ export function PoliticianAnalytics() {
                   {post.body.slice(0, 55)}...
                 </div>
                 <div style={{ display: 'flex', gap: 12, fontSize: '0.8rem', color: 'var(--muted)' }}>
-                  <span>👁 {post.views.toLocaleString()}</span>
-                  <span>❤️ {post.likes}</span>
-                  <span>🔁 {post.shares}</span>
-                  <span>💬 {post.comments}</span>
+                  <span>{post.views.toLocaleString()} views</span>
+                  <span>{post.likes} likes</span>
+                  <span>{post.shares} shares</span>
+                  <span>{post.comments} comments</span>
                 </div>
                 {post.topicTag && (
                   <span className="pol-badge in-progress" style={{ marginTop: 6, display: 'inline-flex', fontSize: '0.72rem' }}>{post.topicTag}</span>
@@ -177,7 +179,7 @@ export function PoliticianAnalytics() {
 
         {/* Volunteer Metrics */}
         <div className="pol-card">
-          <h3>🤝 Volunteer Activity</h3>
+          <h3>Volunteer Activity</h3>
           <div style={{ marginBottom: 16 }}>
             <SimpleBarChart
               data={demoVolunteers.map((v) => ({
@@ -196,10 +198,10 @@ export function PoliticianAnalytics() {
 
       {/* Campaign Goal Progress */}
       <div className="pol-card">
-        <h3>🎯 Fundraising Goal Progress</h3>
+        <h3>Fundraising Goal Progress</h3>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: '0.9rem' }}>
           <span style={{ color: 'var(--muted)' }}>Progress toward ${demoPolitician.fundraisingGoal.toLocaleString()} goal</span>
-          <span style={{ fontWeight: 700, color: 'var(--purple-soft, #8B7FF0)' }}>${totalRaised.toLocaleString()} ({goalPct}%)</span>
+          <span style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${totalRaised.toLocaleString()} ({goalPct}%)</span>
         </div>
         <div className="pol-thermometer" style={{ height: 16, marginBottom: 12 }}>
           <div className="pol-thermometer-fill" style={{ width: `${goalPct}%` }} />
