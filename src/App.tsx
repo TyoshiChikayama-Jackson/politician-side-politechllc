@@ -13,6 +13,10 @@ import { PoliticianBills } from './pages/politician/PoliticianBills';
 import { PoliticianAnalytics } from './pages/politician/PoliticianAnalytics';
 import { PoliticianQuestionnaire } from './pages/politician/PoliticianQuestionnaire';
 import { PoliticianSettings } from './pages/politician/PoliticianSettings';
+import { PoliticianEvents } from './pages/politician/PoliticianEvents';
+import { PoliticianAds } from './pages/politician/PoliticianAds';
+import { PoliticianPolls } from './pages/politician/PoliticianPolls';
+import { PoliticianSpeech } from './pages/politician/PoliticianSpeech';
 
 function App() {
   const [activeView, setActiveView] = useState<PoliticianView>('overview');
@@ -28,6 +32,10 @@ function App() {
       case 'bills': return <PoliticianBills />;
       case 'analytics': return <PoliticianAnalytics />;
       case 'questionnaire': return <PoliticianQuestionnaire />;
+      case 'events': return <PoliticianEvents />;
+      case 'ads': return <PoliticianAds />;
+      case 'polls': return <PoliticianPolls />;
+      case 'speech': return <PoliticianSpeech />;
       case 'settings': return <PoliticianSettings />;
       default: return <PoliticianOverview />;
     }

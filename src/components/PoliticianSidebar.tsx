@@ -10,6 +10,10 @@ export type PoliticianView =
   | 'bills'
   | 'analytics'
   | 'questionnaire'
+  | 'events'
+  | 'ads'
+  | 'polls'
+  | 'speech'
   | 'settings';
 
 type NavItem = { id: PoliticianView; label: string; icon: string };
@@ -23,6 +27,10 @@ const navItems: NavItem[] = [
   { id: 'bills', label: 'Bills & Legislation', icon: '📋' },
   { id: 'analytics', label: 'Analytics', icon: '📈' },
   { id: 'questionnaire', label: 'Policy Stances', icon: '🗳️' },
+  { id: 'events', label: 'Events', icon: '📅' },
+  { id: 'ads', label: 'Ad Studio', icon: '📢' },
+  { id: 'polls', label: 'Polls & Surveys', icon: '📊' },
+  { id: 'speech', label: 'Speech Writer', icon: '🎤' },
   { id: 'settings', label: 'Settings', icon: '⚙️' },
 ];
 

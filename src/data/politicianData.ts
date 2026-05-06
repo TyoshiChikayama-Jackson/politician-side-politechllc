@@ -12,6 +12,10 @@ import type {
   FECFilingRecord,
   BudgetLine,
   CampaignStaff,
+  CampaignEvent,
+  AdCampaign,
+  Survey,
+  Speech,
 } from '../types';
 
 // ─── Demo Politician ──────────────────────────────────────────────────────────
@@ -794,4 +798,383 @@ export const demoCampaignStaff: CampaignStaff[] = [
   { id: 'staff-003', name: 'Keisha Jordan', email: 'kjordan@williamsd42.com', role: 'Volunteer Coordinator', inviteStatus: 'active', joinedAt: '2024-02-01' },
   { id: 'staff-004', name: 'Tom Bauer', email: 'tbauer@williamsd42.com', role: 'Admin', inviteStatus: 'active', joinedAt: '2024-01-01' },
   { id: 'staff-005', name: 'Aaliyah Simmons', email: 'asimmons@williamsd42.com', role: 'Viewer', inviteStatus: 'pending', joinedAt: '2024-04-20' },
+];
+
+// ─── Demo Events ──────────────────────────────────────────────────────────────
+
+export const demoEvents: CampaignEvent[] = [
+  {
+    id: 'evt-001',
+    title: 'Spring Fundraiser Dinner',
+    type: 'Fundraiser',
+    date: '2024-04-18',
+    startTime: '18:00',
+    endTime: '21:00',
+    location: 'Crowne Plaza Indianapolis',
+    address: '123 W. Washington St, Indianapolis, IN 46204',
+    capacity: 80,
+    rsvpCount: 48,
+    description: 'Join us for an elegant evening supporting the Williams for Indiana House campaign. Meet Representative Williams, hear his vision for District 42, and enjoy dinner and remarks.',
+    isPublic: true,
+    status: 'completed',
+    totalRevenue: 24000,
+    volunteerShiftIds: ['shift-003'],
+    tags: ['Fundraiser', 'Featured'],
+    ticketTiers: [
+      { id: 'tier-001a', name: 'General Admission', price: 250, capacity: 50, sold: 32, fecCompliant: true, description: 'Dinner and remarks' },
+      { id: 'tier-001b', name: 'VIP Reception', price: 1000, capacity: 20, sold: 14, fecCompliant: true, description: 'Private reception with Representative Williams + dinner' },
+      { id: 'tier-001c', name: 'Campaign Champion', price: 2000, capacity: 10, sold: 2, fecCompliant: true, description: 'Photo opportunity + VIP reception + dinner' },
+    ],
+    rsvps: [
+      { id: 'rsvp-001', eventId: 'evt-001', name: 'Patricia Chen', email: 'pchen@tech.com', tierId: 'tier-001b', amountPaid: 1000, status: 'confirmed', registeredAt: '2024-04-05T10:00:00Z' },
+      { id: 'rsvp-002', eventId: 'evt-001', name: 'Robert Kaminsky', email: 'rkam@legalfirm.com', tierId: 'tier-001b', amountPaid: 1000, status: 'confirmed', registeredAt: '2024-04-06T14:30:00Z' },
+      { id: 'rsvp-003', eventId: 'evt-001', name: 'David Okonkwo', email: 'david.o@distillery.com', tierId: 'tier-001a', amountPaid: 250, status: 'confirmed', registeredAt: '2024-04-08T09:15:00Z' },
+    ],
+  },
+  {
+    id: 'evt-002',
+    title: 'District 42 Town Hall — Education & Schools',
+    type: 'Town Hall',
+    date: '2026-06-14',
+    startTime: '18:30',
+    endTime: '20:00',
+    location: 'IPS Community Center',
+    address: '3801 N. Meridian St, Indianapolis, IN 46208',
+    capacity: 150,
+    rsvpCount: 31,
+    description: 'Open town hall for all District 42 residents to discuss education funding, school quality, and what Representative Williams is doing at the Statehouse. Q&A session included.',
+    isPublic: true,
+    status: 'published',
+    totalRevenue: 0,
+    volunteerShiftIds: [],
+    tags: ['Town Hall', 'Education'],
+    ticketTiers: [
+      { id: 'tier-002a', name: 'Free Admission', price: 0, capacity: 150, sold: 31, fecCompliant: true, description: 'Open to all District 42 residents' },
+    ],
+    rsvps: [],
+  },
+  {
+    id: 'evt-003',
+    title: 'Near Eastside Canvassing Kickoff',
+    type: 'Canvassing',
+    date: '2026-06-22',
+    startTime: '09:00',
+    endTime: '13:00',
+    location: 'Near Eastside Community Center',
+    address: '2236 E. 10th St, Indianapolis, IN 46201',
+    capacity: 25,
+    rsvpCount: 12,
+    description: 'Morning canvassing push through Near Eastside precincts. Lunch provided for all volunteers. Bring comfortable shoes!',
+    isPublic: false,
+    status: 'published',
+    totalRevenue: 0,
+    volunteerShiftIds: ['shift-001'],
+    tags: ['Canvassing', 'Volunteer'],
+    ticketTiers: [],
+    rsvps: [],
+  },
+];
+
+// ─── Demo Ad Campaigns ────────────────────────────────────────────────────────
+
+export const demoAds: AdCampaign[] = [
+  {
+    id: 'ad-001',
+    name: 'Spring Fundraising Push — Facebook',
+    platform: 'Facebook',
+    goal: 'Fundraising',
+    targetAudience: 'District 42 Democrats and independents, ages 35-65, homeowners',
+    keyMessage: 'Marcus Williams is fighting for District 42 — support his campaign today',
+    tone: 'Hopeful',
+    status: 'active',
+    createdAt: '2024-04-01',
+    budget: 1500,
+    impressions: 42800,
+    clicks: 1240,
+    conversions: 87,
+    complianceApproved: true,
+    variants: [
+      {
+        id: 'var-001a',
+        label: 'Variant A — Community Focus',
+        headline: 'Fighting for District 42 Families',
+        body: 'Marcus Williams has delivered for our community — affordable housing, better schools, and healthcare access. Help him keep fighting. Every dollar counts.',
+        cta: 'Donate Now',
+        charCount: 180,
+      },
+      {
+        id: 'var-001b',
+        label: 'Variant B — Accomplishments',
+        headline: 'Real Results for Real Hoosiers',
+        body: 'HB 1115 passed. Healthcare expanded. Now Marcus needs YOUR support to finish what we started. Join thousands of District 42 supporters.',
+        cta: 'Support Marcus',
+        charCount: 163,
+      },
+      {
+        id: 'var-001c',
+        label: 'Variant C — Urgency',
+        headline: "Don't Let Progress Stop Here",
+        body: 'The work isn\'t done. Marcus Williams is in a tight race — and every contribution before June 30 is matched. Give today.',
+        cta: 'Double My Impact',
+        charCount: 154,
+      },
+    ],
+  },
+  {
+    id: 'ad-002',
+    name: 'Voter Outreach — Google Search',
+    platform: 'Google',
+    goal: 'Voter Outreach',
+    targetAudience: 'Marion County registered voters searching for Marcus Williams or District 42',
+    keyMessage: 'Connect voters to marcuswilliamsd42.com and policy information',
+    tone: 'Professional',
+    status: 'active',
+    createdAt: '2024-03-15',
+    budget: 800,
+    impressions: 18400,
+    clicks: 620,
+    conversions: 0,
+    complianceApproved: true,
+    variants: [
+      {
+        id: 'var-002a',
+        label: 'Variant A — Name Recognition',
+        headline: 'Marcus Williams — Indiana House D-42',
+        body: 'Your State Representative fighting for affordable housing, better schools, and healthcare. Learn where Marcus stands on the issues.',
+        cta: 'View Issues',
+        charCount: 172,
+      },
+      {
+        id: 'var-002b',
+        label: 'Variant B — Issues',
+        headline: 'Healthcare, Housing & Schools — District 42',
+        body: 'Representative Marcus Williams is your voice at the Statehouse. See his record, read his positions, and get involved.',
+        cta: 'Learn More',
+        charCount: 155,
+      },
+      {
+        id: 'var-002c',
+        label: 'Variant C — Get Out The Vote',
+        headline: 'Vote Marcus Williams — Nov 3',
+        body: 'Re-elect Marcus Williams to the Indiana State House. Proven results, progressive values, District 42 first.',
+        cta: 'Get Involved',
+        charCount: 131,
+      },
+    ],
+  },
+  {
+    id: 'ad-003',
+    name: 'GOTV Push — Instagram',
+    platform: 'Instagram',
+    goal: 'GOTV',
+    targetAudience: 'District 42 voters ages 18-35, progressive, likely non-voters',
+    keyMessage: 'Your vote matters — November 3rd, make it count',
+    tone: 'Bold',
+    status: 'draft',
+    createdAt: '2024-05-01',
+    complianceApproved: false,
+    variants: [
+      {
+        id: 'var-003a',
+        label: 'Variant A — Youth Turnout',
+        headline: 'Your District. Your Vote.',
+        body: 'November 3rd. Polls open 6am–6pm. Marcus Williams is on the ballot and fighting for YOU. Tag a friend who needs to vote.',
+        cta: 'Register Now',
+        charCount: 152,
+      },
+      {
+        id: 'var-003b',
+        label: 'Variant B — Issues-Driven',
+        headline: 'Schools. Housing. Healthcare.',
+        body: 'These issues are on the ballot. Marcus Williams has a plan — but only if we show up. November 3rd. Every vote counts.',
+        cta: 'Find My Polling Place',
+        charCount: 158,
+      },
+      {
+        id: 'var-003c',
+        label: 'Variant C — Social Proof',
+        headline: '2,400 District 42 Neighbors Already Voted',
+        body: 'Early voting is open. Join your neighbors who are making their voice heard. Vote Marcus Williams for Indiana House D-42.',
+        cta: 'Vote Early',
+        charCount: 163,
+      },
+    ],
+  },
+];
+
+// ─── Demo Surveys ─────────────────────────────────────────────────────────────
+
+export const demoSurveys: Survey[] = [
+  {
+    id: 'survey-001',
+    title: 'District 42 Education Priorities Survey',
+    description: 'Help us understand what matters most to District 42 families when it comes to K-12 education.',
+    status: 'active',
+    createdAt: '2024-04-10',
+    responseCount: 87,
+    targetAudience: 'District 42 parents and educators',
+    shareLink: 'https://williamsd42.com/surveys/education-2024',
+    aiThemes: ['Teacher pay is the top concern', 'Strong support for pre-K expansion', 'Mixed views on charter schools', 'Broadband/technology access cited by 34%'],
+    questions: [
+      {
+        id: 'sq-001a',
+        order: 1,
+        type: 'multiple-choice',
+        text: 'What is your top education priority for District 42 schools?',
+        options: ['Increase teacher pay', 'Expand pre-K access', 'Improve school safety', 'Better technology and broadband', 'Reduce class sizes'],
+        required: true,
+      },
+      {
+        id: 'sq-001b',
+        order: 2,
+        type: 'yes-no',
+        text: 'Do you support universal pre-K for all 4-year-olds in Indiana?',
+        required: true,
+      },
+      {
+        id: 'sq-001c',
+        order: 3,
+        type: 'rating',
+        text: 'On a scale of 1–5, how would you rate the quality of public schools in District 42?',
+        required: true,
+      },
+      {
+        id: 'sq-001d',
+        order: 4,
+        type: 'open-text',
+        text: 'Is there anything else you would like Representative Williams to know about education in your neighborhood?',
+        required: false,
+      },
+    ],
+    responses: [],
+  },
+  {
+    id: 'survey-002',
+    title: 'Infrastructure & Roads Community Survey',
+    description: 'Tell us about infrastructure challenges in your neighborhood and what improvements you want to see.',
+    status: 'closed',
+    createdAt: '2024-02-15',
+    closedAt: '2024-03-15',
+    responseCount: 203,
+    targetAudience: 'All District 42 residents',
+    shareLink: 'https://williamsd42.com/surveys/infrastructure-2024',
+    aiThemes: ['Potholes and road quality is #1 issue', 'Public transit gaps widely cited', 'Strong demand for pedestrian safety improvements', 'Broadband gaps in eastern precincts'],
+    questions: [
+      {
+        id: 'sq-002a',
+        order: 1,
+        type: 'multiple-choice',
+        text: 'What infrastructure issue affects you most?',
+        options: ['Road quality / potholes', 'Public transit', 'Sidewalks and pedestrian safety', 'Broadband / internet access', 'Street lighting'],
+        required: true,
+      },
+      {
+        id: 'sq-002b',
+        order: 2,
+        type: 'yes-no',
+        text: 'Do you use IndyGo public transit regularly?',
+        required: true,
+      },
+      {
+        id: 'sq-002c',
+        order: 3,
+        type: 'open-text',
+        text: 'Describe the most urgent infrastructure problem in your neighborhood.',
+        required: false,
+      },
+    ],
+    responses: [],
+  },
+];
+
+// ─── Demo Speeches ────────────────────────────────────────────────────────────
+
+export const demoSpeeches: Speech[] = [
+  {
+    id: 'speech-001',
+    title: 'Education Funding Floor Speech',
+    type: 'Full Speech',
+    topic: 'K-12 Education Funding Reform (HB 1042)',
+    audience: 'Indiana State House of Representatives',
+    tone: 'Formal',
+    keyPoints: [
+      'Public education is a constitutional obligation',
+      'HB 1042 redirects $120M from public schools to private vouchers',
+      'District 42 IPS schools would lose per-pupil funding',
+      'Teachers deserve competitive wages to retain talent in Indiana',
+      'Call to vote No on current version, return to committee with amendments',
+    ],
+    content: `Madam Speaker, members of the House —
+
+Thank you for the opportunity to speak on House Bill 1042. I rise today not in opposition to the goal of improving education outcomes for Indiana children — I share that goal deeply. I rise because the path this bill takes will harm the public schools that the vast majority of our children depend on.
+
+My district, the 42nd, includes some of the most dedicated teachers I have ever met. Teachers who buy school supplies out of their own pockets, who stay late for students who have nowhere else to go, who show up every day believing that education can break cycles of poverty. They deserve our support.
+
+HB 1042, as written, redirects $120 million in state education dollars to a voucher program that primarily benefits private institutions. Let me be direct: this is money leaving public schools. IPS, the school system that educates most of District 42's children, stands to lose significant per-pupil funding under the restructured formula.
+
+I have heard from parents. I have heard from principals. I have heard from teachers. Not a single one of them asked us to defund their school to subsidize a system they don't have access to.
+
+I am calling on my colleagues to vote No on this bill in its current form — and to demand that it go back to committee with a commitment to protect public school funding before it returns to this floor.
+
+Our children are watching. Let's make them proud.
+
+Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.`,
+    wordCount: 248,
+    estimatedMinutes: 2,
+    createdAt: '2024-05-06',
+    updatedAt: '2024-05-06',
+    tags: ['Education', 'HB 1042', 'Floor Speech'],
+  },
+  {
+    id: 'speech-002',
+    title: 'Infrastructure Town Hall Talking Points',
+    type: 'Talking Points',
+    topic: 'District 42 Infrastructure Needs and HB 2201',
+    audience: 'District 42 Community Town Hall',
+    tone: 'Conversational',
+    keyPoints: [
+      'Acknowledge specific local road issues by name',
+      'Highlight HB 2201 broadband investment bill',
+      'Explain IndyGo route improvement timeline',
+      'Commit to quarterly infrastructure update meetings',
+    ],
+    content: `INFRASTRUCTURE TALKING POINTS — District 42 Town Hall
+
+OPENING
+• Thank residents for coming out tonight — your voice matters
+• Acknowledge that infrastructure is the #1 concern I hear at the doors
+
+KEY POINTS
+
+1. ROADS & POTHOLES
+   • 38th and Illinois intersection — filed work order with DPW, following up weekly
+   • 10th Street corridor resurfacing in the capital budget for FY2025
+   • I hear you — this is unacceptable and we're pushing hard
+
+2. BROADBAND
+   • HB 2201 passed first committee — I'm the primary sponsor
+   • $75M statewide, with specific set-aside for underserved urban areas like ours
+   • Goal: 90% broadband coverage in D-42 by 2026
+
+3. PUBLIC TRANSIT
+   • Worked with IndyGo on Route 39 extended hours — effective June 1
+   • Advocating for new Route 14 extension through Near Eastside
+   • Regional transit authority study underway
+
+4. WHAT YOU CAN DO
+   • Report potholes: 317-327-4622 or indy.gov/potholes
+   • Sign up for my infrastructure newsletter at williamsd42.com
+   • Join the District 42 Infrastructure Advisory Committee (3 spots open)
+
+CLOSING
+• No one should have to dodge potholes to get to work or wait an hour for a bus
+• I'm committed — and I'll report back at our next town hall
+
+Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.`,
+    wordCount: 241,
+    estimatedMinutes: 3,
+    createdAt: '2024-04-08',
+    updatedAt: '2024-04-09',
+    tags: ['Infrastructure', 'Town Hall', 'Talking Points'],
+  },
 ];

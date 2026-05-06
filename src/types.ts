@@ -213,6 +213,142 @@ export type CampaignStaff = {
   joinedAt: string;
 };
 
+// ─── Events Module ────────────────────────────────────────────────────────────
+
+export type EventType = 'Fundraiser' | 'Town Hall' | 'Canvassing' | 'Phone Bank' | 'Rally' | 'Meet & Greet' | 'Debate' | 'Other';
+
+export type TicketTier = {
+  id: string;
+  name: string;
+  price: number;
+  capacity: number;
+  sold: number;
+  fecCompliant: boolean;
+  description?: string;
+};
+
+export type EventRSVP = {
+  id: string;
+  eventId: string;
+  name: string;
+  email: string;
+  phone?: string;
+  tierId: string;
+  amountPaid: number;
+  status: 'confirmed' | 'waitlist' | 'cancelled';
+  registeredAt: string;
+};
+
+export type CampaignEvent = {
+  id: string;
+  title: string;
+  type: EventType;
+  date: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  address: string;
+  capacity: number;
+  rsvpCount: number;
+  description: string;
+  isPublic: boolean;
+  status: 'draft' | 'published' | 'completed' | 'cancelled';
+  ticketTiers: TicketTier[];
+  rsvps: EventRSVP[];
+  totalRevenue: number;
+  volunteerShiftIds: string[];
+  tags: string[];
+};
+
+// ─── Ad Creative Module ────────────────────────────────────────────────────────
+
+export type AdPlatform = 'Facebook' | 'Instagram' | 'Google' | 'Twitter/X' | 'Direct Mail' | 'Email' | 'TV/Radio';
+export type AdGoal = 'Fundraising' | 'Voter Outreach' | 'GOTV' | 'Awareness' | 'Event Promotion' | 'Opposition Research Response';
+
+export type AdVariant = {
+  id: string;
+  label: string;
+  headline: string;
+  body: string;
+  cta: string;
+  charCount: number;
+};
+
+export type AdCampaign = {
+  id: string;
+  name: string;
+  platform: AdPlatform;
+  goal: AdGoal;
+  targetAudience: string;
+  keyMessage: string;
+  tone: 'Professional' | 'Urgent' | 'Hopeful' | 'Conversational' | 'Bold';
+  variants: AdVariant[];
+  status: 'draft' | 'active' | 'paused' | 'completed';
+  createdAt: string;
+  budget?: number;
+  impressions?: number;
+  clicks?: number;
+  conversions?: number;
+  complianceApproved: boolean;
+};
+
+// ─── Polls & Surveys Module ───────────────────────────────────────────────────
+
+export type QuestionType = 'multiple-choice' | 'yes-no' | 'rating' | 'open-text' | 'ranking';
+
+export type SurveyQuestion = {
+  id: string;
+  order: number;
+  type: QuestionType;
+  text: string;
+  options?: string[];
+  required: boolean;
+};
+
+export type SurveyResponse = {
+  id: string;
+  surveyId: string;
+  respondentId?: string;
+  answers: Record<string, string | string[] | number>;
+  submittedAt: string;
+  zipCode?: string;
+};
+
+export type Survey = {
+  id: string;
+  title: string;
+  description: string;
+  questions: SurveyQuestion[];
+  status: 'draft' | 'active' | 'closed';
+  createdAt: string;
+  closedAt?: string;
+  responseCount: number;
+  targetAudience: string;
+  shareLink?: string;
+  aiThemes?: string[];
+  responses?: SurveyResponse[];
+};
+
+// ─── Speech & Talking Points Module ──────────────────────────────────────────
+
+export type SpeechType = 'Full Speech' | 'Talking Points' | 'Press Statement' | 'Debate Prep' | 'Stump Speech' | 'Social Caption';
+
+export type Speech = {
+  id: string;
+  title: string;
+  type: SpeechType;
+  topic: string;
+  audience: string;
+  tone: 'Formal' | 'Conversational' | 'Inspirational' | 'Urgent' | 'Empathetic';
+  keyPoints: string[];
+  content: string;
+  wordCount: number;
+  estimatedMinutes: number;
+  createdAt: string;
+  updatedAt: string;
+  tags: string[];
+};
+
 // ─── Original Types (preserved) ───────────────────────────────────────────────
 
 export type Constituent = {
