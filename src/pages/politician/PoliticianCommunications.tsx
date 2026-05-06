@@ -196,8 +196,8 @@ export function PoliticianCommunications() {
 
                 {selectedMessage.replyBody ? (
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#16A34A', marginBottom: 8 }}>Replied {selectedMessage.repliedAt ? new Date(selectedMessage.repliedAt).toLocaleDateString() : ''}</div>
-                    <div style={{ padding: '14px 16px', borderRadius: 12, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)', fontSize: '0.9rem', color: 'var(--text)' }}>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--success-solid)', marginBottom: 8 }}>Replied {selectedMessage.repliedAt ? new Date(selectedMessage.repliedAt).toLocaleDateString() : ''}</div>
+                    <div style={{ padding: '14px 16px', borderRadius: 12, background: 'var(--success-bg)', border: '1px solid var(--success-border)', fontSize: '0.9rem', color: 'var(--text-primary)' }}>
                       {selectedMessage.replyBody}
                     </div>
                   </div>
@@ -232,7 +232,7 @@ export function PoliticianCommunications() {
             ) : (
               <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                 <div>
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--border-strong)', marginBottom: 12 }}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                   <p>Select a message to read and reply.</p>
                 </div>
               </div>

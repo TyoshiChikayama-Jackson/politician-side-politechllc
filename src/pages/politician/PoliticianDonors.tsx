@@ -619,7 +619,7 @@ export function PoliticianDonors() {
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 4 }}>
                       {Math.round(pct)}% of limit used
-                      {isOver && <span style={{ color: '#f87171' }}> — OVER LIMIT</span>}
+                      {isOver && <span style={{ color: 'var(--danger-solid)' }}> — OVER LIMIT</span>}
                     </div>
                   </div>
                 );

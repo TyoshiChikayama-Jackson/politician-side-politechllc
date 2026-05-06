@@ -245,7 +245,7 @@ function NewEventForm({ onSave, onCancel }: { onSave: (evt: CampaignEvent) => vo
             <button className="pol-btn-secondary pol-btn-sm" style={{ marginBottom: 0 }} onClick={addTier}>+ Add Tier</button>
           </div>
           {tiers.some((t) => !t.fecCompliant) && (
-            <div style={{ marginTop: 12, padding: '10px 14px', borderRadius: 10, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)', fontSize: '0.85rem', color: '#ef4444' }}>
+            <div style={{ marginTop: 12, padding: '10px 14px', borderRadius: 10, background: 'var(--danger-bg)', border: '1px solid var(--danger-border)', fontSize: '0.85rem', color: 'var(--danger-solid)' }}>
               One or more ticket tiers have a price that may trigger FEC review. Contributions above $3,000 may exceed Indiana state limits. Consult your campaign treasurer.
             </div>
           )}
@@ -591,7 +591,7 @@ export function PoliticianEvents() {
               ) : (
                 <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                   <div>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--border-strong)', marginBottom: 12 }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                     <p>Select an event to view details, RSVPs, and revenue breakdown.</p>
                     <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setTab('new')}>Create Your First Event</button>
                   </div>

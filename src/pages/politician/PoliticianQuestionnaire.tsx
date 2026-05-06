@@ -95,17 +95,17 @@ export function PoliticianQuestionnaire() {
       <div className="pol-stat-grid" style={{ marginBottom: 20 }}>
         <div className="pol-stat-card">
           <span className="pol-stat-label">Answered</span>
-          <span className="pol-stat-value" style={{ color: '#34d399' }}>{answeredCount}</span>
+          <span className="pol-stat-value" style={{ color: 'var(--success-solid)' }}>{answeredCount}</span>
           <span className="pol-stat-sub">Publicly visible</span>
         </div>
         <div className="pol-stat-card">
           <span className="pol-stat-label">In Review</span>
-          <span className="pol-stat-value" style={{ color: '#fbbf24' }}>{inReviewCount}</span>
+          <span className="pol-stat-value" style={{ color: 'var(--warning-solid)' }}>{inReviewCount}</span>
           <span className="pol-stat-sub">Draft saved</span>
         </div>
         <div className="pol-stat-card">
           <span className="pol-stat-label">No Comment</span>
-          <span className="pol-stat-value" style={{ color: '#94a3b8' }}>{noCommentCount}</span>
+          <span className="pol-stat-value" style={{ color: 'var(--text-tertiary)' }}>{noCommentCount}</span>
           <span className="pol-stat-sub">Marked private</span>
         </div>
         <div className="pol-stat-card">
@@ -237,7 +237,7 @@ export function PoliticianQuestionnaire() {
           ) : (
             <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
               <div>
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--border-strong)', marginBottom: 12 }}><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 <p>Select a question to view or edit your policy stance.</p>
                 <p style={{ fontSize: '0.85rem' }}>Use AI Draft to quickly generate thoughtful answers based on your record.</p>
               </div>

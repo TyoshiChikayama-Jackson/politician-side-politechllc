@@ -184,7 +184,7 @@ function AdLibrary({
           ) : (
             <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
               <div>
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D1D5DB', marginBottom: 12 }}><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--border-strong)', marginBottom: 12 }}><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
                 <p>Select an ad campaign to review variants and performance.</p>
                 <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 12 }} onClick={onCreateNew}>Create New Ad</button>
               </div>
