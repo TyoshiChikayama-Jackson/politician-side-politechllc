@@ -87,8 +87,8 @@ export function PoliticianSidebar({ active, onSelect, collapsed, onToggleCollaps
   return (
     <aside className={`pol-sidebar${collapsed ? ' collapsed' : ''}`}>
       <div className="pol-sidebar-brand">
-        <img src="/logo-light.png.png" alt="PoliTech" className="pol-sidebar-logo-img pol-sidebar-logo-light" />
-        <img src="/logo-dark.png.png"  alt="PoliTech" className="pol-sidebar-logo-img pol-sidebar-logo-dark" />
+        <img src="/logo-dark.png" alt="PoliTech" className="pol-sidebar-logo-img pol-sidebar-logo-light" />
+        <img src="/logo-light.png" alt="PoliTech" className="pol-sidebar-logo-img pol-sidebar-logo-dark" />
         <div className="pol-sidebar-brand-text">
           <p>{demoPolitician.name}</p>
         </div>
