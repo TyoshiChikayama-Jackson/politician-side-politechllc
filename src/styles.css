@@ -1445,9 +1445,9 @@ button.small {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 20px 16px 18px;
+  padding: 16px 16px 14px;
   border-bottom: 1px solid var(--border-default);
-  min-height: 72px;
+  min-height: 64px;
   overflow: hidden;
 }
 
@@ -1464,6 +1464,25 @@ button.small {
   font-size: 0.9rem;
   flex-shrink: 0;
 }
+
+.pol-sidebar-logo-img {
+  height: 32px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Show light logo by default, hide dark logo */
+.pol-sidebar-logo-light { display: block; }
+.pol-sidebar-logo-dark  { display: none; }
+
+/* Swap when dark theme is active */
+[data-theme="dark"] .pol-sidebar-logo-light { display: none; }
+[data-theme="dark"] .pol-sidebar-logo-dark  { display: block; }
+
+/* Hide both logos when sidebar is collapsed — the text is already hidden */
+.pol-sidebar.collapsed .pol-sidebar-logo-img { display: none; }
 
 .pol-sidebar-brand-text {
   overflow: hidden;
