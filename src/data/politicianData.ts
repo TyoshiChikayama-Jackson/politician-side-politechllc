@@ -22,21 +22,21 @@ import type {
 
 export const demoPolitician: PoliticianProfile = {
   id: 'pol-001',
-  name: 'Marcus T. Williams',
+  name: 'Alex Johnson',
   office: 'Indiana State House',
-  district: 'District 42',
-  party: 'Democrat',
+  district: 'District 12',
+  party: 'Your Party',
   state: 'IN',
-  bio: 'Lifelong Hoosier committed to expanding access to education, strengthening our small business community, and building safer neighborhoods across District 42.',
-  website: 'https://williamsd42.com',
-  twitterHandle: '@MarcusWilliamsIN',
-  facebookUrl: 'https://facebook.com/williamsd42',
-  campaignName: 'Williams for Indiana House',
+  bio: 'Lifelong Hoosier committed to expanding access to education, strengthening our small business community, and building safer neighborhoods across District 12.',
+  website: 'https://johnsonforstateouse.com',
+  twitterHandle: '@AlexJohnsonIN',
+  facebookUrl: 'https://facebook.com/johnsonforstatehouse',
+  campaignName: 'Johnson for State House',
   treasurerName: 'Sandra K. Moore',
   treasurerAddress: '1842 Meridian St, Indianapolis, IN 46202',
   depositoryBank: 'First Indiana Bank',
   fecCommitteeId: 'C00987654',
-  stateCommitteeId: 'IN-2024-042-DEM',
+  stateCommitteeId: 'IN-2024-012',
   electionDate: '2026-11-03',
   fundraisingGoal: 85000,
 };
@@ -206,7 +206,7 @@ export const demoDonors: DonorFull[] = [
     city: 'Indianapolis',
     state: 'IN',
     zip: '46204',
-    employer: 'District 42 Labor Union',
+    employer: 'District 12 Labor Union',
     occupation: 'Union Representative',
     tags: ['Recurring'],
     notes: 'Union endorsement contact. Monthly contributions from members.',
@@ -255,7 +255,7 @@ export const demoDonors: DonorFull[] = [
   },
   {
     id: 'don-012',
-    firstName: 'Marcus',
+    firstName: 'Jordan',
     lastName: 'Webb',
     email: 'mwebb@volunteermail.com',
     phone: '317-555-1212',
@@ -495,7 +495,7 @@ export const demoContributions: Contribution[] = [
     complianceStatus: 'compliant',
     refundStatus: 'none',
     prohibitedSourceAcknowledged: true,
-    auditLog: [{ timestamp: '2024-04-18T18:00:00Z', user: 'Marcus Williams', action: 'created', details: 'In-kind catering contribution recorded' }],
+    auditLog: [{ timestamp: '2024-04-18T18:00:00Z', user: 'Alex Johnson', action: 'created', details: 'In-kind catering contribution recorded' }],
   },
   {
     id: 'con-005',
@@ -593,15 +593,15 @@ export const demoContributions: Contribution[] = [
 // ─── Demo Expenses (10 across categories) ────────────────────────────────────
 
 export const demoExpenses: Expense[] = [
-  { id: 'exp-001', vendor: 'Indy Digital Media', amount: 4200, category: 'Advertising', date: '2024-03-01', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Marcus Williams', memo: 'Digital ad campaign - March push' },
-  { id: 'exp-002', vendor: 'Campaign Staff - Payroll', amount: 6500, category: 'Staff', date: '2024-04-01', paymentMethod: 'wire', approvalStatus: 'approved', approvedBy: 'Marcus Williams', memo: 'April payroll - 2 FTE campaign staff' },
+  { id: 'exp-001', vendor: 'Indy Digital Media', amount: 4200, category: 'Advertising', date: '2024-03-01', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Alex Johnson', memo: 'Digital ad campaign - March push' },
+  { id: 'exp-002', vendor: 'Campaign Staff - Payroll', amount: 6500, category: 'Staff', date: '2024-04-01', paymentMethod: 'wire', approvalStatus: 'approved', approvedBy: 'Alex Johnson', memo: 'April payroll - 2 FTE campaign staff' },
   { id: 'exp-003', vendor: 'Midwest Print Shop', amount: 1800, category: 'Printing', date: '2024-02-15', paymentMethod: 'check', approvalStatus: 'approved', approvedBy: 'Sandra Moore', memo: 'Yard signs and door hangers - 500 units' },
-  { id: 'exp-004', vendor: 'United Airlines', amount: 620, category: 'Travel', date: '2024-04-10', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Marcus Williams', memo: 'Trip to DC for policy conference' },
-  { id: 'exp-005', vendor: 'Crowne Plaza Indianapolis', amount: 2400, category: 'Events', date: '2024-04-18', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Marcus Williams', memo: 'Spring fundraiser venue rental' },
+  { id: 'exp-004', vendor: 'United Airlines', amount: 620, category: 'Travel', date: '2024-04-10', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Alex Johnson', memo: 'Trip to DC for policy conference' },
+  { id: 'exp-005', vendor: 'Crowne Plaza Indianapolis', amount: 2400, category: 'Events', date: '2024-04-18', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Alex Johnson', memo: 'Spring fundraiser venue rental' },
   { id: 'exp-006', vendor: 'ActBlue Technologies', amount: 340, category: 'Technology', date: '2024-01-31', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Sandra Moore', memo: 'Monthly online fundraising platform fee' },
   { id: 'exp-007', vendor: 'Office Depot', amount: 280, category: 'Office', date: '2024-03-20', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Sandra Moore', memo: 'Office supplies for campaign HQ' },
-  { id: 'exp-008', vendor: 'Capitol Strategic Consulting', amount: 3500, category: 'Consulting', date: '2024-02-28', paymentMethod: 'check', approvalStatus: 'approved', approvedBy: 'Marcus Williams', memo: 'Political strategy consulting - Q1' },
-  { id: 'exp-009', vendor: 'Facebook Ads', amount: 1100, category: 'Advertising', date: '2024-04-22', paymentMethod: 'card', approvalStatus: 'pending', memo: 'Targeted social media ads - District 42 zip codes' },
+  { id: 'exp-008', vendor: 'Capitol Strategic Consulting', amount: 3500, category: 'Consulting', date: '2024-02-28', paymentMethod: 'check', approvalStatus: 'approved', approvedBy: 'Alex Johnson', memo: 'Political strategy consulting - Q1' },
+  { id: 'exp-009', vendor: 'Facebook Ads', amount: 1100, category: 'Advertising', date: '2024-04-22', paymentMethod: 'card', approvalStatus: 'pending', memo: 'Targeted social media ads - District 12 zip codes' },
   { id: 'exp-010', vendor: 'Zoom Communications', amount: 150, category: 'Technology', date: '2024-04-01', paymentMethod: 'card', approvalStatus: 'approved', approvedBy: 'Sandra Moore', memo: 'Monthly video conferencing subscription' },
 ];
 
@@ -623,7 +623,7 @@ export const demoBudget: BudgetLine[] = [
 
 export const demoVolunteers: Volunteer[] = [
   { id: 'vol-001', firstName: 'Amara', lastName: 'Johnson', email: 'amara.j@gmail.com', phone: '317-555-0303', skills: ['Canvassing', 'Social Media', 'Public Speaking'], availability: 'Weekends', totalHours: 48, joinDate: '2024-01-28', status: 'active' },
-  { id: 'vol-002', firstName: 'Marcus', lastName: 'Webb', email: 'mwebb@volunteermail.com', phone: '317-555-1212', skills: ['Organizing', 'Recruiting', 'Event Planning'], availability: 'Flexible', totalHours: 62, joinDate: '2024-01-18', status: 'active' },
+  { id: 'vol-002', firstName: 'Jordan', lastName: 'Webb', email: 'mwebb@volunteermail.com', phone: '317-555-1212', skills: ['Organizing', 'Recruiting', 'Event Planning'], availability: 'Flexible', totalHours: 62, joinDate: '2024-01-18', status: 'active' },
   { id: 'vol-003', firstName: 'Destiny', lastName: 'Okafor', email: 'destiny.o@gmail.com', phone: '317-555-3001', skills: ['Phone Banking', 'Data Entry'], availability: 'Evenings', totalHours: 35, joinDate: '2024-02-10', status: 'active' },
   { id: 'vol-004', firstName: 'Tyler', lastName: 'Brinkman', email: 'tbrinkman@personalmail.com', phone: '317-555-3002', skills: ['Canvassing', 'Driving'], availability: 'Saturdays', totalHours: 22, joinDate: '2024-03-05', status: 'active' },
   { id: 'vol-005', firstName: 'Grace', lastName: 'Kim', email: 'gkim@iupui.edu', phone: '317-555-3003', skills: ['Social Media', 'Photography', 'Graphic Design'], availability: 'Weekends', totalHours: 18, joinDate: '2024-03-22', status: 'active' },
@@ -673,9 +673,9 @@ export const demoShifts: Shift[] = [
 // ─── Demo Constituent Messages ────────────────────────────────────────────────
 
 export const demoMessages: ConstituentMessage[] = [
-  { id: 'msg-001', fromName: 'Janet Torres', fromEmail: 'jatorres@gmail.com', subject: 'Question about HB 1042 - School Funding', body: 'Representative Williams, I am a parent in your district with three kids in IPS schools. Can you explain your position on HB 1042 and how it would affect our school funding? Thank you.', receivedAt: '2024-05-02T09:15:00Z', status: 'unread' },
+  { id: 'msg-001', fromName: 'Janet Torres', fromEmail: 'jatorres@gmail.com', subject: 'Question about HB 1042 - School Funding', body: 'Representative Johnson, I am a parent in your district with three kids in IPS schools. Can you explain your position on HB 1042 and how it would affect our school funding? Thank you.', receivedAt: '2024-05-02T09:15:00Z', status: 'unread' },
   { id: 'msg-002', fromName: 'Carl Erickson', fromEmail: 'cerickson@yahoo.com', subject: 'Pothole issue on 38th Street', body: 'There is a massive pothole near the intersection of 38th and Illinois that has been there for months. Can your office help get this addressed with the city?', receivedAt: '2024-05-01T14:30:00Z', status: 'read' },
-  { id: 'msg-003', fromName: 'Dr. Fiona Gaines', fromEmail: 'fgaines@iupuihealth.edu', subject: 'Healthcare legislation support', body: 'Dr. Williams — I represent a group of healthcare providers in District 42. We strongly support SB 238 on Medicaid expansion and would love to speak with your office.', receivedAt: '2024-04-30T11:00:00Z', status: 'replied', replyBody: 'Thank you Dr. Gaines. I share your commitment to healthcare access. Let\'s schedule a call this week.', repliedAt: '2024-04-30T16:45:00Z' },
+  { id: 'msg-003', fromName: 'Dr. Fiona Gaines', fromEmail: 'fgaines@iupuihealth.edu', subject: 'Healthcare legislation support', body: 'Representative Johnson — I represent a group of healthcare providers in District 12. We strongly support SB 238 on Medicaid expansion and would love to speak with your office.', receivedAt: '2024-04-30T11:00:00Z', status: 'replied', replyBody: 'Thank you Dr. Gaines. I share your commitment to healthcare access. Let\'s schedule a call this week.', repliedAt: '2024-04-30T16:45:00Z' },
   { id: 'msg-004', fromName: 'Ramon Delgado', fromEmail: 'rdelgado@protonmail.com', subject: 'Immigration policy concerns', body: 'Constituents in our neighborhood are very concerned about recent immigration enforcement actions. Would you be willing to hold a town hall to address these fears?', receivedAt: '2024-04-29T08:00:00Z', status: 'unread' },
   { id: 'msg-005', fromName: 'Linda Harper', fromEmail: 'lharper2954@gmail.com', subject: 'Thank you for your work!', body: 'Just wanted to say thank you for your hard work on the housing bill last session. Our neighborhood really benefited and we appreciate your commitment.', receivedAt: '2024-04-28T19:22:00Z', status: 'read' },
 ];
@@ -683,22 +683,22 @@ export const demoMessages: ConstituentMessage[] = [
 // ─── Demo Campaign Posts ──────────────────────────────────────────────────────
 
 export const demoCampaignPosts: CampaignPost[] = [
-  { id: 'post-001', body: 'Proud to vote YES on SB 238 — Medicaid expansion means thousands of Hoosiers in District 42 will finally have access to healthcare. This is what we fight for. 🏥', topicTag: 'Healthcare', billTag: 'SB 238', status: 'published', publishedAt: '2024-04-25T10:00:00Z', views: 4820, likes: 312, shares: 88, comments: 41 },
+  { id: 'post-001', body: 'Proud to vote YES on SB 238 — Medicaid expansion means thousands of Hoosiers in District 12 will finally have access to healthcare. This is what we fight for. 🏥', topicTag: 'Healthcare', billTag: 'SB 238', status: 'published', publishedAt: '2024-04-25T10:00:00Z', views: 4820, likes: 312, shares: 88, comments: 41 },
   { id: 'post-002', body: 'Just finished a 4-hour door-knock through the Near Eastside with our amazing volunteers. Your stories remind me why I ran. Thank you for sharing your concerns about housing, jobs, and schools.', topicTag: 'Community', status: 'published', publishedAt: '2024-04-20T18:30:00Z', views: 2940, likes: 195, shares: 42, comments: 29 },
   { id: 'post-003', body: 'New statement on HB 1042 — Education is the foundation of a thriving Indiana. I oppose cuts to public school funding and will continue fighting for our kids.', topicTag: 'Education', billTag: 'HB 1042', status: 'published', publishedAt: '2024-04-15T09:00:00Z', views: 6120, likes: 501, shares: 134, comments: 87 },
-  { id: 'post-004', body: 'TOMORROW: Join me for a town hall on housing affordability at IPS Community Center, 6:30 PM. All District 42 residents welcome. RSVP at the link in bio.', topicTag: 'Housing', status: 'published', publishedAt: '2024-04-10T12:00:00Z', views: 3300, likes: 220, shares: 95, comments: 33 },
-  { id: 'post-005', body: 'Looking forward to speaking at the District 42 Labor Day parade — celebrating the workers who built Indiana! More details coming soon.', topicTag: 'Community', status: 'draft', views: 0, likes: 0, shares: 0, comments: 0 },
+  { id: 'post-004', body: 'TOMORROW: Join me for a town hall on housing affordability at IPS Community Center, 6:30 PM. All District 12 residents welcome. RSVP at the link in bio.', topicTag: 'Housing', status: 'published', publishedAt: '2024-04-10T12:00:00Z', views: 3300, likes: 220, shares: 95, comments: 33 },
+  { id: 'post-005', body: 'Looking forward to speaking at the District 12 Labor Day parade — celebrating the workers who built Indiana! More details coming soon.', topicTag: 'Community', status: 'draft', views: 0, likes: 0, shares: 0, comments: 0 },
 ];
 
 // ─── Demo Bills ───────────────────────────────────────────────────────────────
 
 export const demoBills: Bill[] = [
-  { id: 'bill-001', number: 'SB 238', title: 'Medicaid Expansion Act', status: 'in-progress', sponsored: false, voteDate: '2024-04-25', politicianVote: 'yes', voteRationale: 'Expanding Medicaid is a moral and economic imperative. 200,000 Hoosiers lack coverage. This bill saves lives and reduces ER overcrowding.', impactNotes: 'Estimated 8,200 District 42 residents would gain coverage.', summary: 'Expands Medicaid eligibility to individuals earning up to 138% of the federal poverty level in Indiana.' },
+  { id: 'bill-001', number: 'SB 238', title: 'Medicaid Expansion Act', status: 'in-progress', sponsored: false, voteDate: '2024-04-25', politicianVote: 'yes', voteRationale: 'Expanding Medicaid is a moral and economic imperative. 200,000 Hoosiers lack coverage. This bill saves lives and reduces ER overcrowding.', impactNotes: 'Estimated 8,200 District 12 residents would gain coverage.', summary: 'Expands Medicaid eligibility to individuals earning up to 138% of the federal poverty level in Indiana.' },
   { id: 'bill-002', number: 'HB 1042', title: 'K-12 Education Funding Reform', status: 'in-progress', sponsored: true, voteDate: '2024-05-08', politicianVote: 'no', voteRationale: 'The current version redirects $120M from public schools to private vouchers. I cannot support defunding public education.', impactNotes: 'IPS and MSD Warren stand to lose significant per-pupil funding under current formula.', summary: 'Restructures the state education funding formula, including new voucher provisions for private schools.' },
-  { id: 'bill-003', number: 'HB 1115', title: 'Affordable Housing Trust Fund', status: 'passed', sponsored: true, voteDate: '2024-03-12', politicianVote: 'yes', voteRationale: 'District 42 has seen a 22% increase in housing costs. This fund provides critical resources for affordable housing development.', impactNotes: 'Creates $50M statewide housing trust fund. District 42 eligible for $3.2M allocation.', summary: 'Establishes a state affordable housing trust fund financed through a portion of real estate transfer taxes.' },
+  { id: 'bill-003', number: 'HB 1115', title: 'Affordable Housing Trust Fund', status: 'passed', sponsored: true, voteDate: '2024-03-12', politicianVote: 'yes', voteRationale: 'District 12 has seen a 22% increase in housing costs. This fund provides critical resources for affordable housing development.', impactNotes: 'Creates $50M statewide housing trust fund. District 12 eligible for $3.2M allocation.', summary: 'Establishes a state affordable housing trust fund financed through a portion of real estate transfer taxes.' },
   { id: 'bill-004', number: 'SB 105', title: 'Small Business Tax Credit Expansion', status: 'passed', sponsored: false, voteDate: '2024-02-28', politicianVote: 'yes', voteRationale: 'Small businesses are the backbone of our district economy. These credits help them compete and keep jobs local.', summary: 'Expands the Indiana small business tax credit from 10% to 15% for businesses with fewer than 25 employees.' },
   { id: 'bill-005', number: 'SB 412', title: 'Criminal Justice Sentencing Reform', status: 'failed', sponsored: false, voteDate: '2024-03-20', politicianVote: 'yes', voteRationale: 'Smart sentencing reform reduces recidivism and saves taxpayers money. Disappointed this failed.', summary: 'Proposed revisions to mandatory minimum sentencing for nonviolent drug offenses.' },
-  { id: 'bill-006', number: 'HB 2201', title: 'Broadband Infrastructure Investment', status: 'pending', sponsored: true, summary: 'Allocates $75M for rural and urban broadband expansion, prioritizing unserved areas including parts of District 42.' },
+  { id: 'bill-006', number: 'HB 2201', title: 'Broadband Infrastructure Investment', status: 'pending', sponsored: true, summary: 'Allocates $75M for rural and urban broadband expansion, prioritizing unserved areas including parts of District 12.' },
 ];
 
 // ─── Demo Policy Stances ──────────────────────────────────────────────────────
@@ -710,7 +710,7 @@ export const demoPolicyStances: PolicyStance[] = [
     question: 'What is your approach to economic development and job creation in your district?',
     category: 'Economy',
     multipleChoiceAnswer: 'Focus on small business investment and workforce training',
-    freeTextAnswer: 'I believe in a strong middle class built from the ground up. My economic agenda focuses on supporting small businesses through tax credits and reduced red tape, expanding workforce training partnerships with community colleges, and attracting industries that offer living wages. District 42 has tremendous talent — we need to invest in infrastructure that lets that talent thrive locally.',
+    freeTextAnswer: 'I believe in a strong middle class built from the ground up. My economic agenda focuses on supporting small businesses through tax credits and reduced red tape, expanding workforce training partnerships with community colleges, and attracting industries that offer living wages. District 12 has tremendous talent — we need to invest in infrastructure that lets that talent thrive locally.',
     status: 'answered',
     updatedAt: '2024-02-15',
     versionHistory: [],
@@ -743,7 +743,7 @@ export const demoPolicyStances: PolicyStance[] = [
     question: 'What infrastructure priorities will you focus on?',
     category: 'Infrastructure',
     multipleChoiceAnswer: 'Roads, broadband, and public transit',
-    freeTextAnswer: 'District 42 needs serious infrastructure investment. My priorities include repairing aging roads and bridges, expanding high-speed broadband to underserved neighborhoods, improving IndyGo bus routes in our district, and investing in green infrastructure that reduces flooding.',
+    freeTextAnswer: 'District 12 needs serious infrastructure investment. My priorities include repairing aging roads and bridges, expanding high-speed broadband to underserved neighborhoods, improving IndyGo bus routes in our district, and investing in green infrastructure that reduces flooding.',
     status: 'answered',
     updatedAt: '2024-02-20',
     versionHistory: [],
@@ -793,11 +793,11 @@ export const demoFECFilings: FECFilingRecord[] = [
 // ─── Demo Campaign Staff ──────────────────────────────────────────────────────
 
 export const demoCampaignStaff: CampaignStaff[] = [
-  { id: 'staff-001', name: 'Sandra K. Moore', email: 'smoore@williamsd42.com', role: 'Finance', inviteStatus: 'active', joinedAt: '2024-01-01' },
-  { id: 'staff-002', name: 'Derek Hampton', email: 'dhampton@williamsd42.com', role: 'Communications', inviteStatus: 'active', joinedAt: '2024-01-15' },
-  { id: 'staff-003', name: 'Keisha Jordan', email: 'kjordan@williamsd42.com', role: 'Volunteer Coordinator', inviteStatus: 'active', joinedAt: '2024-02-01' },
-  { id: 'staff-004', name: 'Tom Bauer', email: 'tbauer@williamsd42.com', role: 'Admin', inviteStatus: 'active', joinedAt: '2024-01-01' },
-  { id: 'staff-005', name: 'Aaliyah Simmons', email: 'asimmons@williamsd42.com', role: 'Viewer', inviteStatus: 'pending', joinedAt: '2024-04-20' },
+  { id: 'staff-001', name: 'Sandra K. Moore', email: 'smoore@alexjohnson-d12.com', role: 'Finance', inviteStatus: 'active', joinedAt: '2024-01-01' },
+  { id: 'staff-002', name: 'Derek Hampton', email: 'dhampton@alexjohnson-d12.com', role: 'Communications', inviteStatus: 'active', joinedAt: '2024-01-15' },
+  { id: 'staff-003', name: 'Keisha Jordan', email: 'kjordan@alexjohnson-d12.com', role: 'Volunteer Coordinator', inviteStatus: 'active', joinedAt: '2024-02-01' },
+  { id: 'staff-004', name: 'Tom Bauer', email: 'tbauer@alexjohnson-d12.com', role: 'Admin', inviteStatus: 'active', joinedAt: '2024-01-01' },
+  { id: 'staff-005', name: 'Aaliyah Simmons', email: 'asimmons@alexjohnson-d12.com', role: 'Viewer', inviteStatus: 'pending', joinedAt: '2024-04-20' },
 ];
 
 // ─── Demo Events ──────────────────────────────────────────────────────────────
@@ -814,7 +814,7 @@ export const demoEvents: CampaignEvent[] = [
     address: '123 W. Washington St, Indianapolis, IN 46204',
     capacity: 80,
     rsvpCount: 48,
-    description: 'Join us for an elegant evening supporting the Williams for Indiana House campaign. Meet Representative Williams, hear his vision for District 42, and enjoy dinner and remarks.',
+    description: 'Join us for an elegant evening supporting the Johnson for State House campaign. Meet Representative Johnson, hear his vision for District 12, and enjoy dinner and remarks.',
     isPublic: true,
     status: 'completed',
     totalRevenue: 24000,
@@ -822,7 +822,7 @@ export const demoEvents: CampaignEvent[] = [
     tags: ['Fundraiser', 'Featured'],
     ticketTiers: [
       { id: 'tier-001a', name: 'General Admission', price: 250, capacity: 50, sold: 32, fecCompliant: true, description: 'Dinner and remarks' },
-      { id: 'tier-001b', name: 'VIP Reception', price: 1000, capacity: 20, sold: 14, fecCompliant: true, description: 'Private reception with Representative Williams + dinner' },
+      { id: 'tier-001b', name: 'VIP Reception', price: 1000, capacity: 20, sold: 14, fecCompliant: true, description: 'Private reception with Representative Johnson + dinner' },
       { id: 'tier-001c', name: 'Campaign Champion', price: 2000, capacity: 10, sold: 2, fecCompliant: true, description: 'Photo opportunity + VIP reception + dinner' },
     ],
     rsvps: [
@@ -833,7 +833,7 @@ export const demoEvents: CampaignEvent[] = [
   },
   {
     id: 'evt-002',
-    title: 'District 42 Town Hall — Education & Schools',
+    title: 'District 12 Town Hall — Education & Schools',
     type: 'Town Hall',
     date: '2026-06-14',
     startTime: '18:30',
@@ -842,14 +842,14 @@ export const demoEvents: CampaignEvent[] = [
     address: '3801 N. Meridian St, Indianapolis, IN 46208',
     capacity: 150,
     rsvpCount: 31,
-    description: 'Open town hall for all District 42 residents to discuss education funding, school quality, and what Representative Williams is doing at the Statehouse. Q&A session included.',
+    description: 'Open town hall for all District 12 residents to discuss education funding, school quality, and what Representative Johnson is doing at the Statehouse. Q&A session included.',
     isPublic: true,
     status: 'published',
     totalRevenue: 0,
     volunteerShiftIds: [],
     tags: ['Town Hall', 'Education'],
     ticketTiers: [
-      { id: 'tier-002a', name: 'Free Admission', price: 0, capacity: 150, sold: 31, fecCompliant: true, description: 'Open to all District 42 residents' },
+      { id: 'tier-002a', name: 'Free Admission', price: 0, capacity: 150, sold: 31, fecCompliant: true, description: 'Open to all District 12 residents' },
     ],
     rsvps: [],
   },
@@ -883,8 +883,8 @@ export const demoAds: AdCampaign[] = [
     name: 'Spring Fundraising Push — Facebook',
     platform: 'Facebook',
     goal: 'Fundraising',
-    targetAudience: 'District 42 Democrats and independents, ages 35-65, homeowners',
-    keyMessage: 'Marcus Williams is fighting for District 42 — support his campaign today',
+    targetAudience: 'District 12 voters and independents, ages 35-65, homeowners',
+    keyMessage: 'Alex Johnson is fighting for District 12 — support his campaign today',
     tone: 'Hopeful',
     status: 'active',
     createdAt: '2024-04-01',
@@ -897,8 +897,8 @@ export const demoAds: AdCampaign[] = [
       {
         id: 'var-001a',
         label: 'Variant A — Community Focus',
-        headline: 'Fighting for District 42 Families',
-        body: 'Marcus Williams has delivered for our community — affordable housing, better schools, and healthcare access. Help him keep fighting. Every dollar counts.',
+        headline: 'Fighting for District 12 Families',
+        body: 'Alex Johnson has delivered for our community — affordable housing, better schools, and healthcare access. Help him keep fighting. Every dollar counts.',
         cta: 'Donate Now',
         charCount: 180,
       },
@@ -906,15 +906,15 @@ export const demoAds: AdCampaign[] = [
         id: 'var-001b',
         label: 'Variant B — Accomplishments',
         headline: 'Real Results for Real Hoosiers',
-        body: 'HB 1115 passed. Healthcare expanded. Now Marcus needs YOUR support to finish what we started. Join thousands of District 42 supporters.',
-        cta: 'Support Marcus',
+        body: 'HB 1115 passed. Healthcare expanded. Now we need YOUR support to finish what we started. Join thousands of District 12 supporters.',
+        cta: 'Support Our Campaign',
         charCount: 163,
       },
       {
         id: 'var-001c',
         label: 'Variant C — Urgency',
         headline: "Don't Let Progress Stop Here",
-        body: 'The work isn\'t done. Marcus Williams is in a tight race — and every contribution before June 30 is matched. Give today.',
+        body: 'The work isn\'t done. Alex Johnson is in a tight race — and every contribution before June 30 is matched. Give today.',
         cta: 'Double My Impact',
         charCount: 154,
       },
@@ -925,8 +925,8 @@ export const demoAds: AdCampaign[] = [
     name: 'Voter Outreach — Google Search',
     platform: 'Google',
     goal: 'Voter Outreach',
-    targetAudience: 'Marion County registered voters searching for Marcus Williams or District 42',
-    keyMessage: 'Connect voters to marcuswilliamsd42.com and policy information',
+    targetAudience: 'Marion County registered voters searching for Alex Johnson or District 12',
+    keyMessage: 'Connect voters to marcusalexjohnson-d12.com and policy information',
     tone: 'Professional',
     status: 'active',
     createdAt: '2024-03-15',
@@ -939,24 +939,24 @@ export const demoAds: AdCampaign[] = [
       {
         id: 'var-002a',
         label: 'Variant A — Name Recognition',
-        headline: 'Marcus Williams — Indiana House D-42',
-        body: 'Your State Representative fighting for affordable housing, better schools, and healthcare. Learn where Marcus stands on the issues.',
+        headline: 'Alex Johnson — Indiana House D-12',
+        body: 'Your State Representative fighting for affordable housing, better schools, and healthcare. Learn where Alex stands on the issues.',
         cta: 'View Issues',
         charCount: 172,
       },
       {
         id: 'var-002b',
         label: 'Variant B — Issues',
-        headline: 'Healthcare, Housing & Schools — District 42',
-        body: 'Representative Marcus Williams is your voice at the Statehouse. See his record, read his positions, and get involved.',
+        headline: 'Healthcare, Housing & Schools — District 12',
+        body: 'Representative Alex Johnson is your voice at the Statehouse. See his record, read his positions, and get involved.',
         cta: 'Learn More',
         charCount: 155,
       },
       {
         id: 'var-002c',
         label: 'Variant C — Get Out The Vote',
-        headline: 'Vote Marcus Williams — Nov 3',
-        body: 'Re-elect Marcus Williams to the Indiana State House. Proven results, progressive values, District 42 first.',
+        headline: 'Vote Alex Johnson — Nov 3',
+        body: 'Re-elect Alex Johnson to the Indiana State House. Proven results, District 12 first.',
         cta: 'Get Involved',
         charCount: 131,
       },
@@ -967,7 +967,7 @@ export const demoAds: AdCampaign[] = [
     name: 'GOTV Push — Instagram',
     platform: 'Instagram',
     goal: 'GOTV',
-    targetAudience: 'District 42 voters ages 18-35, progressive, likely non-voters',
+    targetAudience: 'District 12 voters ages 18-35, progressive, likely non-voters',
     keyMessage: 'Your vote matters — November 3rd, make it count',
     tone: 'Bold',
     status: 'draft',
@@ -978,7 +978,7 @@ export const demoAds: AdCampaign[] = [
         id: 'var-003a',
         label: 'Variant A — Youth Turnout',
         headline: 'Your District. Your Vote.',
-        body: 'November 3rd. Polls open 6am–6pm. Marcus Williams is on the ballot and fighting for YOU. Tag a friend who needs to vote.',
+        body: 'November 3rd. Polls open 6am–6pm. Alex Johnson is on the ballot and fighting for YOU. Tag a friend who needs to vote.',
         cta: 'Register Now',
         charCount: 152,
       },
@@ -986,15 +986,15 @@ export const demoAds: AdCampaign[] = [
         id: 'var-003b',
         label: 'Variant B — Issues-Driven',
         headline: 'Schools. Housing. Healthcare.',
-        body: 'These issues are on the ballot. Marcus Williams has a plan — but only if we show up. November 3rd. Every vote counts.',
+        body: 'These issues are on the ballot. Alex Johnson has a plan — but only if we show up. November 3rd. Every vote counts.',
         cta: 'Find My Polling Place',
         charCount: 158,
       },
       {
         id: 'var-003c',
         label: 'Variant C — Social Proof',
-        headline: '2,400 District 42 Neighbors Already Voted',
-        body: 'Early voting is open. Join your neighbors who are making their voice heard. Vote Marcus Williams for Indiana House D-42.',
+        headline: '2,400 District 12 Neighbors Already Voted',
+        body: 'Early voting is open. Join your neighbors who are making their voice heard. Vote Alex Johnson for State House D-12.',
         cta: 'Vote Early',
         charCount: 163,
       },
@@ -1007,20 +1007,20 @@ export const demoAds: AdCampaign[] = [
 export const demoSurveys: Survey[] = [
   {
     id: 'survey-001',
-    title: 'District 42 Education Priorities Survey',
-    description: 'Help us understand what matters most to District 42 families when it comes to K-12 education.',
+    title: 'District 12 Education Priorities Survey',
+    description: 'Help us understand what matters most to District 12 families when it comes to K-12 education.',
     status: 'active',
     createdAt: '2024-04-10',
     responseCount: 87,
-    targetAudience: 'District 42 parents and educators',
-    shareLink: 'https://williamsd42.com/surveys/education-2024',
+    targetAudience: 'District 12 parents and educators',
+    shareLink: 'https://alexjohnson-d12.com/surveys/education-2024',
     aiThemes: ['Teacher pay is the top concern', 'Strong support for pre-K expansion', 'Mixed views on charter schools', 'Broadband/technology access cited by 34%'],
     questions: [
       {
         id: 'sq-001a',
         order: 1,
         type: 'multiple-choice',
-        text: 'What is your top education priority for District 42 schools?',
+        text: 'What is your top education priority for District 12 schools?',
         options: ['Increase teacher pay', 'Expand pre-K access', 'Improve school safety', 'Better technology and broadband', 'Reduce class sizes'],
         required: true,
       },
@@ -1035,14 +1035,14 @@ export const demoSurveys: Survey[] = [
         id: 'sq-001c',
         order: 3,
         type: 'rating',
-        text: 'On a scale of 1–5, how would you rate the quality of public schools in District 42?',
+        text: 'On a scale of 1–5, how would you rate the quality of public schools in District 12?',
         required: true,
       },
       {
         id: 'sq-001d',
         order: 4,
         type: 'open-text',
-        text: 'Is there anything else you would like Representative Williams to know about education in your neighborhood?',
+        text: 'Is there anything else you would like Representative Johnson to know about education in your neighborhood?',
         required: false,
       },
     ],
@@ -1056,8 +1056,8 @@ export const demoSurveys: Survey[] = [
     createdAt: '2024-02-15',
     closedAt: '2024-03-15',
     responseCount: 203,
-    targetAudience: 'All District 42 residents',
-    shareLink: 'https://williamsd42.com/surveys/infrastructure-2024',
+    targetAudience: 'All District 12 residents',
+    shareLink: 'https://alexjohnson-d12.com/surveys/infrastructure-2024',
     aiThemes: ['Potholes and road quality is #1 issue', 'Public transit gaps widely cited', 'Strong demand for pedestrian safety improvements', 'Broadband gaps in eastern precincts'],
     questions: [
       {
@@ -1100,7 +1100,7 @@ export const demoSpeeches: Speech[] = [
     keyPoints: [
       'Public education is a constitutional obligation',
       'HB 1042 redirects $120M from public schools to private vouchers',
-      'District 42 IPS schools would lose per-pupil funding',
+      'District 12 IPS schools would lose per-pupil funding',
       'Teachers deserve competitive wages to retain talent in Indiana',
       'Call to vote No on current version, return to committee with amendments',
     ],
@@ -1110,7 +1110,7 @@ Thank you for the opportunity to speak on House Bill 1042. I rise today not in o
 
 My district, the 42nd, includes some of the most dedicated teachers I have ever met. Teachers who buy school supplies out of their own pockets, who stay late for students who have nowhere else to go, who show up every day believing that education can break cycles of poverty. They deserve our support.
 
-HB 1042, as written, redirects $120 million in state education dollars to a voucher program that primarily benefits private institutions. Let me be direct: this is money leaving public schools. IPS, the school system that educates most of District 42's children, stands to lose significant per-pupil funding under the restructured formula.
+HB 1042, as written, redirects $120 million in state education dollars to a voucher program that primarily benefits private institutions. Let me be direct: this is money leaving public schools. IPS, the school system that educates most of District 12's children, stands to lose significant per-pupil funding under the restructured formula.
 
 I have heard from parents. I have heard from principals. I have heard from teachers. Not a single one of them asked us to defund their school to subsidize a system they don't have access to.
 
@@ -1118,7 +1118,7 @@ I am calling on my colleagues to vote No on this bill in its current form — an
 
 Our children are watching. Let's make them proud.
 
-Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.`,
+Paid for by Johnson for State House. Sandra K. Moore, Treasurer.`,
     wordCount: 248,
     estimatedMinutes: 2,
     createdAt: '2024-05-06',
@@ -1129,8 +1129,8 @@ Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.`,
     id: 'speech-002',
     title: 'Infrastructure Town Hall Talking Points',
     type: 'Talking Points',
-    topic: 'District 42 Infrastructure Needs and HB 2201',
-    audience: 'District 42 Community Town Hall',
+    topic: 'District 12 Infrastructure Needs and HB 2201',
+    audience: 'District 12 Community Town Hall',
     tone: 'Conversational',
     keyPoints: [
       'Acknowledge specific local road issues by name',
@@ -1138,7 +1138,7 @@ Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.`,
       'Explain IndyGo route improvement timeline',
       'Commit to quarterly infrastructure update meetings',
     ],
-    content: `INFRASTRUCTURE TALKING POINTS — District 42 Town Hall
+    content: `INFRASTRUCTURE TALKING POINTS — District 12 Town Hall
 
 OPENING
 • Thank residents for coming out tonight — your voice matters
@@ -1154,7 +1154,7 @@ KEY POINTS
 2. BROADBAND
    • HB 2201 passed first committee — I'm the primary sponsor
    • $75M statewide, with specific set-aside for underserved urban areas like ours
-   • Goal: 90% broadband coverage in D-42 by 2026
+   • Goal: 90% broadband coverage in D-12 by 2026
 
 3. PUBLIC TRANSIT
    • Worked with IndyGo on Route 39 extended hours — effective June 1
@@ -1163,14 +1163,14 @@ KEY POINTS
 
 4. WHAT YOU CAN DO
    • Report potholes: 317-327-4622 or indy.gov/potholes
-   • Sign up for my infrastructure newsletter at williamsd42.com
-   • Join the District 42 Infrastructure Advisory Committee (3 spots open)
+   • Sign up for my infrastructure newsletter at alexjohnson-d12.com
+   • Join the District 12 Infrastructure Advisory Committee (3 spots open)
 
 CLOSING
 • No one should have to dodge potholes to get to work or wait an hour for a bus
 • I'm committed — and I'll report back at our next town hall
 
-Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.`,
+Paid for by Johnson for State House. Sandra K. Moore, Treasurer.`,
     wordCount: 241,
     estimatedMinutes: 3,
     createdAt: '2024-04-08',

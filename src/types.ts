@@ -5,7 +5,7 @@ export type PoliticianProfile = {
   name: string;
   office: string;
   district: string;
-  party: 'Republican' | 'Democrat' | 'Independent' | 'Libertarian' | 'Other';
+  party: 'Republican' | 'Democrat' | 'Independent' | 'Libertarian' | 'Other' | 'Your Party';
   state: string;
   photoUrl?: string;
   bio?: string;

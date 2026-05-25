@@ -204,7 +204,7 @@ export function PoliticianBills() {
                   <textarea
                     value={editImpact}
                     onChange={(e) => setEditImpact(e.target.value)}
-                    placeholder="Explain how this bill affects District 42 residents..."
+                    placeholder="Explain how this bill affects District 12 residents..."
                     style={{ width: '100%', minHeight: 80, border: '1px solid var(--border)', borderRadius: 10, padding: '10px 12px', background: 'var(--surface)', color: 'var(--text)', fontSize: '0.9rem', resize: 'vertical' }}
                   />
                 ) : (

@@ -20,7 +20,7 @@ function AIDraftButton({ question, onDraft }: { question: string; onDraft: (text
       const data = await res.json();
       onDraft(data.draft);
     } catch {
-      onDraft(`My approach to this issue is guided by the values and concerns I hear from constituents in District 42 every day. After careful consideration and review of relevant data, I believe that effective policy must be evidence-based, fiscally responsible, and centered on the needs of working families and small businesses in our community.`);
+      onDraft(`My approach to this issue is guided by the values and concerns I hear from constituents in District 12 every day. After careful consideration and review of relevant data, I believe that effective policy must be evidence-based, fiscally responsible, and centered on the needs of working families and small businesses in our community.`);
     } finally {
       setLoading(false);
     }

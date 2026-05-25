@@ -306,7 +306,7 @@ const TAB_DATA = [
         <div style={{ display: 'grid', gap: 8 }}>
           {[
             { from: 'Janet Torres', subj: 'Re: HB 1042 Education Question', date: 'May 5', unread: true },
-            { from: 'Marcus Webb', subj: 'Infrastructure concerns in District 42', date: 'May 4', unread: true },
+            { from: 'Jordan Webb', subj: 'Infrastructure concerns in District 12', date: 'May 4', unread: true },
             { from: 'Sara Chen', subj: 'Town hall follow-up', date: 'May 3', unread: false },
           ].map((m, i) => (
             <div key={i} className="lp-preview-inbox-row">
@@ -771,10 +771,9 @@ function AboutSection() {
             Built in Indiana. For politicians who take the whole job seriously.
           </h2>
           <p className="lp-about-body">
-            PoliTech was started by Tyoshi Chikayama-Jackson and Jonathan Baker — two Evansville
-            natives who watched local politicians run campaigns on spreadsheets and govern on
-            personal Gmail accounts. The tools existed for national races. Nothing existed for the
-            races that actually shape people's daily lives.
+            PoliTech was started by two Evansville natives who watched local politicians run
+            campaigns on spreadsheets and govern on personal Gmail accounts. The tools existed for
+            national races. Nothing existed for the races that actually shape people's daily lives.
           </p>
           <p className="lp-about-body">
             So we built it. Starting with Indiana's 150 state legislators and expanding to all 50
@@ -782,8 +781,8 @@ function AboutSection() {
             the whole job — not just the 90 days before an election.
           </p>
           <p className="lp-about-body">
-            PoliTech is advised by Alexander Burton, Indiana State House District 77, and supported
-            by the Indiana Small Business Development Center.
+            PoliTech is advised by sitting Indiana state legislators and supported by the Indiana
+            Small Business Development Center.
           </p>
           <div className="lp-about-stats">
             <div className="lp-about-stat">
@@ -801,12 +800,8 @@ function AboutSection() {
         <div className="lp-about-card">
           <img src="/images/PoliTechLogo.png" alt="PoliTech" className="lp-about-card-logo" />
           <div className="lp-about-founder">
-            <div className="lp-about-founder-name">Tyoshi Chikayama-Jackson</div>
-            <div className="lp-about-founder-title">CEO &amp; Co-Founder</div>
-          </div>
-          <div className="lp-about-founder" style={{ marginTop: 12 }}>
-            <div className="lp-about-founder-name">Jonathan Baker</div>
-            <div className="lp-about-founder-title">COO &amp; Co-Founder</div>
+            <div className="lp-about-founder-name">PoliTech LLC</div>
+            <div className="lp-about-founder-title">Founded in Indiana · 2025</div>
           </div>
           <p className="lp-about-card-tagline">"Campaign smarter. Govern better."</p>
           <svg viewBox="0 0 200 240" className="lp-indiana-svg" aria-label="Indiana state outline">
@@ -965,7 +960,7 @@ function ContactSection() {
             </div>
             <div className="lp-form-group">
               <label>Office / Race</label>
-              <input type="text" placeholder="e.g. Indiana State House, District 42" value={form.office} onChange={e => setForm(v => ({ ...v, office: e.target.value }))} />
+              <input type="text" placeholder="e.g. Indiana State House, District 12" value={form.office} onChange={e => setForm(v => ({ ...v, office: e.target.value }))} />
             </div>
             <div className="lp-form-group">
               <label>Message</label>
@@ -1031,6 +1026,7 @@ function LandingFooter() {
         </div>
         <div className="lp-footer-bottom">
           <p>© 2026 PoliTech LLC. All rights reserved.</p>
+          <p style={{ fontSize: '0.75rem', marginTop: 6, color: 'inherit', opacity: 0.7 }}>PoliTech is a nonpartisan platform. We serve politicians of all parties equally.</p>
         </div>
       </div>
     </footer>

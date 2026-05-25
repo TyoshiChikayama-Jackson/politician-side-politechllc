@@ -36,7 +36,7 @@ function CharCounter({ current, max }: { current: number; max: number }) {
 function ComplianceBanner() {
   return (
     <div style={{ padding: '10px 16px', borderRadius: 10, background: 'rgba(107,93,230,0.08)', border: '1px solid var(--navy-border)', fontSize: '0.82rem', color: 'var(--text)', lineHeight: 1.5, marginBottom: 16 }}>
-      <strong>FEC Compliance Notice:</strong> All political advertisements must include a paid-for disclaimer ("Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer."). Digital ads must also include the name of the political committee. Ensure all generated copy includes required attribution before publication.
+      <strong>FEC Compliance Notice:</strong> All political advertisements must include a paid-for disclaimer ("Paid for by Johnson for State House. Sandra K. Moore, Treasurer."). Digital ads must also include the name of the political committee. Ensure all generated copy includes required attribution before publication.
     </div>
   );
 }
@@ -169,7 +169,7 @@ function AdLibrary({
                       {selectedAd.variants[selectedVariantIdx].cta}
                     </div>
                     <div style={{ marginTop: 12, fontSize: '0.72rem', color: 'var(--muted)', fontStyle: 'italic' }}>
-                      Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.
+                      Paid for by Johnson for State House. Sandra K. Moore, Treasurer.
                     </div>
                   </div>
                 )}
@@ -236,8 +236,8 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
         {
           id: `var-${Date.now()}-a`,
           label: 'Variant A — Community',
-          headline: 'Fighting for District 42 Families',
-          body: `Marcus Williams has delivered real results for our community. ${form.keyMessage || 'Support his campaign today and help us finish what we started.'}`,
+          headline: 'Fighting for District 12 Families',
+          body: `Alex Johnson has delivered real results for our community. ${form.keyMessage || 'Support his campaign today and help us finish what we started.'}`,
           cta: form.goal === 'Fundraising' ? 'Donate Now' : form.goal === 'GOTV' ? 'Vote Today' : 'Learn More',
           charCount: 0,
         },
@@ -245,15 +245,15 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
           id: `var-${Date.now()}-b`,
           label: 'Variant B — Issues',
           headline: 'Real Results for Real Hoosiers',
-          body: `Healthcare. Schools. Affordable housing. Marcus Williams has fought for every one of these issues — and he needs your support to keep going.`,
-          cta: form.goal === 'Fundraising' ? 'Support Marcus' : form.goal === 'GOTV' ? 'Make Your Voice Heard' : 'Get Involved',
+          body: `Healthcare. Schools. Affordable housing. Alex Johnson has fought for every one of these issues — and needs your support to keep going.`,
+          cta: form.goal === 'Fundraising' ? 'Support Our Campaign' : form.goal === 'GOTV' ? 'Make Your Voice Heard' : 'Get Involved',
           charCount: 0,
         },
         {
           id: `var-${Date.now()}-c`,
           label: 'Variant C — Urgency',
           headline: "Don't Let Progress Stop Here",
-          body: `The work isn't done in District 42. Marcus Williams is counting on you. ${form.goal === 'Fundraising' ? 'Every dollar makes a difference before the deadline.' : 'Every vote matters on Election Day.'}`,
+          body: `The work isn't done in District 12. Alex Johnson is counting on you. ${form.goal === 'Fundraising' ? 'Every dollar makes a difference before the deadline.' : 'Every vote matters on Election Day.'}`,
           cta: form.goal === 'Fundraising' ? 'Double My Impact' : form.goal === 'GOTV' ? 'Vote Now' : 'Take Action',
           charCount: 0,
         },
@@ -331,7 +331,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
           </div>
           <div className="pol-field-group">
             <label>Target Audience</label>
-            <input value={form.targetAudience} onChange={(e) => setForm((f) => ({ ...f, targetAudience: e.target.value }))} placeholder="e.g. District 42 Democrats and independents, ages 35-65, homeowners" />
+            <input value={form.targetAudience} onChange={(e) => setForm((f) => ({ ...f, targetAudience: e.target.value }))} placeholder="e.g. District 12 voters and independents, ages 35-65, homeowners" />
           </div>
           <div className="pol-field-group">
             <label>Key Message *</label>
@@ -430,7 +430,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
                   />
                 </div>
                 <div style={{ marginTop: 10, fontSize: '0.72rem', color: 'var(--muted)', fontStyle: 'italic' }}>
-                  Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.
+                  Paid for by Johnson for State House. Sandra K. Moore, Treasurer.
                 </div>
               </div>
             ))}

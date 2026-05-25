@@ -252,7 +252,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
           <h4 style={{ marginBottom: 16 }}>Survey Setup</h4>
           <div className="pol-field-group">
             <label>Survey Title *</label>
-            <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. District 42 Education Priorities Survey" />
+            <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. District 12 Education Priorities Survey" />
           </div>
           <div className="pol-field-group">
             <label>Description</label>
@@ -260,7 +260,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
           </div>
           <div className="pol-field-group">
             <label>Target Audience</label>
-            <input value={form.targetAudience} onChange={(e) => setForm((f) => ({ ...f, targetAudience: e.target.value }))} placeholder="e.g. District 42 parents and educators" />
+            <input value={form.targetAudience} onChange={(e) => setForm((f) => ({ ...f, targetAudience: e.target.value }))} placeholder="e.g. District 12 parents and educators" />
           </div>
           <button className="pol-btn-primary pol-btn-sm" disabled={!form.title} onClick={() => setStep(2)}>
             Next: Add Questions →

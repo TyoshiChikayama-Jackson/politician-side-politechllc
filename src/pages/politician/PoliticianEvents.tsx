@@ -161,7 +161,7 @@ function NewEventForm({ onSave, onCancel }: { onSave: (evt: CampaignEvent) => vo
 
       <div className="pol-field-group">
         <label>Event Title *</label>
-        <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. District 42 Town Hall on Education" />
+        <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. District 12 Town Hall on Education" />
       </div>
 
       <div className="pol-form-row">
@@ -416,7 +416,7 @@ function EventDetail({ event }: { event: CampaignEvent }) {
               <div style={{ padding: '14px 16px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)', marginBottom: 16 }}>
                 <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 4 }}>PUBLIC EVENT URL</div>
                 <div style={{ fontWeight: 600, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.9rem' }}>
-                  williamsd42.com/events/{event.id}
+                  alexjohnson-d12.com/events/{event.id}
                 </div>
               </div>
               <div style={{ padding: '20px', borderRadius: 12, border: '2px dashed var(--border)', marginBottom: 16 }}>
@@ -431,7 +431,7 @@ function EventDetail({ event }: { event: CampaignEvent }) {
                   RSVP Now
                 </div>
                 <div style={{ marginTop: 16, fontSize: '0.75rem', color: 'var(--muted)', fontStyle: 'italic' }}>
-                  Paid for by Williams for Indiana House. Sandra K. Moore, Treasurer.
+                  Paid for by Johnson for State House. Sandra K. Moore, Treasurer.
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
