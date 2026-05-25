@@ -119,9 +119,7 @@ function HeroSection() {
           </p>
           <div className="lp-hero-ctas">
             <a
-              href="https://politician-side-politechllc.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/"
               className="lp-btn-primary lp-btn-lg"
             >
               See the Dashboard
@@ -426,9 +424,7 @@ function FeaturesSection() {
               </div>
             ))}
             <a
-              href="https://politician-side-politechllc.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/"
               className="lp-btn-primary lp-btn-lg"
               style={{ marginTop: 8, alignSelf: 'flex-start' }}
             >
@@ -609,9 +605,7 @@ function DemoSection() {
             ))}
           </ul>
           <a
-            href="https://politician-side-politechllc.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/"
             className="lp-btn-white lp-btn-lg"
           >
             Open Live Dashboard →
@@ -912,9 +906,7 @@ function ClosingCTA() {
               Get Started Free
             </a>
             <a
-              href="https://politician-side-politechllc.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/"
               className="lp-btn-outline-white lp-btn-lg"
             >
               See the Dashboard
