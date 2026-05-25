@@ -40,7 +40,7 @@ export function PoliticianOverview() {
       <div className="pol-page-header overview" style={{ marginBottom: 24 }}>
         <div className="pol-header-left">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            <span className={`pol-badge ${demoPolitician.party.toLowerCase()}`}>{demoPolitician.party}</span>
+            <span className="pol-badge party-neutral">YOUR PARTY</span>
             <span style={{ color: 'var(--color-gray-500)', fontSize: '0.8rem' }}>{demoPolitician.district}</span>
           </div>
           <h1>Welcome back, {demoPolitician.name.split(' ')[0]}</h1>

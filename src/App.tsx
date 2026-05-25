@@ -61,10 +61,23 @@ function Dashboard() {
   );
 }
 
+function ScreenshotOverview() {
+  return (
+    <div data-theme="dark" style={{ width: 1280, minWidth: 1280, background: 'var(--bg-primary)', colorScheme: 'dark' }}>
+      <div className="pol-page" style={{ padding: 32 }}>
+        <PoliticianOverview />
+      </div>
+    </div>
+  );
+}
+
 function Router() {
   const path = window.location.pathname;
   if (path === '/politicians' || path === '/politicians/') {
     return <PoliticiansLandingPage />;
+  }
+  if (path === '/politician/overview/screenshot') {
+    return <ScreenshotOverview />;
   }
   return <Dashboard />;
 }

@@ -1780,9 +1780,10 @@ button.small {
 }
 
 /* Party */
-.pol-badge.democrat    { background: var(--info-bg);    color: var(--info-text); }
-.pol-badge.republican  { background: var(--danger-bg);  color: var(--danger-text); }
-.pol-badge.independent { background: var(--bg-hover);   color: var(--text-secondary); }
+.pol-badge.democrat      { background: var(--info-bg);    color: var(--info-text); }
+.pol-badge.republican    { background: var(--danger-bg);  color: var(--danger-text); }
+.pol-badge.independent   { background: var(--bg-hover);   color: var(--text-secondary); }
+.pol-badge.party-neutral { background: #4B5563;           color: #E5E7EB; }
 
 /* Bill / item status */
 .pol-badge.passed,
