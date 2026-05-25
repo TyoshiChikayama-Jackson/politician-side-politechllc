@@ -113,6 +113,17 @@ export function PoliticianSidebar({ active, onSelect, collapsed, onToggleCollaps
       </nav>
 
       <div className="pol-sidebar-footer">
+        <a
+          href="/politicians"
+          className="pol-sidebar-back-link"
+          title={collapsed ? 'Back to Overview' : undefined}
+          aria-label="Back to Overview"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          <span className="pol-nav-label">Back to Overview</span>
+        </a>
         <button
           className="pol-sidebar-collapse-btn"
           onClick={onToggleCollapse}

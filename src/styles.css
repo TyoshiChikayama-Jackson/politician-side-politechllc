@@ -1584,6 +1584,27 @@ button.small {
   border-top: 1px solid var(--border-default);
 }
 
+.pol-sidebar-back-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  height: 36px;
+  border-radius: var(--border-radius-md);
+  color: var(--text-tertiary);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+.pol-sidebar-back-link:hover {
+  background: var(--bg-hover);
+  color: var(--brand-primary);
+}
+
 .pol-sidebar-collapse-btn {
   width: 100%;
   display: flex;
