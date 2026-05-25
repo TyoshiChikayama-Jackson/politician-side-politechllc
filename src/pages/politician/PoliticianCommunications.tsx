@@ -105,7 +105,7 @@ export function PoliticianCommunications() {
       const data = await res.json();
       setBlastBody(data.draft);
     } catch {
-      setBlastBody(`Dear Valued Supporter,\n\nThank you for your continued engagement with our campaign. I wanted to reach out personally to update you on ${blastSubject || 'important issues facing our district'}.\n\nAs your representative, I am committed to fighting for the values and priorities that matter most to District 12. Your support makes this work possible.\n\nThank you for standing with us.\n\nIn service,\nAlex Johnson\nIndiana State House, District 12`);
+      setBlastBody(`Dear Valued Supporter,\n\nThank you for your continued engagement with our campaign. I wanted to reach out personally to update you on ${blastSubject || 'important issues facing our district'}.\n\nAs your representative, I am committed to fighting for the values and priorities that matter most to District 12. Your support makes this work possible.\n\nThank you for standing with us.\n\nIn service,\nMarcus Johnson\nIndiana State House, District 12`);
     } finally {
       setAiDraftLoading(false);
     }
