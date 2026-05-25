@@ -114,8 +114,8 @@ function HeroSection() {
             <span className="lp-gradient-text">once you&rsquo;re in office.</span>
           </h1>
           <p className="lp-hero-sub">
-            PoliTech gives state and local politicians the tools to win elections, manage their
-            campaigns, and govern with transparency — all in one platform.
+            PoliTech is built for the whole job. Run your campaign, win your race, and keep serving
+            your district — without switching platforms, losing momentum, or starting over.
           </p>
           <div className="lp-hero-ctas">
             <a
@@ -134,7 +134,7 @@ function HeroSection() {
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#6B5DE6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             Built for Indiana&nbsp;&nbsp;·&nbsp;&nbsp;
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#6B5DE6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            Scales to all 50 states
+            From announcement to re-election
           </p>
         </div>
 
@@ -203,16 +203,16 @@ function StatsBar() {
   }, []);
 
   const stats = [
-    { num: '72%', label: 'of campaigns use 3+ disconnected tools — spreadsheets, email, and donor apps that don\'t talk to each other' },
-    { num: '$450', label: 'average monthly cost of piecing together separate campaign software — before staff time' },
-    { num: '1 in 2', label: 'state legislators have no dedicated campaign software after election day — governing from Gmail' },
+    { num: '72%', label: 'of campaigns run on disconnected tools that don\'t talk to each other — spreadsheets, donor apps, and personal email' },
+    { num: '$450', label: 'average monthly cost of piecing together separate tools — before you count the hours your staff wastes on manual data entry' },
+    { num: '1 in 2', label: 'state legislators have no dedicated platform after election day — governing from Gmail and hoping nothing slips through' },
   ];
 
   return (
     <section className="lp-stats-dark">
       <div className="lp-container" ref={ref}>
         <div className="lp-reveal" style={{ opacity: active ? 1 : 0, transform: active ? 'none' : 'translateY(20px)', transition: 'all 0.6s ease' }}>
-          <h2 className="lp-stats-dark-heading">The Problem With Political Tools Today</h2>
+          <h2 className="lp-stats-dark-heading">Most campaign tools stop working on election night. PoliTech doesn&rsquo;t.</h2>
           <div className="lp-stats-circles">
             {stats.map((s, i) => (
               <StatCircle key={i} num={s.num} label={s.label} active={active} />
@@ -225,16 +225,15 @@ function StatsBar() {
 }
 
 // ─── FEATURES TABS ────────────────────────────────────────────────────────────
-const TABS = ['Campaign Management', 'Donor & Compliance', 'Communications', 'AI Tools', 'Governing Tools'];
+const TABS = ['Running Your Campaign', 'Donors & Compliance', 'Reaching Constituents', 'Your AI Advantage', 'Life in Office'];
 
 const TAB_DATA = [
   {
     items: [
-      'Campaign Overview dashboard with real-time fundraising goal tracker',
-      'Event management — fundraisers, town halls, canvassing events with RSVP and ticket sales',
-      'Volunteer coordination — shifts, hours tracking, canvassing lists',
-      'Phone banking tool with call scripts and disposition logging',
-      'Expense tracking and budget management',
+      'Track every donor, dollar, and deadline in one place',
+      'Create fundraisers, town halls, and canvassing events — with RSVPs, ticket sales, and volunteer sign-ups built in',
+      'Coordinate your ground game — volunteer shifts, canvassing lists, and phone banking scripts',
+      'Know your fundraising pace before it becomes a problem',
     ],
     preview: {
       title: 'Campaign Overview',
@@ -258,12 +257,11 @@ const TAB_DATA = [
   },
   {
     items: [
-      'Full donor CRM with contribution history and tagging',
-      'Real-time contribution limit enforcement — hard stops before violations',
-      'FEC report generator — Schedule A and B exports, .fec file format',
-      'Filing deadline calendar with 30, 10, and 3-day email alerts',
-      'Refund workflow and prohibited source checker',
-      'Complete audit log — every change timestamped',
+      'Every contribution tracked with a full audit trail',
+      'Real-time alerts before a donor hits their legal limit — not after',
+      'FEC reports generated in minutes, not hours',
+      'Filing deadlines on your calendar before they sneak up on you',
+      'If something goes wrong, you\'ll know first — not the press',
     ],
     preview: {
       title: 'FEC Compliance',
@@ -296,12 +294,11 @@ const TAB_DATA = [
   },
   {
     items: [
-      'Constituent inbox — all messages in one place',
-      'Email campaign composer with open and click analytics',
-      'PoliFeed post publisher — post directly to your public PoliTech profile',
-      'SMS blast integration',
-      'Constituent message templates and auto-responses',
-      'Response rate tracking — feeds your public PoliCred score',
+      'Every constituent message in one inbox — not scattered across three email accounts',
+      'Send targeted email campaigns to donors, volunteers, or your whole district',
+      'Publish directly to your public PoliTech voter profile',
+      'Know how many people you\'re actually reaching — open rates, click rates, response rates',
+      'Your response time is tracked and shown publicly — it builds trust',
     ],
     preview: {
       title: 'Communications Hub',
@@ -329,12 +326,11 @@ const TAB_DATA = [
   },
   {
     items: [
-      'Speech writer — full speeches, talking points, floor statements in 30 seconds',
-      'Ad creative generator — Facebook, Instagram, Google ad copy with compliance disclaimers',
-      'Bill briefing — plain-English summary of any bill before a floor vote',
-      'Constituent reply suggestions — AI-drafted responses to common issues',
-      'Polls & surveys — constituent sentiment gathering with AI theme analysis',
-      'PoliAI assistant — ask questions about your own campaign data',
+      'Draft a speech in 30 seconds — personalized to your voting record and your district',
+      'Get a plain-English briefing on any bill before a floor vote',
+      'Generate ad copy for Facebook, Instagram, and Google — with compliance disclaimers built in',
+      'Ask PoliAI anything about your own campaign data: "Am I on pace for my fundraising goal?"',
+      'Every output is specific to you — not generic political boilerplate',
     ],
     preview: {
       title: 'PoliAI Speech Writer',
@@ -360,12 +356,11 @@ const TAB_DATA = [
   },
   {
     items: [
-      'Constituent casework — track and resolve resident requests',
-      'Campaign promise tracker — public accountability visible on your voter profile',
-      'District issue map — pin and resolve reported problems',
-      'Voting record with personal rationale — your story behind every vote',
-      'Legislator peer directory — coalition building and co-sponsorship outreach',
-      'Term milestone tracker',
+      'Track and resolve constituent requests — the daily work of being in office',
+      'Make your campaign promises public and show your progress on each one',
+      'See what issues your district is actually calling about — not just what\'s in the news',
+      'Log your reasoning behind every vote — your story, in your words, on your profile',
+      'Build the track record that makes re-election easier',
     ],
     preview: {
       title: 'Promise Tracker',
@@ -396,10 +391,10 @@ function FeaturesSection() {
     <section className="lp-features-tabs" id="features">
       <div className="lp-container">
         <div {...reveal} className={reveal.className + ' lp-section-header'}>
-          <span className="lp-eyebrow">Platform Features</span>
-          <h2 className="lp-section-title lp-gradient-text">Everything from kickoff to re-election</h2>
+          <span className="lp-eyebrow">What PoliTech Does</span>
+          <h2 className="lp-section-title lp-gradient-text">Built for the whole job — not just election day</h2>
           <p className="lp-section-sub">
-            One platform. Every tool your campaign and office needs — built for state and local politicians.
+            Two phases. One platform. From your first fundraiser to your re-election campaign.
           </p>
         </div>
 
@@ -448,20 +443,20 @@ function HowItWorksSection() {
     {
       svgPath: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
       num: '01',
-      title: 'Set Up Your Campaign',
-      desc: 'Create your profile, connect your committee, and import your existing donor list. Your public PoliTech voter profile goes live instantly.',
+      title: 'Launch Your Campaign',
+      desc: 'Set up your profile, connect your committee, and start building your donor list. Your public voter profile on PoliTech goes live the same day — voters can find you before the first ad runs.',
     },
     {
       svgPath: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
       num: '02',
-      title: 'Run Your Campaign',
-      desc: 'Manage donors, host events, coordinate volunteers, and communicate with constituents — with PoliAI drafting your speeches, ads, and replies.',
+      title: 'Run and Win',
+      desc: 'Manage donors, host events, and coordinate your ground game — with PoliAI writing your speeches, ads, and constituent replies. Stay compliant, stay organized, stay on offense.',
     },
     {
       svgPath: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
       num: '03',
-      title: 'Govern With Confidence',
-      desc: 'After election day, use PoliTech to track legislation, resolve constituent casework, keep your promises visible, and build the trust that wins re-election.',
+      title: 'Serve — and Get Re-elected',
+      desc: 'After election day, PoliTech doesn\'t go quiet. Track legislation, resolve constituent casework, keep your promises public, and build the credibility that wins the next race before you even announce.',
     },
   ];
 
@@ -469,7 +464,7 @@ function HowItWorksSection() {
     <section className="lp-how lp-bg-gray">
       <div className="lp-container">
         <div {...reveal} className={reveal.className + ' lp-section-header'}>
-          <h2 className="lp-section-title">From kickoff to re-election in three steps</h2>
+          <h2 className="lp-section-title">Three phases. One continuous platform.</h2>
         </div>
         <div className="lp-steps-grid">
           {steps.map((s, i) => (
@@ -533,9 +528,9 @@ function CompetitorSection() {
     <section className="lp-competitor">
       <div className="lp-container">
         <div {...reveal} className={reveal.className + ' lp-section-header'}>
-          <span className="lp-eyebrow">Why PoliTech</span>
-          <h2 className="lp-section-title lp-gradient-text">Built different from everything else out there</h2>
-          <p className="lp-section-sub">Most political tools solve one problem. PoliTech solves all of them.</p>
+          <span className="lp-eyebrow">How We&rsquo;re Different</span>
+          <h2 className="lp-section-title lp-gradient-text">Every other tool stops at election night</h2>
+          <p className="lp-section-sub">ActBlue processes donations. NationBuilder runs lists. NGP VAN manages volunteers. None of them are there on November 4th. PoliTech is.</p>
         </div>
         <div className="lp-comp-table-wrap">
           <table className="lp-comp-table">
@@ -578,11 +573,11 @@ function CompetitorSection() {
 function DemoSection() {
   const reveal = useReveal();
   const bullets = [
-    'Live donor management with compliance warnings',
-    'AI speech writer — generate real talking points',
-    'FEC filing calendar with Indiana deadlines',
-    'Constituent inbox and email campaigns',
-    'Events, volunteers, and analytics',
+    'Live donor records with a real compliance warning firing',
+    'AI speech writer — type a topic, watch it draft',
+    'Filing deadlines already on the calendar',
+    'Constituent inbox with unread messages waiting',
+    'Promise tracker showing real progress',
   ];
 
   return (
@@ -590,11 +585,11 @@ function DemoSection() {
       <div className="lp-container lp-demo-preview-inner">
         <div {...reveal} className={reveal.className + ' lp-demo-preview-text'}>
           <span className="lp-pill lp-pill-white">Live Demo</span>
-          <h2 className="lp-section-title lp-white">See your dashboard before you commit</h2>
+          <h2 className="lp-section-title lp-white">See what governing and campaigning looks like in one place</h2>
           <p className="lp-section-sub lp-white-muted">
-            We've built a fully functional demo with real campaign data. No login required. Click
-            through every feature — donor management, FEC compliance, AI tools, and constituent
-            communications — before signing up.
+            This is a real, working dashboard — not a mockup. Click through donor management, FEC
+            compliance, the AI speech writer, constituent communications, and the promise tracker.
+            No login. No sales call. Just the product.
           </p>
           <ul className="lp-demo-bullets">
             {bullets.map((b, i) => (
@@ -608,10 +603,10 @@ function DemoSection() {
             href="/"
             className="lp-btn-white lp-btn-lg"
           >
-            Open Live Dashboard →
+            Explore the Dashboard →
           </a>
           <p style={{ marginTop: 10, fontSize: '0.82rem', color: 'rgba(255,255,255,0.55)' }}>
-            No account needed. Explore freely.
+            No account needed. This is the real thing.
           </p>
         </div>
 
@@ -716,8 +711,8 @@ function PricingSection() {
       <div className="lp-container">
         <div {...reveal} className={reveal.className + ' lp-section-header'}>
           <span className="lp-eyebrow">Pricing</span>
-          <h2 className="lp-section-title">Simple pricing for every race</h2>
-          <p className="lp-section-sub">No contracts. No setup fees. Cancel anytime.</p>
+          <h2 className="lp-section-title">Pricing that works for a state race</h2>
+          <p className="lp-section-sub">Most enterprise political software is priced for national campaigns. PoliTech is built for state and local politicians — and priced to match.</p>
           <div className="lp-billing-toggle">
             <span className={!annual ? 'lp-toggle-active' : ''}>Monthly</span>
             <button className={`lp-toggle-switch${annual ? ' on' : ''}`} onClick={() => setAnnual(v => !v)} aria-label="Toggle annual billing">
@@ -773,22 +768,22 @@ function AboutSection() {
         <div {...reveal} className={reveal.className + ' lp-about-text'}>
           <span className="lp-eyebrow">About PoliTech</span>
           <h2 className="lp-section-title" style={{ textAlign: 'left' }}>
-            Built in Indiana, for Indiana.<br />Scaling everywhere.
+            Built in Indiana. For politicians who take the whole job seriously.
           </h2>
           <p className="lp-about-body">
-            PoliTech was founded by Tyoshi Chikayama-Jackson and Jonathan Baker — two Evansville
-            natives who saw firsthand how disconnected political tools were failing state and local
-            campaigns. While national campaigns had enterprise software, local legislators were
-            running their offices from Gmail and spreadsheets.
+            PoliTech was started by Tyoshi Chikayama-Jackson and Jonathan Baker — two Evansville
+            natives who watched local politicians run campaigns on spreadsheets and govern on
+            personal Gmail accounts. The tools existed for national races. Nothing existed for the
+            races that actually shape people's daily lives.
           </p>
           <p className="lp-about-body">
-            We built PoliTech to change that. Starting with Indiana's 150 state legislators and
-            scaling to all 50 states, our platform brings together everything a campaign and office
-            needs — powered by AI, designed for humans of every technical background.
+            So we built it. Starting with Indiana's 150 state legislators and expanding to all 50
+            states, PoliTech gives state and local politicians a platform that's with them through
+            the whole job — not just the 90 days before an election.
           </p>
           <p className="lp-about-body">
-            PoliTech is supported by advisors including Alexander Burton, Indiana State House
-            District 77, and the Indiana Small Business Development Center.
+            PoliTech is advised by Alexander Burton, Indiana State House District 77, and supported
+            by the Indiana Small Business Development Center.
           </p>
           <div className="lp-about-stats">
             <div className="lp-about-stat">
@@ -813,7 +808,7 @@ function AboutSection() {
             <div className="lp-about-founder-name">Jonathan Baker</div>
             <div className="lp-about-founder-title">COO &amp; Co-Founder</div>
           </div>
-          <p className="lp-about-card-tagline">"Empowering democracy through technology"</p>
+          <p className="lp-about-card-tagline">"Campaign smarter. Govern better."</p>
           <svg viewBox="0 0 200 240" className="lp-indiana-svg" aria-label="Indiana state outline">
             <path
               d="M60 20 L80 18 L140 22 L145 40 L148 60 L150 90 L148 120 L145 150 L140 180 L130 210 L120 225 L110 235 L100 240 L90 235 L80 225 L70 210 L60 180 L55 150 L52 120 L50 90 L52 60 L55 40 Z"
@@ -896,10 +891,10 @@ function ClosingCTA() {
     <section className="lp-closing">
       <div className="lp-container lp-closing-inner">
         <div {...reveal} className={reveal.className}>
-          <h2 className="lp-closing-title">Ready to run a smarter campaign?</h2>
+          <h2 className="lp-closing-title">The whole job deserves the right platform.</h2>
           <p className="lp-closing-sub">
-            Join Indiana politicians already using PoliTech to engage voters, manage their campaigns,
-            and govern with transparency.
+            Join Indiana politicians using PoliTech to run smarter campaigns and serve their
+            districts better. From announcement to re-election.
           </p>
           <div className="lp-closing-ctas">
             <a href="https://politechllc.com/Account/Register" className="lp-btn-white lp-btn-lg">
@@ -995,7 +990,7 @@ function LandingFooter() {
               <img src="/images/PoliTechLogo.png" alt="PoliTech" className="lp-footer-logo-img" />
               <span className="lp-footer-logo-text">PoliTech</span>
             </div>
-            <p className="lp-footer-tagline">Empowering democracy through technology</p>
+            <p className="lp-footer-tagline">Campaign smarter. Govern better.</p>
           </div>
 
           <div className="lp-footer-cols">
