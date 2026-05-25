@@ -77,8 +77,7 @@ function LandingNav() {
     <nav className={`lp-nav${scrolled ? ' scrolled' : ''}`}>
       <div className="lp-nav-inner">
         <a href="/politicians" className="lp-nav-logo">
-          <img src="/images/PoliTechLogo.png" alt="PoliTech" className="lp-logo-img" />
-          <span className="lp-logo-text">PoliTech</span>
+          <img src="/images/politech-logo.png" alt="PoliTech" className="lp-logo-img" style={{ height: 40, width: 'auto' }} />
         </a>
 
         <div className={`lp-nav-links${menuOpen ? ' open' : ''}`}>
