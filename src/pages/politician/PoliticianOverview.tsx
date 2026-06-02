@@ -27,8 +27,266 @@ const recentActivity = [
   { label: 'Post published: HB 1042 Education Statement', time: 'May 1', color: 'blue' },
 ];
 
+// ─── Shared Toast ─────────────────────────────────────────────────────────────
+
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+// ─── New Post Modal ───────────────────────────────────────────────────────────
+
+function NewPostModal({ onClose, onSave }: { onClose: () => void; onSave: (body: string) => void }) {
+  const [body, setBody] = useState('');
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>New PoliFeed Post</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="pol-field-group">
+            <label>Post Text</label>
+            <textarea
+              value={body}
+              onChange={(e) => setBody(e.target.value.slice(0, 500))}
+              placeholder="Share an update with your constituents..."
+              style={{ minHeight: 140 }}
+            />
+            <div style={{ fontSize: '0.8rem', color: body.length > 450 ? '#f59e0b' : 'var(--muted)', textAlign: 'right', marginTop: 4 }}>{body.length}/500</div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" disabled={!body.trim()} onClick={() => onSave(body)}>Publish Now</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Add Donor Modal ──────────────────────────────────────────────────────────
+
+function AddDonorModal({ onClose, onSave }: { onClose: () => void; onSave: (name: string) => void }) {
+  const [form, setForm] = useState({ firstName: '', lastName: '', employer: '', occupation: '', amount: '', date: new Date().toISOString().slice(0, 10), type: 'Individual', city: '', state: 'IN', zip: '', notes: '' });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const f = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setForm((p) => ({ ...p, [key]: e.target.value }));
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.firstName.trim()) e.firstName = 'Required';
+    if (!form.lastName.trim()) e.lastName = 'Required';
+    return e;
+  };
+
+  const handleSave = () => {
+    const e = validate();
+    if (Object.keys(e).length) { setErrors(e); return; }
+    onSave(`${form.firstName} ${form.lastName}`);
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 580 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Add Donor</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            {(['firstName', 'lastName', 'employer', 'occupation'] as const).map((key) => (
+              <div className="pol-field-group" key={key}>
+                <label>{key === 'firstName' ? 'First Name' : key === 'lastName' ? 'Last Name' : key === 'employer' ? 'Employer' : 'Occupation'}</label>
+                <input value={form[key]} onChange={f(key)} />
+                {errors[key] && <span className="pol-field-error">{errors[key]}</span>}
+              </div>
+            ))}
+            <div className="pol-field-group">
+              <label>Amount ($)</label>
+              <input type="number" min="1" value={form.amount} onChange={f('amount')} />
+            </div>
+            <div className="pol-field-group">
+              <label>Contribution Date</label>
+              <input type="date" value={form.date} onChange={f('date')} />
+            </div>
+            <div className="pol-field-group">
+              <label>Type</label>
+              <select value={form.type} onChange={f('type')}>
+                {['Individual', 'PAC', 'Party', 'Other'].map((t) => <option key={t}>{t}</option>)}
+              </select>
+            </div>
+            <div className="pol-field-group">
+              <label>City</label>
+              <input value={form.city} onChange={f('city')} />
+            </div>
+            <div className="pol-field-group">
+              <label>State</label>
+              <input value={form.state} onChange={f('state')} maxLength={2} />
+            </div>
+            <div className="pol-field-group">
+              <label>ZIP</label>
+              <input value={form.zip} onChange={f('zip')} />
+            </div>
+            <div className="pol-field-group form-span-full">
+              <label>Notes</label>
+              <textarea value={form.notes} onChange={f('notes')} style={{ minHeight: 70 }} />
+            </div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" onClick={handleSave}>Save Donor</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Log Expense Modal ────────────────────────────────────────────────────────
+
+function LogExpenseModal({ onClose, onSave }: { onClose: () => void; onSave: () => void }) {
+  const [form, setForm] = useState({ vendor: '', category: 'Advertising', amount: '', date: new Date().toISOString().slice(0, 10), description: '', paymentMethod: 'card' });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const f = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setForm((p) => ({ ...p, [key]: e.target.value }));
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.vendor.trim()) e.vendor = 'Required';
+    if (!form.amount || Number(form.amount) <= 0) e.amount = 'Must be > 0';
+    return e;
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 520 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Log Expense</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="pol-field-group form-span-full">
+              <label>Vendor Name *</label>
+              <input value={form.vendor} onChange={f('vendor')} />
+              {errors.vendor && <span className="pol-field-error">{errors.vendor}</span>}
+            </div>
+            <div className="pol-field-group">
+              <label>Category</label>
+              <select value={form.category} onChange={f('category')}>
+                {['Advertising', 'Printing', 'Postage', 'Staff', 'Consulting', 'Events', 'Travel', 'Technology', 'Office', 'Other'].map((c) => <option key={c}>{c}</option>)}
+              </select>
+            </div>
+            <div className="pol-field-group">
+              <label>Amount ($) *</label>
+              <input type="number" min="1" value={form.amount} onChange={f('amount')} />
+              {errors.amount && <span className="pol-field-error">{errors.amount}</span>}
+            </div>
+            <div className="pol-field-group">
+              <label>Date</label>
+              <input type="date" value={form.date} onChange={f('date')} />
+            </div>
+            <div className="pol-field-group">
+              <label>Payment Method</label>
+              <select value={form.paymentMethod} onChange={f('paymentMethod')}>
+                {['card', 'check', 'wire', 'cash'].map((m) => <option key={m} value={m}>{m.charAt(0).toUpperCase() + m.slice(1)}</option>)}
+              </select>
+            </div>
+            <div className="pol-field-group form-span-full">
+              <label>Description</label>
+              <textarea value={form.description} onChange={f('description')} style={{ minHeight: 70 }} />
+            </div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" onClick={() => {
+            const e = validate();
+            if (Object.keys(e).length) { setErrors(e); return; }
+            onSave();
+          }}>Save Expense</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── New Email Campaign Modal ─────────────────────────────────────────────────
+
+function NewEmailCampaignModal({ onClose, onSave }: { onClose: () => void; onSave: (subject: string, recipients: string) => void }) {
+  const [form, setForm] = useState({ subject: '', recipients: 'All Supporters', body: '', schedule: false, scheduleDate: '' });
+  const recipientCounts: Record<string, string> = { 'All Supporters': '1,240', 'Donors Only': '20', 'Volunteers Only': '5', 'District 12 Residents': '3,800' };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 580 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>New Email Campaign</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="pol-field-group">
+            <label>Recipient List</label>
+            <select value={form.recipients} onChange={(e) => setForm((p) => ({ ...p, recipients: e.target.value }))}>
+              {Object.keys(recipientCounts).map((r) => <option key={r}>{r}</option>)}
+            </select>
+            <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 4 }}>~{recipientCounts[form.recipients]} recipients</div>
+          </div>
+          <div className="pol-field-group">
+            <label>Subject Line *</label>
+            <input value={form.subject} onChange={(e) => setForm((p) => ({ ...p, subject: e.target.value }))} placeholder="e.g. Update on HB 1042 Education Funding" />
+          </div>
+          <div className="pol-field-group">
+            <label>Message Body</label>
+            <textarea
+              value={form.body}
+              onChange={(e) => setForm((p) => ({ ...p, body: e.target.value }))}
+              placeholder="Write your message to supporters..."
+              style={{ minHeight: 160 }}
+            />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4 }}>
+            <input type="checkbox" id="sched" checked={form.schedule} onChange={(e) => setForm((p) => ({ ...p, schedule: e.target.checked }))} style={{ width: 'auto' }} />
+            <label htmlFor="sched" style={{ marginBottom: 0, fontSize: '0.9rem', cursor: 'pointer' }}>Schedule for later</label>
+            {form.schedule && (
+              <input type="datetime-local" value={form.scheduleDate} onChange={(e) => setForm((p) => ({ ...p, scheduleDate: e.target.value }))} style={{ marginLeft: 8 }} />
+            )}
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" disabled={!form.subject.trim()} onClick={() => onSave(form.subject, form.recipients)}>
+            {form.schedule ? 'Schedule' : 'Send Now'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
+
 export function PoliticianOverview() {
-  const [, setShowNewPost] = useState(false);
+  const [showNewPost, setShowNewPost] = useState(false);
+  const [showAddDonor, setShowAddDonor] = useState(false);
+  const [showLogExpense, setShowLogExpense] = useState(false);
+  const [showEmailCampaign, setShowEmailCampaign] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const upcomingFiling = demoFECFilings.find((f) => f.status === 'upcoming');
   const unreadMessages = demoMessages.filter((m) => m.status === 'unread').length;
@@ -36,7 +294,6 @@ export function PoliticianOverview() {
 
   return (
     <div>
-      {/* Page Header — overview variant keeps subtle accent */}
       <div className="pol-page-header overview" style={{ marginBottom: 24 }}>
         <div className="pol-header-left">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
@@ -63,15 +320,13 @@ export function PoliticianOverview() {
         </div>
       </div>
 
-      {/* Quick action buttons — below header as separate row */}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
         <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowNewPost(true)}>New Post</button>
-        <button className="pol-btn-secondary pol-btn-sm">Add Donor</button>
-        <button className="pol-btn-secondary pol-btn-sm">Log Expense</button>
-        <button className="pol-btn-secondary pol-btn-sm">New Email Campaign</button>
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowAddDonor(true)}>Add Donor</button>
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowLogExpense(true)}>Log Expense</button>
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowEmailCampaign(true)}>New Email Campaign</button>
       </div>
 
-      {/* Quick Stats */}
       <div className="pol-stat-grid">
         <div className="pol-stat-card">
           <span className="pol-stat-label">Total Donors</span>
@@ -95,9 +350,7 @@ export function PoliticianOverview() {
         </div>
       </div>
 
-      {/* Alerts & Activity */}
       <div className="pol-grid-2" style={{ marginBottom: 20 }}>
-        {/* Alerts Panel */}
         <div className="pol-card">
           <h3>Alerts</h3>
 
@@ -148,7 +401,6 @@ export function PoliticianOverview() {
           </div>
         </div>
 
-        {/* Recent Activity */}
         <div className="pol-card">
           <h3>Recent Activity</h3>
           <div className="pol-activity-feed">
@@ -165,7 +417,6 @@ export function PoliticianOverview() {
         </div>
       </div>
 
-      {/* Post Analytics & FEC Calendar */}
       <div className="pol-grid-2">
         <div className="pol-card">
           <h3>Recent Post Performance</h3>
@@ -206,6 +457,44 @@ export function PoliticianOverview() {
           </div>
         </div>
       </div>
+
+      {showNewPost && (
+        <NewPostModal
+          onClose={() => setShowNewPost(false)}
+          onSave={(body) => {
+            setShowNewPost(false);
+            showToast(`Post published: "${body.slice(0, 40)}..."`);
+          }}
+        />
+      )}
+      {showAddDonor && (
+        <AddDonorModal
+          onClose={() => setShowAddDonor(false)}
+          onSave={(name) => {
+            setShowAddDonor(false);
+            showToast(`Donor ${name} added successfully.`);
+          }}
+        />
+      )}
+      {showLogExpense && (
+        <LogExpenseModal
+          onClose={() => setShowLogExpense(false)}
+          onSave={() => {
+            setShowLogExpense(false);
+            showToast('Expense logged successfully.');
+          }}
+        />
+      )}
+      {showEmailCampaign && (
+        <NewEmailCampaignModal
+          onClose={() => setShowEmailCampaign(false)}
+          onSave={(subject, recipients) => {
+            setShowEmailCampaign(false);
+            showToast(`Email campaign "${subject}" sent to ${recipients}.`);
+          }}
+        />
+      )}
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

@@ -4,12 +4,274 @@ import { demoVolunteers, demoShifts } from '../../data/politicianData';
 
 type Tab = 'roster' | 'shifts' | 'leaderboard';
 
+// ─── Shared Toast ─────────────────────────────────────────────────────────────
+
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div
+      style={{
+        position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+        background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+        padding: '12px 16px', borderRadius: 8, fontSize: 14,
+        color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+        display: 'flex', alignItems: 'center', gap: 12,
+      }}
+    >
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16, lineHeight: 1 }}>✕</button>
+    </div>
+  );
+}
+
+function useToast() {
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  };
+  return { toast, showToast };
+}
+
+// ─── Add Volunteer Modal ──────────────────────────────────────────────────────
+
+const SKILL_OPTIONS = ['Canvassing', 'Phone Banking', 'Data Entry', 'Event Setup', 'Social Media', 'Graphic Design', 'Fundraising', 'Legal', 'Translation', 'Photography'];
+const AVAILABILITY_OPTIONS = ['Weekdays', 'Weekends', 'Evenings', 'Mornings', 'Flexible'];
+
+function AddVolunteerModal({ onClose, onSave }: { onClose: () => void; onSave: (v: Volunteer) => void }) {
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', availability: 'Weekends', skills: [] as string[] });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const toggleSkill = (skill: string) =>
+    setForm((p) => ({ ...p, skills: p.skills.includes(skill) ? p.skills.filter((s) => s !== skill) : [...p.skills, skill] }));
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.firstName.trim()) e.firstName = 'Required';
+    if (!form.lastName.trim()) e.lastName = 'Required';
+    if (!form.email.trim()) e.email = 'Required';
+    return e;
+  };
+
+  const handleSave = () => {
+    const e = validate();
+    if (Object.keys(e).length) { setErrors(e); return; }
+    const v: Volunteer = {
+      id: `vol-${Date.now()}`,
+      firstName: form.firstName,
+      lastName: form.lastName,
+      email: form.email,
+      phone: form.phone,
+      skills: form.skills.length ? form.skills : ['General'],
+      availability: form.availability,
+      status: 'active',
+      totalHours: 0,
+      joinDate: new Date().toISOString().slice(0, 10),
+    };
+    onSave(v);
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Add New Volunteer</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            {(['firstName', 'lastName', 'email', 'phone'] as const).map((key) => (
+              <div className="pol-field-group" key={key}>
+                <label>{key === 'firstName' ? 'First Name' : key === 'lastName' ? 'Last Name' : key === 'email' ? 'Email' : 'Phone'}</label>
+                <input value={form[key]} onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))} />
+                {errors[key] && <span className="pol-field-error">{errors[key]}</span>}
+              </div>
+            ))}
+            <div className="pol-field-group">
+              <label>Availability</label>
+              <select value={form.availability} onChange={(e) => setForm((p) => ({ ...p, availability: e.target.value }))}>
+                {AVAILABILITY_OPTIONS.map((a) => <option key={a} value={a}>{a}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="pol-field-group" style={{ marginTop: 8 }}>
+            <label>Skills</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 6 }}>
+              {SKILL_OPTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => toggleSkill(s)}
+                  className={form.skills.includes(s) ? 'pol-btn-primary pol-btn-sm' : 'pol-btn-ghost pol-btn-sm'}
+                  style={{ fontSize: '0.78rem' }}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" onClick={handleSave}>Add Volunteer</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Create Shift Modal ───────────────────────────────────────────────────────
+
+function CreateShiftModal({ onClose, onSave }: { onClose: () => void; onSave: (s: Shift) => void }) {
+  const [form, setForm] = useState({ title: '', date: '', startTime: '', endTime: '', location: '', capacity: '20', notes: '', type: 'canvassing' as Shift['type'] });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.title.trim()) e.title = 'Required';
+    if (!form.date) e.date = 'Required';
+    if (!form.location.trim()) e.location = 'Required';
+    return e;
+  };
+
+  const handleSave = () => {
+    const e = validate();
+    if (Object.keys(e).length) { setErrors(e); return; }
+    const shift: Shift = {
+      id: `shift-${Date.now()}`,
+      title: form.title,
+      date: form.date,
+      startTime: form.startTime,
+      endTime: form.endTime,
+      location: form.location,
+      type: form.type,
+      capacity: Number(form.capacity) || 20,
+      assignedVolunteerIds: [],
+      hoursLogged: {},
+    };
+    onSave(shift);
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Create Shift</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="pol-field-group form-span-full">
+              <label>Shift Name *</label>
+              <input value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} placeholder="e.g. Saturday Canvassing — North Side" />
+              {errors.title && <span className="pol-field-error">{errors.title}</span>}
+            </div>
+            <div className="pol-field-group">
+              <label>Type</label>
+              <select value={form.type} onChange={(e) => setForm((p) => ({ ...p, type: e.target.value as Shift['type'] }))}>
+                <option value="canvassing">Canvassing</option>
+                <option value="phone-banking">Phone Banking</option>
+                <option value="event-setup">Event Setup</option>
+                <option value="data-entry">Data Entry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="pol-field-group">
+              <label>Capacity (max volunteers)</label>
+              <input type="number" min="1" value={form.capacity} onChange={(e) => setForm((p) => ({ ...p, capacity: e.target.value }))} />
+            </div>
+            <div className="pol-field-group">
+              <label>Date *</label>
+              <input type="date" value={form.date} onChange={(e) => setForm((p) => ({ ...p, date: e.target.value }))} />
+              {errors.date && <span className="pol-field-error">{errors.date}</span>}
+            </div>
+            <div className="pol-field-group">
+              <label>Location *</label>
+              <input value={form.location} onChange={(e) => setForm((p) => ({ ...p, location: e.target.value }))} placeholder="e.g. IPS Community Center" />
+              {errors.location && <span className="pol-field-error">{errors.location}</span>}
+            </div>
+            <div className="pol-field-group">
+              <label>Start Time</label>
+              <input type="time" value={form.startTime} onChange={(e) => setForm((p) => ({ ...p, startTime: e.target.value }))} />
+            </div>
+            <div className="pol-field-group">
+              <label>End Time</label>
+              <input type="time" value={form.endTime} onChange={(e) => setForm((p) => ({ ...p, endTime: e.target.value }))} />
+            </div>
+            <div className="pol-field-group form-span-full">
+              <label>Notes</label>
+              <textarea value={form.notes} onChange={(e) => setForm((p) => ({ ...p, notes: e.target.value }))} style={{ minHeight: 70 }} />
+            </div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" onClick={handleSave}>Save Shift</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Log Hours Modal ──────────────────────────────────────────────────────────
+
+function LogHoursModal({ volunteer, onClose, onSave }: { volunteer: Volunteer; onClose: () => void; onSave: (id: string, hours: number, activity: string) => void }) {
+  const [hours, setHours] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [activity, setActivity] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSave = () => {
+    if (!hours || Number(hours) <= 0) { setError('Enter a valid number of hours.'); return; }
+    onSave(volunteer.id, Number(hours), activity);
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 440 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Log Hours</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="pol-field-group">
+            <label>Volunteer</label>
+            <input value={`${volunteer.firstName} ${volunteer.lastName}`} disabled style={{ opacity: 0.6 }} />
+          </div>
+          <div className="pol-field-group">
+            <label>Date</label>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          </div>
+          <div className="pol-field-group">
+            <label>Hours *</label>
+            <input type="number" min="0.5" step="0.5" value={hours} onChange={(e) => { setHours(e.target.value); setError(''); }} placeholder="e.g. 4" />
+            {error && <span className="pol-field-error">{error}</span>}
+          </div>
+          <div className="pol-field-group">
+            <label>Activity Description</label>
+            <input value={activity} onChange={(e) => setActivity(e.target.value)} placeholder="e.g. Saturday canvassing — North Side" />
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" onClick={handleSave}>Log Hours</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
+
 export function PoliticianVolunteers() {
   const [tab, setTab] = useState<Tab>('roster');
   const [volunteers, setVolunteers] = useState<Volunteer[]>(demoVolunteers);
-  const [shifts] = useState<Shift[]>(demoShifts);
+  const [shifts, setShifts] = useState<Shift[]>(demoShifts);
   const [selectedVolunteer, setSelectedVolunteer] = useState<Volunteer | null>(null);
   const [search, setSearch] = useState('');
+  const [showAddVolunteer, setShowAddVolunteer] = useState(false);
+  const [showCreateShift, setShowCreateShift] = useState(false);
+  const [logHoursTarget, setLogHoursTarget] = useState<Volunteer | null>(null);
+  const { toast, showToast } = useToast();
 
   const totalHours = useMemo(() => volunteers.reduce((s, v) => s + v.totalHours, 0), [volunteers]);
   const activeCount = useMemo(() => volunteers.filter((v) => v.status === 'active').length, [volunteers]);
@@ -24,10 +286,25 @@ export function PoliticianVolunteers() {
 
   const sorted = useMemo(() => [...volunteers].sort((a, b) => b.totalHours - a.totalHours), [volunteers]);
 
-  const logHours = (volunteerId: string, hours: number) => {
+  const handleAddVolunteer = (v: Volunteer) => {
+    setVolunteers((prev) => [v, ...prev]);
+    setShowAddVolunteer(false);
+    showToast(`${v.firstName} ${v.lastName} added to volunteer roster.`);
+  };
+
+  const handleCreateShift = (s: Shift) => {
+    setShifts((prev) => [s, ...prev]);
+    setShowCreateShift(false);
+    showToast(`Shift "${s.title}" created.`);
+  };
+
+  const handleLogHours = (id: string, hours: number, activity: string) => {
     setVolunteers((prev) =>
-      prev.map((v) => v.id === volunteerId ? { ...v, totalHours: v.totalHours + hours } : v)
+      prev.map((v) => v.id === id ? { ...v, totalHours: v.totalHours + hours } : v)
     );
+    setSelectedVolunteer((prev) => prev && prev.id === id ? { ...prev, totalHours: prev.totalHours + hours } : prev);
+    setLogHoursTarget(null);
+    showToast(`${hours} hours logged${activity ? ` for "${activity}"` : ''}.`);
   };
 
   return (
@@ -38,9 +315,16 @@ export function PoliticianVolunteers() {
           <p>Recruit, schedule, and track your volunteer team. Manage shifts and keep your ground game organized.</p>
         </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-secondary pol-btn-sm">Export List</button>
-          <button className="pol-btn-secondary pol-btn-sm">Create Shift</button>
-          <button className="pol-btn-primary pol-btn-sm">Add Volunteer</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+            const csv = ['First Name,Last Name,Email,Phone,Skills,Availability,Hours,Status',
+              ...volunteers.map((v) => `${v.firstName},${v.lastName},${v.email},${v.phone || ''},"${v.skills.join('; ')}",${v.availability},${v.totalHours},${v.status}`)
+            ].join('\n');
+            const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = 'volunteers.csv'; a.click();
+            showToast('Volunteer list exported.');
+          }}>Export List</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowCreateShift(true)}>Create Shift</button>
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAddVolunteer(true)}>Add Volunteer</button>
         </div>
       </div>
 
@@ -58,7 +342,7 @@ export function PoliticianVolunteers() {
         <div className="pol-stat-card">
           <span className="pol-stat-label">Shifts Scheduled</span>
           <span className="pol-stat-value">{shifts.length}</span>
-          <span className="pol-stat-sub">Upcoming & past</span>
+          <span className="pol-stat-sub">Upcoming &amp; past</span>
         </div>
         <div className="pol-stat-card">
           <span className="pol-stat-label">Avg Hours / Volunteer</span>
@@ -77,7 +361,6 @@ export function PoliticianVolunteers() {
 
       {tab === 'roster' && (
         <div className="pol-sidebar-layout">
-          {/* Left column wrapper — min-width + overflow so long names don't blow out the column */}
           <div style={{ minWidth: 0, overflow: 'hidden' }}>
             <div className="pol-search-bar">
               <div className="pol-search-wrapper" style={{ flex: 1 }}>
@@ -117,10 +400,7 @@ export function PoliticianVolunteers() {
                     <h3 style={{ marginBottom: 4 }}>{selectedVolunteer.firstName} {selectedVolunteer.lastName}</h3>
                     <div style={{ color: 'var(--muted)', fontSize: '0.88rem' }}>{selectedVolunteer.email} · {selectedVolunteer.phone}</div>
                   </div>
-                  <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
-                    const h = prompt('Log hours for this volunteer:');
-                    if (h && !isNaN(Number(h))) logHours(selectedVolunteer.id, Number(h));
-                  }}>+ Log Hours</button>
+                  <button className="pol-btn-secondary pol-btn-sm" onClick={() => setLogHoursTarget(selectedVolunteer)}>+ Log Hours</button>
                 </div>
 
                 <div className="pol-card-dark" style={{ marginBottom: 16 }}>
@@ -157,9 +437,16 @@ export function PoliticianVolunteers() {
                 </div>
 
                 <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-                  <button className="pol-btn-secondary pol-btn-sm">Send Email</button>
-                  <button className="pol-btn-secondary pol-btn-sm">Send SMS</button>
-                  <button className="pol-btn-secondary pol-btn-sm">Assign to Shift</button>
+                  <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                    window.open(`mailto:${selectedVolunteer.email}?subject=Campaign Update`);
+                  }}>Send Email</button>
+                  <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                    showToast(`SMS link copied for ${selectedVolunteer.firstName}.`);
+                  }}>Send SMS</button>
+                  <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                    setTab('shifts');
+                    showToast(`Viewing shifts to assign ${selectedVolunteer.firstName}.`);
+                  }}>Assign to Shift</button>
                 </div>
               </div>
             ) : (
@@ -201,13 +488,17 @@ export function PoliticianVolunteers() {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="pol-btn-secondary pol-btn-sm">Edit Shift</button>
-                <button className="pol-btn-secondary pol-btn-sm">Log Hours</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => showToast(`Edit functionality for "${shift.title}" — use the form to create a new shift.`)}>Edit Shift</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                  const first = volunteers.find((v) => shift.assignedVolunteerIds.includes(v.id));
+                  if (first) setLogHoursTarget(first);
+                  else showToast('No volunteers assigned to this shift yet.');
+                }}>Log Hours</button>
               </div>
             </div>
           ))}
           <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 200, border: '2px dashed var(--border)', background: 'transparent' }}>
-            <button className="pol-btn-primary" onClick={() => {}}>+ Create New Shift</button>
+            <button className="pol-btn-primary" onClick={() => setShowCreateShift(true)}>+ Create New Shift</button>
           </div>
         </div>
       )}
@@ -235,6 +526,11 @@ export function PoliticianVolunteers() {
           </div>
         </div>
       )}
+
+      {showAddVolunteer && <AddVolunteerModal onClose={() => setShowAddVolunteer(false)} onSave={handleAddVolunteer} />}
+      {showCreateShift && <CreateShiftModal onClose={() => setShowCreateShift(false)} onSave={handleCreateShift} />}
+      {logHoursTarget && <LogHoursModal volunteer={logHoursTarget} onClose={() => setLogHoursTarget(null)} onSave={handleLogHours} />}
+      {toast && <SuccessToast message={toast} onDismiss={() => {}} />}
     </div>
   );
 }

@@ -1,5 +1,28 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { demoDonors, demoContributions, demoCampaignPosts, demoVolunteers, demoPolitician } from '../../data/politicianData';
+
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function downloadCSV(rows: string[][], filename: string) {
+  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = filename;
+  a.click();
+}
 
 const POLIPOINT_SCORES = {
   votingAlignment: 91,
@@ -44,6 +67,8 @@ function SimpleBarChart({ data }: { data: { label: string; value: number; max: n
 }
 
 export function PoliticianAnalytics() {
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
   const totalRaised = useMemo(() => demoContributions.reduce((s, c) => s + c.amount, 0), []);
   const avgDonation = useMemo(() => totalRaised / demoContributions.length, [totalRaised]);
   const goalPct = Math.round((totalRaised / demoPolitician.fundraisingGoal) * 100);
@@ -61,7 +86,22 @@ export function PoliticianAnalytics() {
           <p>Insights into your donor base, campaign reach, volunteer activity, and PoliCred score.</p>
         </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-primary pol-btn-sm">Export PDF Report</button>
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => {
+            downloadCSV(
+              [
+                ['Month', 'Amount'],
+                ...MONTHLY_FUNDRAISING.map((m) => [m.month, String(m.amount)]),
+                [],
+                ['County', 'Amount', 'Donors'],
+                ...COUNTY_DATA.map((c) => [c.county, String(c.amount), String(c.donors)]),
+                [],
+                ['Volunteer', 'Hours'],
+                ...demoVolunteers.map((v) => [`${v.firstName} ${v.lastName}`, String(v.totalHours)]),
+              ],
+              'analytics-report.csv'
+            );
+            showToast('Analytics report exported as CSV.');
+          }}>Export PDF Report</button>
         </div>
       </div>
 
@@ -213,6 +253,8 @@ export function PoliticianAnalytics() {
           <span>Returning Donors: <strong style={{ color: 'var(--text)' }}>17</strong></span>
         </div>
       </div>
+
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

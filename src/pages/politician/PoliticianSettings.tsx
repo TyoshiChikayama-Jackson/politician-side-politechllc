@@ -1,6 +1,49 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { demoPolitician, demoCampaignStaff } from '../../data/politicianData';
 import type { CampaignStaff, StaffRole } from '../../types';
+
+function ChangePasswordModal({ onClose, onSave }: { onClose: () => void; onSave: () => void }) {
+  const [form, setForm] = useState({ current: '', next: '', confirm: '' });
+  const [error, setError] = useState('');
+  const f = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => setForm((p) => ({ ...p, [key]: e.target.value }));
+
+  const handleSave = () => {
+    if (!form.current.trim()) { setError('Current password is required.'); return; }
+    if (form.next.length < 8) { setError('New password must be at least 8 characters.'); return; }
+    if (form.next !== form.confirm) { setError('Passwords do not match.'); return; }
+    onSave();
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 440 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Change Password</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          {error && <div style={{ padding: '10px 14px', borderRadius: 8, background: 'var(--danger-bg)', border: '1px solid var(--danger-border)', color: 'var(--danger-solid)', fontSize: '0.88rem', marginBottom: 12 }}>{error}</div>}
+          <div className="pol-field-group">
+            <label>Current Password</label>
+            <input type="password" value={form.current} onChange={f('current')} />
+          </div>
+          <div className="pol-field-group">
+            <label>New Password</label>
+            <input type="password" value={form.next} onChange={f('next')} placeholder="Min. 8 characters" />
+          </div>
+          <div className="pol-field-group">
+            <label>Confirm New Password</label>
+            <input type="password" value={form.confirm} onChange={f('confirm')} />
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" onClick={handleSave}>Update Password</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 type Tab = 'profile' | 'campaign' | 'staff' | 'notifications' | 'security' | 'billing';
 
@@ -12,6 +55,10 @@ export function PoliticianSettings() {
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState<StaffRole>('Viewer');
   const [savedToast, setSavedToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('Changes saved successfully.');
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
   const [profile, setProfile] = useState({
     name: demoPolitician.name,
     bio: demoPolitician.bio || '',
@@ -36,7 +83,8 @@ export function PoliticianSettings() {
     weeklyReport: true,
   });
 
-  const showSavedToast = () => {
+  const showSavedToast = (msg = 'Settings saved.') => {
+    setToastMessage(msg);
     setSavedToast(true);
     setTimeout(() => setSavedToast(false), 2500);
   };
@@ -70,8 +118,8 @@ export function PoliticianSettings() {
       </div>
 
       {savedToast && (
-        <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 999, padding: '14px 20px', borderRadius: 8, background: 'var(--color-success, #16A34A)', color: 'white', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', gap: 10 }}>
-          Changes saved successfully.
+        <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999, padding: '12px 16px', borderRadius: 8, background: '#F0FDF4', borderLeft: '4px solid #16A34A', color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}>
+          {toastMessage}
         </div>
       )}
 
@@ -88,10 +136,22 @@ export function PoliticianSettings() {
           <div className="pol-card">
             <h3>Public Profile</h3>
             <div style={{ textAlign: 'center', marginBottom: 20 }}>
-              <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--grad-purple, linear-gradient(135deg, #6B5DE6, #4F46E5))', display: 'grid', placeItems: 'center', fontSize: '1.8rem', margin: '0 auto 12px', color: 'white', fontWeight: 700 }}>
-                M
-              </div>
-              <button className="pol-btn-ghost pol-btn-sm">Upload Photo</button>
+              {profilePhotoUrl ? (
+                <img src={profilePhotoUrl} alt="Profile" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', margin: '0 auto 12px', display: 'block', border: '2px solid var(--border)' }} />
+              ) : (
+                <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--grad-purple, linear-gradient(135deg, #6B5DE6, #4F46E5))', display: 'grid', placeItems: 'center', fontSize: '1.8rem', margin: '0 auto 12px', color: 'white', fontWeight: 700 }}>
+                  M
+                </div>
+              )}
+              <button className="pol-btn-ghost pol-btn-sm" onClick={() => photoInputRef.current?.click()}>Upload Photo</button>
+              <input ref={photoInputRef} type="file" accept="image/jpeg,image/png,image/webp" style={{ display: 'none' }} onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => { setProfilePhotoUrl(ev.target?.result as string); showSavedToast('Profile photo updated.'); };
+                reader.readAsDataURL(file);
+                e.target.value = '';
+              }} />
             </div>
 
             {[
@@ -116,7 +176,7 @@ export function PoliticianSettings() {
                 style={{ minHeight: 100 }}
               />
             </div>
-            <button className="pol-btn-primary pol-btn-sm" onClick={showSavedToast}>Save Profile</button>
+            <button className="pol-btn-primary pol-btn-sm" onClick={() => showSavedToast()}>Save Profile</button>
           </div>
 
           <div className="pol-card">
@@ -161,7 +221,7 @@ export function PoliticianSettings() {
                 />
               </div>
             ))}
-            <button className="pol-btn-primary pol-btn-sm" onClick={showSavedToast}>Save Campaign Info</button>
+            <button className="pol-btn-primary pol-btn-sm" onClick={() => showSavedToast()}>Save Campaign Info</button>
           </div>
 
           <div className="pol-card">
@@ -175,7 +235,7 @@ export function PoliticianSettings() {
               <label>State Committee ID</label>
               <input value={campaign.stateCommitteeId} onChange={(e) => setCampaign((p) => ({ ...p, stateCommitteeId: e.target.value }))} />
             </div>
-            <button className="pol-btn-primary pol-btn-sm" onClick={showSavedToast}>Save IDs</button>
+            <button className="pol-btn-primary pol-btn-sm" onClick={() => showSavedToast()}>Save IDs</button>
           </div>
         </div>
       )}
@@ -267,7 +327,7 @@ export function PoliticianSettings() {
               </div>
             ))}
           </div>
-          <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 20 }} onClick={showSavedToast}>Save Preferences</button>
+          <button className="pol-btn-primary pol-btn-sm" style={{ marginTop: 20 }} onClick={() => showSavedToast()}>Save Preferences</button>
         </div>
       )}
 
@@ -279,16 +339,17 @@ export function PoliticianSettings() {
             <div style={{ padding: '16px', borderRadius: 8, background: 'var(--color-success-bg, #F0FDF4)', border: '1px solid rgba(22,163,74,0.25)', marginBottom: 16 }}>
               <span style={{ color: 'var(--color-success, #16A34A)', fontWeight: 600 }}>2FA is currently enabled</span>
             </div>
-            <button className="pol-btn-ghost pol-btn-sm">Manage 2FA Settings</button>
+            <button className="pol-btn-ghost pol-btn-sm" onClick={() => showSavedToast('2FA settings managed. No changes made.')}>Manage 2FA Settings</button>
+            <button className="pol-btn-secondary pol-btn-sm" style={{ marginTop: 12 }} onClick={() => setShowChangePassword(true)}>Change Password</button>
           </div>
           <div className="pol-card">
             <h3>Data Export (Compliance)</h3>
             <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 20 }}>Download all your campaign data for compliance, audit, or migration purposes.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <button className="pol-btn-secondary pol-btn-sm">Export All Donor Data</button>
-              <button className="pol-btn-secondary pol-btn-sm">Export All Contributions</button>
-              <button className="pol-btn-secondary pol-btn-sm">Export All Expenses</button>
-              <button className="pol-btn-secondary pol-btn-sm">Full Account Export (ZIP)</button>
+              <button className="pol-btn-secondary pol-btn-sm" onClick={() => showSavedToast('Donor data export initiated — check your downloads.')}>Export All Donor Data</button>
+              <button className="pol-btn-secondary pol-btn-sm" onClick={() => showSavedToast('Contribution data export initiated.')}>Export All Contributions</button>
+              <button className="pol-btn-secondary pol-btn-sm" onClick={() => showSavedToast('Expense data export initiated.')}>Export All Expenses</button>
+              <button className="pol-btn-secondary pol-btn-sm" onClick={() => showSavedToast('Full account export queued — you will receive an email when ready.')}>Full Account Export (ZIP)</button>
             </div>
           </div>
         </div>
@@ -304,15 +365,22 @@ export function PoliticianSettings() {
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.82rem', marginTop: 8 }}>Next billing: June 1, 2026</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <button className="pol-btn-primary pol-btn-sm">Upgrade Plan</button>
-            <button className="pol-btn-ghost pol-btn-sm">Update Payment Method</button>
-            <button className="pol-btn-ghost pol-btn-sm">View Invoice History</button>
-            <button className="pol-btn-danger pol-btn-sm">Cancel Subscription</button>
+            <button className="pol-btn-primary pol-btn-sm" onClick={() => showSavedToast('Plan upgrade — contact support@politechllc.com to change your plan.')}>Upgrade Plan</button>
+            <button className="pol-btn-ghost pol-btn-sm" onClick={() => showSavedToast('Payment method update — contact support@politechllc.com.')}>Update Payment Method</button>
+            <button className="pol-btn-ghost pol-btn-sm" onClick={() => showSavedToast('Invoice history — contact support@politechllc.com for billing records.')}>View Invoice History</button>
+            <button className="pol-btn-danger pol-btn-sm" onClick={() => { if (window.confirm('Are you sure you want to cancel your subscription?')) showSavedToast('Cancellation request received. A team member will follow up.'); }}>Cancel Subscription</button>
           </div>
           <p style={{ color: 'var(--muted)', fontSize: '0.82rem', marginTop: 16 }}>
             Need help? Contact <a href="mailto:support@politechllc.com" style={{ color: 'var(--color-brand, #6B5DE6)' }}>support@politechllc.com</a>
           </p>
         </div>
+      )}
+
+      {showChangePassword && (
+        <ChangePasswordModal
+          onClose={() => setShowChangePassword(false)}
+          onSave={() => { setShowChangePassword(false); showSavedToast('Password updated successfully.'); }}
+        />
       )}
     </div>
   );

@@ -1,6 +1,89 @@
 import { useState } from 'react';
 import type { PolicyStance } from '../../types';
-import { demoPolicyStances } from '../../data/politicianData';
+import { demoPolicyStances, demoPolitician } from '../../data/politicianData';
+
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function PublicProfilePreviewModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 600 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Public Profile Preview</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body" style={{ padding: 0 }}>
+          {/* Styled like the voter-side profile */}
+          <div style={{ background: 'linear-gradient(135deg, #1e2444, #2d1b69)', padding: '28px 28px 20px', borderRadius: '0 0 0 0' }}>
+            <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+              <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #6B5DE6, #4F46E5)', display: 'grid', placeItems: 'center', fontSize: '1.6rem', color: 'white', fontWeight: 700, flexShrink: 0 }}>
+                {demoPolitician.name.charAt(0)}
+              </div>
+              <div>
+                <h2 style={{ margin: '0 0 4px', color: 'white', fontSize: '1.3rem' }}>{demoPolitician.name}</h2>
+                <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.88rem', marginBottom: 8 }}>{demoPolitician.office} · {demoPolitician.district}</div>
+                <span style={{ padding: '3px 10px', borderRadius: 999, background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', fontWeight: 600 }}>YOUR PARTY</span>
+              </div>
+            </div>
+          </div>
+          <div style={{ padding: '20px 28px' }}>
+            <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', marginBottom: 20 }}>
+              {[
+                { label: 'Year Elected', value: '2020' },
+                { label: 'Bills Sponsored', value: '7' },
+                { label: 'Committees', value: '3' },
+                { label: 'PoliCred', value: '84' },
+              ].map((s) => (
+                <div key={s.label} style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-brand, #6B5DE6)' }}>{s.value}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <h4 style={{ margin: '0 0 6px', fontSize: '0.88rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>About</h4>
+              <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--text)', margin: 0 }}>{demoPolitician.bio}</p>
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <h4 style={{ margin: '0 0 6px', fontSize: '0.88rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Committees</h4>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {['Education', 'Ways & Means', 'Local Government'].map((c) => (
+                  <span key={c} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim, rgba(107,93,230,0.1))', color: 'var(--color-brand, #6B5DE6)', fontSize: '0.8rem' }}>{c}</span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 style={{ margin: '0 0 6px', fontSize: '0.88rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Contact</h4>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text)' }}>
+                <div>{demoPolitician.website}</div>
+                <div>{demoPolitician.twitterHandle}</div>
+              </div>
+            </div>
+            <div style={{ marginTop: 20, padding: '12px 14px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)', fontSize: '0.78rem', color: 'var(--muted)', fontStyle: 'italic' }}>
+              This is a preview of your public PoliTech voter profile. Voters see this page when they search for you.
+            </div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-primary" onClick={onClose}>Close Preview</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 
 const STATUS_OPTIONS: PolicyStance['status'][] = ['answered', 'in-review', 'no-comment'];
@@ -40,6 +123,9 @@ export function PoliticianQuestionnaire() {
   const [editStatus, setEditStatus] = useState<PolicyStance['status']>('answered');
   const [editMode, setEditMode] = useState(false);
   const [filterCategory, setFilterCategory] = useState('All');
+  const [showProfilePreview, setShowProfilePreview] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const categories = ['All', ...Array.from(new Set(stances.map((s) => s.category)))];
   const filtered = filterCategory === 'All' ? stances : stances.filter((s) => s.category === filterCategory);
@@ -88,7 +174,7 @@ export function PoliticianQuestionnaire() {
           <p>Answer the PoliTech standardized questionnaire. Your responses appear on your public profile and inform PoliAI.</p>
         </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-secondary pol-btn-sm">Preview Public Profile</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowProfilePreview(true)}>Preview Public Profile</button>
         </div>
       </div>
 
@@ -199,7 +285,7 @@ export function PoliticianQuestionnaire() {
                     </select>
                   </div>
                   <div style={{ display: 'flex', gap: 10 }}>
-                    <button className="pol-btn-primary pol-btn-sm" onClick={saveStance}>Save Answer</button>
+                    <button className="pol-btn-primary pol-btn-sm" onClick={() => { saveStance(); showToast('Answer saved successfully.'); }}>Save Answer</button>
                     <button className="pol-btn-ghost pol-btn-sm" onClick={() => setEditMode(false)}>Cancel</button>
                   </div>
                 </>
@@ -245,6 +331,9 @@ export function PoliticianQuestionnaire() {
           )}
         </div>
       </div>
+
+      {showProfilePreview && <PublicProfilePreviewModal onClose={() => setShowProfilePreview(false)} />}
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

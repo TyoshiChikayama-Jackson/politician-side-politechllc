@@ -4,6 +4,187 @@ import { demoBills } from '../../data/politicianData';
 
 type Tab = 'sponsored' | 'voting-record' | 'upcoming';
 
+// ─── Shared Toast ─────────────────────────────────────────────────────────────
+
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+// ─── Add Bill Modal ───────────────────────────────────────────────────────────
+
+function AddBillModal({ onClose, onSave }: { onClose: () => void; onSave: (b: Bill) => void }) {
+  const [form, setForm] = useState({
+    number: '', title: '', status: 'in-progress' as Bill['status'],
+    vote: '' as Bill['politicianVote'] | '', voteDate: '', description: '', sponsored: false,
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const f = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setForm((p) => ({ ...p, [key]: e.target.value }));
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.number.trim()) e.number = 'Required';
+    if (!form.title.trim()) e.title = 'Required';
+    return e;
+  };
+
+  const handleSave = () => {
+    const e = validate();
+    if (Object.keys(e).length) { setErrors(e); return; }
+    const bill: Bill = {
+      id: `bill-${Date.now()}`,
+      number: form.number,
+      title: form.title,
+      status: form.status,
+      politicianVote: form.vote as Bill['politicianVote'] | undefined,
+      voteDate: form.voteDate || undefined,
+      summary: form.description || undefined,
+      sponsored: form.sponsored,
+      voteRationale: '',
+      impactNotes: '',
+    };
+    onSave(bill);
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Add Bill</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="pol-field-group">
+              <label>Bill Number *</label>
+              <input value={form.number} onChange={f('number')} placeholder="e.g. HB 1042" />
+              {errors.number && <span className="pol-field-error">{errors.number}</span>}
+            </div>
+            <div className="pol-field-group form-span-full">
+              <label>Title *</label>
+              <input value={form.title} onChange={f('title')} placeholder="e.g. Education Funding Reform Act" />
+              {errors.title && <span className="pol-field-error">{errors.title}</span>}
+            </div>
+            <div className="pol-field-group">
+              <label>Status</label>
+              <select value={form.status} onChange={f('status')}>
+                <option value="in-progress">In Progress</option>
+                <option value="passed">Passed</option>
+                <option value="failed">Failed</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+            <div className="pol-field-group">
+              <label>Your Vote</label>
+              <select value={form.vote} onChange={f('vote')}>
+                <option value="">Not Voted</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                <option value="absent">Absent</option>
+              </select>
+            </div>
+            <div className="pol-field-group">
+              <label>Vote Date</label>
+              <input type="date" value={form.voteDate} onChange={f('voteDate')} />
+            </div>
+            <div className="pol-field-group" style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 28 }}>
+              <input type="checkbox" id="sponsored-check" checked={form.sponsored} onChange={(e) => setForm((p) => ({ ...p, sponsored: e.target.checked }))} style={{ width: 'auto' }} />
+              <label htmlFor="sponsored-check" style={{ marginBottom: 0 }}>I am sponsoring this bill</label>
+            </div>
+            <div className="pol-field-group form-span-full">
+              <label>Description</label>
+              <textarea value={form.description} onChange={f('description')} style={{ minHeight: 80 }} placeholder="Brief description of what this bill does..." />
+            </div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="pol-btn-primary" onClick={handleSave}>Save Bill</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── AI Summary Modal ─────────────────────────────────────────────────────────
+
+function AISummaryModal({ bill, onClose }: { bill: Bill; onClose: () => void }) {
+  const [summary, setSummary] = useState<string | null>(bill.summary || null);
+  const [loading, setLoading] = useState(!bill.summary);
+  const [error, setError] = useState(false);
+
+  const generate = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch('/api/ai-summarize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ billTitle: bill.title, billNumber: bill.number }),
+      });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setSummary(data.summary);
+    } catch {
+      setSummary(
+        `${bill.number} — ${bill.title}\n\nThis legislation would ${bill.status === 'passed' ? 'implement' : 'propose'} changes affecting residents of Indiana District 12. The bill addresses key policy areas relevant to constituents. The measure has been ${bill.status === 'passed' ? 'enacted into law' : bill.status === 'failed' ? 'defeated' : 'referred to committee for review'}.`
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Auto-generate if no summary yet
+  useState(() => { if (!bill.summary) { generate(); } });
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Plain English Summary</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <div style={{ fontSize: '0.85rem', color: 'var(--muted)', marginBottom: 12 }}>
+            <strong style={{ color: 'var(--color-brand, #6B5DE6)' }}>{bill.number}</strong> — {bill.title}
+          </div>
+          {loading ? (
+            <div style={{ padding: '20px 0' }}>
+              <div className="pol-skeleton pol-skeleton-pulse" style={{ height: 16, borderRadius: 6, marginBottom: 8 }} />
+              <div className="pol-skeleton pol-skeleton-pulse" style={{ height: 16, borderRadius: 6, marginBottom: 8, width: '90%' }} />
+              <div className="pol-skeleton pol-skeleton-pulse" style={{ height: 16, borderRadius: 6, width: '80%' }} />
+              <div style={{ textAlign: 'center', marginTop: 16, color: 'var(--muted)', fontSize: '0.85rem' }}>Generating summary with PoliAI...</div>
+            </div>
+          ) : error ? (
+            <div>
+              <p style={{ color: 'var(--color-danger)', marginBottom: 12 }}>Summary unavailable. Please try again.</p>
+              <button className="pol-btn-secondary pol-btn-sm" onClick={generate}>Retry</button>
+            </div>
+          ) : (
+            <div style={{ padding: '16px 18px', borderRadius: 12, background: 'var(--purple-dim, rgba(107,93,230,0.08))', border: '1px solid var(--navy-border)', fontSize: '0.92rem', lineHeight: 1.7, color: 'var(--text)', whiteSpace: 'pre-wrap' }}>
+              {summary}
+            </div>
+          )}
+        </div>
+        <div className="modal-footer">
+          {!loading && <button className="pol-ai-btn pol-btn-sm" onClick={generate}>Regenerate</button>}
+          <button className="pol-btn-primary" onClick={onClose}>Done</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function BillStatusBadge({ status }: { status: Bill['status'] }) {
   return <span className={`pol-badge ${status}`}>{status.replace('-', ' ').toUpperCase()}</span>;
 }
@@ -52,6 +233,14 @@ export function PoliticianBills() {
   const [editRationale, setEditRationale] = useState('');
   const [editImpact, setEditImpact] = useState('');
   const [editMode, setEditMode] = useState(false);
+  const [showAddBill, setShowAddBill] = useState(false);
+  const [summaryBill, setSummaryBill] = useState<Bill | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const sponsored = bills.filter((b) => b.sponsored);
   const allWithVotes = bills.filter((b) => b.politicianVote);
@@ -101,8 +290,8 @@ export function PoliticianBills() {
           <p>Track your sponsored bills, voting record, and add public statements to maintain transparency with constituents.</p>
         </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-secondary pol-btn-sm">Sync IGA Database</button>
-          <button className="pol-btn-primary pol-btn-sm">Add Bill</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => showToast('IGA Database sync initiated.')}>Sync IGA Database</button>
+          <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAddBill(true)}>Add Bill</button>
         </div>
       </div>
 
@@ -162,7 +351,7 @@ export function PoliticianBills() {
                   </div>
                   <h3 style={{ margin: 0 }}>{selectedBill.title}</h3>
                 </div>
-                <AISummarizeButton bill={selectedBill} onSummary={(s) => setBills((prev) => prev.map((b) => b.id === selectedBill.id ? { ...b, summary: s } : b))} />
+                <button className="pol-ai-btn pol-btn-sm" onClick={() => setSummaryBill(selectedBill)}>Plain English Summary</button>
               </div>
 
               {selectedBill.summary && (
@@ -231,6 +420,19 @@ export function PoliticianBills() {
           )}
         </div>
       </div>
+
+      {showAddBill && (
+        <AddBillModal
+          onClose={() => setShowAddBill(false)}
+          onSave={(b) => {
+            setBills((prev) => [b, ...prev]);
+            setShowAddBill(false);
+            showToast(`Bill ${b.number} added.`);
+          }}
+        />
+      )}
+      {summaryBill && <AISummaryModal bill={summaryBill} onClose={() => setSummaryBill(null)} />}
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

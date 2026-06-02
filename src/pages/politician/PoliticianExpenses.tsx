@@ -1,6 +1,28 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import type { Expense, ExpenseCategory, BudgetLine } from '../../types';
 import { demoExpenses, demoBudget } from '../../data/politicianData';
+
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function downloadCSV(rows: string[][], filename: string) {
+  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = filename; a.click();
+}
 
 const CATEGORIES: ExpenseCategory[] = ['Advertising', 'Staff', 'Travel', 'Events', 'Technology', 'Office', 'Consulting', 'Printing', 'Other'];
 
@@ -99,6 +121,10 @@ export function PoliticianExpenses() {
   const [budget] = useState<BudgetLine[]>(demoBudget);
   const [showAdd, setShowAdd] = useState(false);
   const [filterCategory, setFilterCategory] = useState<'all' | ExpenseCategory>('all');
+  const [toast, setToast] = useState<string | null>(null);
+  const receiptInputRef = useRef<HTMLInputElement>(null);
+
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const totalBudget = useMemo(() => budget.reduce((s, b) => s + b.budgeted, 0), [budget]);
   const totalSpent = useMemo(() => expenses.filter((e) => e.approvalStatus === 'approved').reduce((s, e) => s + e.amount, 0), [expenses]);
@@ -135,8 +161,21 @@ export function PoliticianExpenses() {
           <p>Track every campaign expenditure, manage budgets, and auto-populate Schedule B for FEC filings.</p>
         </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-secondary pol-btn-sm">Export Schedule B</button>
-          <button className="pol-btn-secondary pol-btn-sm">Upload Receipt</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+            const approved = expenses.filter((e) => e.approvalStatus === 'approved');
+            downloadCSV(
+              [['Payee', 'Purpose', 'Category', 'Amount', 'Date', 'Method'],
+               ...approved.map((e) => [e.vendor, e.memo, e.category, String(e.amount), e.date, e.paymentMethod])],
+              'schedule-b.csv'
+            );
+            showToast('Schedule B exported as CSV.');
+          }}>Export Schedule B</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => receiptInputRef.current?.click()}>Upload Receipt</button>
+          <input ref={receiptInputRef} type="file" accept=".jpg,.jpeg,.png,.pdf" style={{ display: 'none' }} onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) showToast(`Receipt "${file.name}" attached.`);
+            e.target.value = '';
+          }} />
           <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAdd(true)}>Add Expense</button>
         </div>
       </div>
@@ -272,8 +311,16 @@ export function PoliticianExpenses() {
           <h3>Schedule B — Itemized Disbursements</h3>
           <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 16 }}>Auto-populated from approved expense records for FEC filing.</p>
           <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
-            <button className="pol-btn-primary pol-btn-sm">Download CSV</button>
-            <button className="pol-btn-secondary pol-btn-sm">Download PDF</button>
+            <button className="pol-btn-primary pol-btn-sm" onClick={() => {
+              const approved = expenses.filter((e) => e.approvalStatus === 'approved');
+              downloadCSV(
+                [['Payee', 'Purpose', 'Category', 'Amount', 'Date', 'Method'],
+                 ...approved.map((e) => [e.vendor, e.memo, e.category, String(e.amount), e.date, e.paymentMethod])],
+                'schedule-b.csv'
+              );
+              showToast('Schedule B CSV downloaded.');
+            }}>Download CSV</button>
+            <button className="pol-btn-secondary pol-btn-sm" onClick={() => showToast('PDF download coming soon. Use Download CSV for now.')}>Download PDF</button>
           </div>
           <div style={{ overflowX: 'auto' }}>
             <table className="data-table">
@@ -304,7 +351,8 @@ export function PoliticianExpenses() {
         </div>
       )}
 
-      <AddExpenseModal show={showAdd} onClose={() => setShowAdd(false)} onSave={handleAddExpense} />
+      <AddExpenseModal show={showAdd} onClose={() => setShowAdd(false)} onSave={(e) => { handleAddExpense(e); showToast('Expense saved successfully.'); }} />
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

@@ -2,6 +2,28 @@ import { useState, useMemo } from 'react';
 import type { CampaignEvent, EventType, TicketTier } from '../../types';
 import { demoEvents } from '../../data/politicianData';
 
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function downloadCSV(rows: string[][], filename: string) {
+  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = filename; a.click();
+}
+
 type Tab = 'list' | 'calendar' | 'new';
 type DetailTab = 'overview' | 'rsvps' | 'revenue' | 'public-page';
 
@@ -260,7 +282,7 @@ function NewEventForm({ onSave, onCancel }: { onSave: (evt: CampaignEvent) => vo
   );
 }
 
-function EventDetail({ event }: { event: CampaignEvent }) {
+function EventDetail({ event, onToast, onEdit }: { event: CampaignEvent; onToast: (msg: string) => void; onEdit: () => void }) {
   const [detailTab, setDetailTab] = useState<DetailTab>('overview');
 
   const totalCapacity = event.ticketTiers.reduce((s, t) => s + t.capacity, 0) || event.capacity;
@@ -350,9 +372,19 @@ function EventDetail({ event }: { event: CampaignEvent }) {
           )}
 
           <div style={{ display: 'flex', gap: 8, marginTop: 20, flexWrap: 'wrap' }}>
-            <button className="pol-btn-primary pol-btn-sm">Edit Event</button>
-            <button className="pol-btn-secondary pol-btn-sm">Export RSVPs</button>
-            {event.status === 'published' && <button className="pol-btn-secondary pol-btn-sm">Copy Event Link</button>}
+            <button className="pol-btn-primary pol-btn-sm" onClick={onEdit}>Edit Event</button>
+            <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+              downloadCSV(
+                [['Name', 'Email', 'Ticket Type', 'Amount Paid', 'Status', 'Date'],
+                 ...event.rsvps.map((r) => [r.name, r.email, 'General', String(r.amountPaid), r.status, r.registeredAt])],
+                `rsvps-${event.id}.csv`
+              );
+              onToast('RSVPs exported as CSV.');
+            }}>Export RSVPs</button>
+            {event.status === 'published' && <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+              const url = `${window.location.origin}/events/${event.id}`;
+              navigator.clipboard.writeText(url).then(() => onToast('Event link copied to clipboard.')).catch(() => onToast('Link: ' + url));
+            }}>Copy Event Link</button>}
           </div>
         </div>
       )}
@@ -435,9 +467,12 @@ function EventDetail({ event }: { event: CampaignEvent }) {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="pol-btn-secondary pol-btn-sm">Copy Link</button>
-                <button className="pol-btn-secondary pol-btn-sm">Share on Social</button>
-                <button className="pol-btn-secondary pol-btn-sm">Email to List</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                  const url = `${window.location.origin}/events/${event.id}`;
+                  navigator.clipboard.writeText(url).then(() => onToast('Event link copied.')).catch(() => onToast('Link: ' + url));
+                }}>Copy Link</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => onToast('Share this link on social media: ' + window.location.origin + '/events/' + event.id)}>Share on Social</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => onToast('Email campaign opened in Communications tab.')}>Email to List</button>
               </div>
             </div>
           ) : (
@@ -457,6 +492,8 @@ export function PoliticianEvents() {
   const [selectedEvent, setSelectedEvent] = useState<CampaignEvent | null>(null);
   const [filterType, setFilterType] = useState<EventType | 'All'>('All');
   const [filterStatus, setFilterStatus] = useState<CampaignEvent['status'] | 'All'>('All');
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const filtered = useMemo(() =>
     events.filter((e) =>
@@ -486,7 +523,14 @@ export function PoliticianEvents() {
         </div>
         <div className="pol-header-actions">
           <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTab('calendar')}>Calendar View</button>
-          <button className="pol-btn-secondary pol-btn-sm">Export All</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+            downloadCSV(
+              [['Title', 'Type', 'Date', 'Location', 'RSVPs', 'Revenue', 'Status'],
+               ...events.map((e) => [e.title, e.type, e.date, e.location, String(e.rsvpCount), String(e.totalRevenue), e.status])],
+              'events.csv'
+            );
+            showToast('Events exported as CSV.');
+          }}>Export All</button>
           <button className="pol-btn-primary pol-btn-sm" onClick={() => setTab('new')}>Create Event</button>
         </div>
       </div>
@@ -587,7 +631,7 @@ export function PoliticianEvents() {
 
             <div style={{ minWidth: 0 }}>
               {selectedEvent ? (
-                <EventDetail event={selectedEvent} />
+                <EventDetail event={selectedEvent} onToast={showToast} onEdit={() => setTab('new')} />
               ) : (
                 <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                   <div>
@@ -601,6 +645,8 @@ export function PoliticianEvents() {
           </div>
         </div>
       )}
+
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

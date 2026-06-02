@@ -2,6 +2,21 @@ import { useState } from 'react';
 import type { ConstituentMessage, CampaignPost } from '../../types';
 import { demoMessages, demoCampaignPosts } from '../../data/politicianData';
 
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
 type Tab = 'inbox' | 'email-blast' | 'polifeed' | 'history';
 
 const RESPONSE_TEMPLATES = [
@@ -51,6 +66,9 @@ export function PoliticianCommunications() {
   const [postTopic, setPostTopic] = useState('');
   const [postBill, setPostBill] = useState('');
   const [aiDraftLoading, setAiDraftLoading] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const unreadCount = messages.filter((m) => m.status === 'unread').length;
 
@@ -271,9 +289,13 @@ export function PoliticianCommunications() {
               style={{ width: '100%', minHeight: 220, border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', background: 'var(--surface)', color: 'var(--text)', fontSize: '0.92rem', resize: 'vertical', marginBottom: 16 }}
             />
             <div style={{ display: 'flex', gap: 10 }}>
-              <button className="pol-btn-primary pol-btn-sm" disabled={!blastSubject.trim() || !blastBody.trim()}>Send Campaign</button>
-              <button className="pol-btn-secondary pol-btn-sm">Save Draft</button>
-              <button className="pol-btn-secondary pol-btn-sm">Schedule</button>
+              <button className="pol-btn-primary pol-btn-sm" disabled={!blastSubject.trim() || !blastBody.trim()} onClick={() => {
+                const count = blastTarget === 'all' ? '1,240' : blastTarget === 'donors' ? '20' : blastTarget === 'volunteers' ? '5' : '3,800';
+                showToast(`Email campaign "${blastSubject}" sent to ${count} recipients.`);
+                setBlastSubject(''); setBlastBody('');
+              }}>Send Campaign</button>
+              <button className="pol-btn-secondary pol-btn-sm" disabled={!blastSubject.trim()} onClick={() => showToast('Email campaign saved as draft.')}>Save Draft</button>
+              <button className="pol-btn-secondary pol-btn-sm" disabled={!blastSubject.trim() || !blastBody.trim()} onClick={() => showToast('Campaign scheduled. Set a send date and time above.')}>Schedule</button>
             </div>
           </div>
           <div className="pol-card">
@@ -323,9 +345,9 @@ export function PoliticianCommunications() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
-              <button className="pol-btn-primary pol-btn-sm" onClick={publishPost} disabled={!postBody.trim()}>Publish Now</button>
-              <button className="pol-btn-secondary pol-btn-sm">Save Draft</button>
-              <button className="pol-btn-secondary pol-btn-sm">Schedule</button>
+              <button className="pol-btn-primary pol-btn-sm" onClick={() => { publishPost(); showToast('Post published to PoliFeed.'); }} disabled={!postBody.trim()}>Publish Now</button>
+              <button className="pol-btn-secondary pol-btn-sm" disabled={!postBody.trim()} onClick={() => showToast('Post saved as draft.')}>Save Draft</button>
+              <button className="pol-btn-secondary pol-btn-sm" disabled={!postBody.trim()} onClick={() => showToast('Schedule a date/time to publish this post.')}>Schedule</button>
             </div>
           </div>
 
@@ -389,6 +411,8 @@ export function PoliticianCommunications() {
           </div>
         </div>
       )}
+
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

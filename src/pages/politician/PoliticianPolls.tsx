@@ -2,6 +2,56 @@ import { useState, useMemo } from 'react';
 import type { Survey, SurveyQuestion, QuestionType } from '../../types';
 import { demoSurveys } from '../../data/politicianData';
 
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function ShareSurveyModal({ survey, onClose }: { survey: Survey; onClose: () => void }) {
+  const url = `${window.location.origin}/survey/${survey.id}`;
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(url).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); }).catch(() => {});
+  };
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" style={{ maxWidth: 480 }} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h3>Share Survey</h3>
+          <button className="close-button" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 16 }}>Share this link with constituents to collect responses for "{survey.title}".</p>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '12px 14px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)' }}>
+            <div style={{ flex: 1, fontSize: '0.85rem', color: 'var(--color-brand, #6B5DE6)', fontWeight: 600, overflowWrap: 'break-word', wordBreak: 'break-all' }}>{url}</div>
+            <button className="pol-btn-primary pol-btn-sm" onClick={copy} style={{ flexShrink: 0 }}>{copied ? 'Copied!' : 'Copy Link'}</button>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button className="pol-btn-primary" onClick={onClose}>Done</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function downloadCSV(rows: string[][], filename: string) {
+  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = filename; a.click();
+}
+
 type View = 'library' | 'create';
 type CreateStep = 1 | 2 | 3;
 
@@ -19,7 +69,7 @@ const STATUS_COLORS: Record<Survey['status'], string> = {
   closed: 'in-progress',
 };
 
-function SurveyResultsPanel({ survey }: { survey: Survey }) {
+function SurveyResultsPanel({ survey, onToast, onShare, onClose: onCloseSurvey }: { survey: Survey; onToast: (msg: string) => void; onShare: (s: Survey) => void; onClose: (id: string) => void }) {
   const [aiLoading, setAiLoading] = useState(false);
   const [themes, setThemes] = useState<string[]>(survey.aiThemes || []);
 
@@ -129,10 +179,24 @@ function SurveyResultsPanel({ survey }: { survey: Survey }) {
       )}
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-        <button className="pol-btn-secondary pol-btn-sm">Export Results</button>
-        <button className="pol-btn-secondary pol-btn-sm">Download CSV</button>
-        {survey.status === 'active' && <button className="pol-btn-secondary pol-btn-sm">Share Survey</button>}
-        {survey.status === 'active' && <button className="pol-btn-ghost pol-btn-sm">Close Survey</button>}
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+          downloadCSV(
+            [['Question', 'Type', 'Responses (est.)'],
+             ...survey.questions.map((q) => [q.text, q.type, String(Math.round(survey.responseCount * 0.7))])],
+            `results-${survey.id}.csv`
+          );
+          onToast('Survey results exported as CSV.');
+        }}>Export Results</button>
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+          downloadCSV(
+            [['Question', 'Type', 'Options', 'Required'],
+             ...survey.questions.map((q) => [q.text, q.type, (q.options || []).join('; '), String(q.required)])],
+            `survey-${survey.id}.csv`
+          );
+          onToast('Survey data downloaded as CSV.');
+        }}>Download CSV</button>
+        {survey.status === 'active' && <button className="pol-btn-secondary pol-btn-sm" onClick={() => onShare(survey)}>Share Survey</button>}
+        {survey.status === 'active' && <button className="pol-btn-ghost pol-btn-sm" onClick={() => { onCloseSurvey(survey.id); onToast(`Survey "${survey.title}" closed.`); }}>Close Survey</button>}
       </div>
     </div>
   );
@@ -414,6 +478,14 @@ export function PoliticianPolls() {
   const [view, setView] = useState<View>('library');
   const [surveys, setSurveys] = useState<Survey[]>(demoSurveys);
   const [selectedSurvey, setSelectedSurvey] = useState<Survey | null>(null);
+  const [sharingSurvey, setSharingSurvey] = useState<Survey | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
+
+  const handleCloseSurvey = (id: string) => {
+    setSurveys((prev) => prev.map((s) => s.id === id ? { ...s, status: 'closed' as const } : s));
+    setSelectedSurvey((prev) => prev && prev.id === id ? { ...prev, status: 'closed' as const } : prev);
+  };
 
   const activeCount = surveys.filter((s) => s.status === 'active').length;
   const totalResponses = surveys.reduce((s, sv) => s + sv.responseCount, 0);
@@ -503,7 +575,7 @@ export function PoliticianPolls() {
 
           <div style={{ minWidth: 0 }}>
             {selectedSurvey ? (
-              <SurveyResultsPanel survey={selectedSurvey} />
+              <SurveyResultsPanel survey={selectedSurvey} onToast={showToast} onShare={setSharingSurvey} onClose={handleCloseSurvey} />
             ) : (
               <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
                 <div>
@@ -517,6 +589,8 @@ export function PoliticianPolls() {
         </div>
       )}
 
+      {sharingSurvey && <ShareSurveyModal survey={sharingSurvey} onClose={() => setSharingSurvey(null)} />}
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

@@ -2,6 +2,29 @@ import { useState, useMemo } from 'react';
 import type { AdCampaign, AdPlatform, AdGoal, AdVariant } from '../../types';
 import { demoAds } from '../../data/politicianData';
 
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function copyText(text: string, onDone: () => void) {
+  navigator.clipboard.writeText(text).then(onDone).catch(() => {
+    const ta = document.createElement('textarea'); ta.value = text;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); onDone();
+  });
+}
+
 type View = 'library' | 'create';
 type CreateStep = 1 | 2 | 3 | 4;
 
@@ -45,13 +68,18 @@ function AdLibrary({
   ads,
   onSelect,
   onCreateNew,
+  onToast,
+  onApprove,
 }: {
   ads: AdCampaign[];
   onSelect: (ad: AdCampaign) => void;
   onCreateNew: () => void;
+  onToast: (msg: string) => void;
+  onApprove: (adId: string) => void;
 }) {
   const [selectedAd, setSelectedAd] = useState<AdCampaign | null>(null);
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
+  const [copiedVariantId, setCopiedVariantId] = useState<string | null>(null);
 
   const handleSelect = (ad: AdCampaign) => {
     setSelectedAd(ad);
@@ -176,9 +204,25 @@ function AdLibrary({
               </div>
 
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                <button className="pol-btn-secondary pol-btn-sm">Copy Text</button>
-                <button className="pol-btn-secondary pol-btn-sm">Export</button>
-                <button className="pol-btn-secondary pol-btn-sm">Mark Approved</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                  const v = selectedAd.variants[selectedVariantIdx];
+                  if (!v) return;
+                  const text = `${v.headline}\n\n${v.body}\n\nCTA: ${v.cta}\n\nPaid for by Johnson for State House. Sandra K. Moore, Treasurer.`;
+                  copyText(text, () => { setCopiedVariantId(v.id); setTimeout(() => setCopiedVariantId(null), 2000); });
+                }}>{copiedVariantId === selectedAd.variants[selectedVariantIdx]?.id ? 'Copied!' : 'Copy Text'}</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                  const lines = selectedAd.variants.map((v, i) =>
+                    `Variant ${String.fromCharCode(65 + i)}\n${'─'.repeat(40)}\nHeadline: ${v.headline}\n\n${v.body}\n\nCTA: ${v.cta}\n`
+                  ).join('\n');
+                  const text = `${selectedAd.name}\nPlatform: ${selectedAd.platform} | Goal: ${selectedAd.goal}\n\n${lines}\nPaid for by Johnson for State House. Sandra K. Moore, Treasurer.`;
+                  const blob = new Blob([text], { type: 'text/plain' });
+                  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${selectedAd.name}.txt`; a.click();
+                  onToast('Ad copy exported.');
+                }}>Export</button>
+                <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+                  onApprove(selectedAd.id);
+                  onToast(`"${selectedAd.name}" marked as compliance approved.`);
+                }}>Mark Approved</button>
               </div>
             </div>
           ) : (
@@ -472,10 +516,17 @@ export function PoliticianAds() {
   const [view, setView] = useState<View>('library');
   const [ads, setAds] = useState<AdCampaign[]>(demoAds);
   const [_selectedAd, setSelectedAd] = useState<AdCampaign | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const handleSaveAd = (ad: AdCampaign) => {
     setAds((prev) => [ad, ...prev]);
     setView('library');
+    showToast(`Ad campaign "${ad.name}" saved to library.`);
+  };
+
+  const handleApprove = (adId: string) => {
+    setAds((prev) => prev.map((a) => a.id === adId ? { ...a, complianceApproved: true } : a));
   };
 
   return (
@@ -492,12 +543,14 @@ export function PoliticianAds() {
       </div>
 
       {view === 'library' && (
-        <AdLibrary ads={ads} onSelect={setSelectedAd} onCreateNew={() => setView('create')} />
+        <AdLibrary ads={ads} onSelect={setSelectedAd} onCreateNew={() => setView('create')} onToast={showToast} onApprove={handleApprove} />
       )}
 
       {view === 'create' && (
         <AdCreator onSave={handleSaveAd} onCancel={() => setView('library')} />
       )}
+
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

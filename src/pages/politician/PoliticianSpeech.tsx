@@ -2,6 +2,33 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import type { Speech, SpeechType } from '../../types';
 import { demoSpeeches } from '../../data/politicianData';
 
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function copyToClipboard(text: string, onDone: () => void) {
+  navigator.clipboard.writeText(text).then(onDone).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    onDone();
+  });
+}
+
 type View = 'library' | 'create' | 'edit';
 type CreateStep = 1 | 2 | 3 | 4;
 
@@ -343,7 +370,11 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
           <div style={{ display: 'flex', gap: 10 }}>
             <button className="pol-btn-ghost pol-btn-sm" onClick={() => setStep(3)}>← Back</button>
             <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>Save to Library</button>
-            <button className="pol-btn-secondary pol-btn-sm">Export as PDF</button>
+            <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+              const text = `${form.title || form.type + ': ' + form.topic}\n${'─'.repeat(60)}\n\n${content}`;
+              const blob = new Blob([text], { type: 'text/plain' });
+              const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${form.title || 'speech'}.txt`; a.click();
+            }}>Export as PDF</button>
           </div>
         </div>
       )}
@@ -353,9 +384,10 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
 
 // ─── Speech Editor ────────────────────────────────────────────────────────────
 
-function SpeechEditor({ speech, onUpdate, onClose }: { speech: Speech; onUpdate: (s: Speech) => void; onClose: () => void }) {
+function SpeechEditor({ speech, onUpdate, onClose, onToast }: { speech: Speech; onUpdate: (s: Speech) => void; onClose: () => void; onToast: (msg: string) => void }) {
   const [content, setContent] = useState(speech.content);
   const [teleprompter, setTeleprompter] = useState(false);
+  const [copied, setCopied] = useState(false);
   const wc = wordCount(content);
   const mins = estimateMinutes(wc);
 
@@ -423,10 +455,17 @@ function SpeechEditor({ speech, onUpdate, onClose }: { speech: Speech; onUpdate:
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: 10 }}>
-        <button className="pol-btn-primary pol-btn-sm" onClick={handleSave}>Save Changes</button>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <button className="pol-btn-primary pol-btn-sm" onClick={() => { handleSave(); onToast('Speech saved to library.'); }}>Save Changes</button>
         <button className="pol-btn-secondary pol-btn-sm" onClick={() => setTeleprompter(true)}>Launch Teleprompter</button>
-        <button className="pol-btn-secondary pol-btn-sm">Export</button>
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+          copyToClipboard(content, () => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+        }}>{copied ? 'Copied!' : 'Copy Text'}</button>
+        <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+          const blob = new Blob([`${speech.title}\n${'─'.repeat(60)}\n\n${content}`], { type: 'text/plain' });
+          const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${speech.title || 'speech'}.txt`; a.click();
+          onToast('Speech exported as text file.');
+        }}>Export</button>
         <button className="pol-btn-ghost pol-btn-sm" onClick={onClose}>Cancel</button>
       </div>
     </div>
@@ -441,6 +480,8 @@ export function PoliticianSpeech() {
   const [selectedSpeech, setSelectedSpeech] = useState<Speech | null>(null);
   const [filterType, setFilterType] = useState<SpeechType | 'All'>('All');
   const [teleprompterSpeech, setTeleprompterSpeech] = useState<Speech | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const filtered = useMemo(() =>
     filterType === 'All' ? speeches : speeches.filter((s) => s.type === filterType),
@@ -571,6 +612,7 @@ export function PoliticianSpeech() {
                   speech={selectedSpeech}
                   onUpdate={handleUpdate}
                   onClose={() => setView('library')}
+                  onToast={showToast}
                 />
               ) : (
                 <div className="pol-card" style={{ display: 'grid', placeItems: 'center', minHeight: 300, color: 'var(--muted)', textAlign: 'center' }}>
@@ -586,6 +628,8 @@ export function PoliticianSpeech() {
           </div>
         </div>
       )}
+
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }

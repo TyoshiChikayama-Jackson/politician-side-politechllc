@@ -1,9 +1,31 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import type { DonorFull, Contribution } from '../../types';
 import {
   demoDonors,
   demoContributions,
 } from '../../data/politicianData';
+
+function SuccessToast({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      background: '#F0FDF4', borderLeft: '4px solid #16A34A',
+      padding: '12px 16px', borderRadius: 8, fontSize: 14,
+      color: '#14532D', boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+      display: 'flex', alignItems: 'center', gap: 12,
+    }}>
+      <span>{message}</span>
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#14532D', fontSize: 16 }}>✕</button>
+    </div>
+  );
+}
+
+function downloadCSV(rows: string[][], filename: string) {
+  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = filename; a.click();
+}
 
 type Tab = 'crm' | 'contributions' | 'compliance' | 'reports';
 type FilterStatus = 'all' | 'active' | 'lapsed' | 'maxed-out';
@@ -290,6 +312,10 @@ export function PoliticianDonors() {
   const [showAddDonor, setShowAddDonor] = useState(false);
   const [showAddContrib, setShowAddContrib] = useState(false);
   const [contribDonor, setContribDonor] = useState<DonorFull | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const csvInputRef = useRef<HTMLInputElement>(null);
+
+  const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const filteredDonors = useMemo(() => {
     return donors.filter((d) => {
@@ -343,8 +369,16 @@ export function PoliticianDonors() {
           <p>Donor CRM with real-time contribution limit enforcement and FEC reporting.</p>
         </div>
         <div className="pol-header-actions">
-          <button className="pol-btn-secondary pol-btn-sm">Import CSV</button>
-          <button className="pol-btn-secondary pol-btn-sm">Export FEC Report</button>
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => csvInputRef.current?.click()}>Import CSV</button>
+          <input ref={csvInputRef} type="file" accept=".csv" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) showToast(`File "${f.name}" uploaded. Import processing (demo mode).`); e.target.value = ''; }} />
+          <button className="pol-btn-secondary pol-btn-sm" onClick={() => {
+            downloadCSV(
+              [['First Name', 'Last Name', 'Email', 'Employer', 'City', 'State', 'Cycle Total', 'Status'],
+               ...donors.map((d) => [d.firstName, d.lastName, d.email, d.employer, d.city, d.state, String(d.cycleTotal), d.status])],
+              'fec-report.csv'
+            );
+            showToast('FEC donor report exported.');
+          }}>Export FEC Report</button>
           <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowAddDonor(true)}>Add Donor</button>
         </div>
       </div>
@@ -695,9 +729,19 @@ export function PoliticianDonors() {
             </div>
 
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 4 }}>
-              <button className="pol-btn-primary pol-btn-sm">Download CSV</button>
-              <button className="pol-btn-secondary pol-btn-sm">Download PDF</button>
-              <button className="pol-btn-secondary pol-btn-sm">Download .FEC</button>
+              <button className="pol-btn-primary pol-btn-sm" onClick={() => {
+                downloadCSV(
+                  [['Donor', 'Amount', 'Date', 'Method', 'Employer'],
+                   ...contributions.filter((c) => c.complianceStatus !== 'violation').map((c) => {
+                     const d = donors.find((dd) => dd.id === c.donorId);
+                     return [c.donorName, String(c.amount), c.date, c.method, d?.employer || ''];
+                   })],
+                  'schedule-a.csv'
+                );
+                showToast('FEC Schedule A downloaded as CSV.');
+              }}>Download CSV</button>
+              <button className="pol-btn-secondary pol-btn-sm" onClick={() => showToast('PDF export coming soon. Use Download CSV for now.')}>Download PDF</button>
+              <button className="pol-btn-secondary pol-btn-sm" onClick={() => showToast('.FEC file format export coming soon.')}>Download .FEC</button>
             </div>
 
             <div style={{ marginTop: 24 }}>
@@ -748,8 +792,9 @@ export function PoliticianDonors() {
         </div>
       )}
 
-      <AddDonorModal show={showAddDonor} onClose={() => setShowAddDonor(false)} onSave={handleAddDonor} />
-      <AddContributionModal show={showAddContrib} donor={contribDonor} onClose={() => setShowAddContrib(false)} onSave={handleAddContribution} />
+      <AddDonorModal show={showAddDonor} onClose={() => setShowAddDonor(false)} onSave={(d) => { handleAddDonor(d); showToast(`Donor ${d.firstName} ${d.lastName} added.`); }} />
+      <AddContributionModal show={showAddContrib} donor={contribDonor} onClose={() => setShowAddContrib(false)} onSave={(c) => { handleAddContribution(c); showToast(`Contribution of $${c.amount.toLocaleString()} recorded.`); }} />
+      {toast && <SuccessToast message={toast} onDismiss={() => setToast(null)} />}
     </div>
   );
 }
