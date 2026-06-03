@@ -301,7 +301,6 @@ export function PoliticianOverview() {
             <span style={{ fontSize: 20, fontWeight: 600, color: 'var(--text-primary)' }}>
               {demoPolitician.name}
             </span>
-            <span className="pol-badge party-neutral">Your Party</span>
           </div>
           <div style={{ fontSize: 13, color: 'var(--text-tertiary)', marginBottom: 16 }}>
             {demoPolitician.office} · {demoPolitician.district}
@@ -324,15 +323,15 @@ export function PoliticianOverview() {
         </div>
       </div>
 
-      {/* Action buttons — secondary style row */}
+      {/* Action buttons — flat text row with dividers */}
       <div style={{
-        display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20,
-        padding: '12px 0', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)',
+        display: 'flex', alignItems: 'center', gap: 0, marginBottom: 20,
+        borderBottom: '1px solid var(--border-default)', paddingBottom: 16,
       }}>
-        <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowNewPost(true)}>New Post</button>
-        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowAddDonor(true)}>Add Donor</button>
-        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowLogExpense(true)}>Log Expense</button>
-        <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowEmailCampaign(true)}>New Email Campaign</button>
+        <button onClick={() => setShowNewPost(true)} style={{ background: 'none', border: 'none', borderRight: '1px solid var(--border-default)', padding: '6px 16px 6px 0', fontSize: 13, fontWeight: 600, color: 'var(--brand-primary)', cursor: 'pointer', fontFamily: 'inherit' }}>New Post</button>
+        <button onClick={() => setShowAddDonor(true)} style={{ background: 'none', border: 'none', borderRight: '1px solid var(--border-default)', padding: '6px 16px', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer', fontFamily: 'inherit' }}>Add Donor</button>
+        <button onClick={() => setShowLogExpense(true)} style={{ background: 'none', border: 'none', borderRight: '1px solid var(--border-default)', padding: '6px 16px', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer', fontFamily: 'inherit' }}>Log Expense</button>
+        <button onClick={() => setShowEmailCampaign(true)} style={{ background: 'none', border: 'none', padding: '6px 16px', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer', fontFamily: 'inherit' }}>New Email Campaign</button>
       </div>
 
       {/* Stat cards */}
@@ -414,8 +413,7 @@ export function PoliticianOverview() {
           <h3>Recent Activity</h3>
           <div className="pol-activity-feed">
             {recentActivity.map((item, i) => (
-              <div key={i} className="pol-activity-item">
-                <div className={`pol-activity-dot ${item.color}`} />
+              <div key={i} className={`pol-activity-item ${item.color}`}>
                 <div className="pol-activity-content">
                   <strong>{item.label}</strong>
                   <span>{item.time}</span>

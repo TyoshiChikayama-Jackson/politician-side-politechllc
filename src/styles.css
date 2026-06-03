@@ -9,7 +9,7 @@
 [data-theme="light"] {
 
   /* --- Page structure --- */
-  --bg-page:            #F4F5F7;   /* cool light gray — not pure white */
+  --bg-page:            #FAFAFA;   /* very slightly off-white, not gray */
   --bg-surface:         #FFFFFF;
   --bg-surface-raised:  #FFFFFF;
   --bg-sidebar:         #1C2333;   /* dark navy sidebar */
@@ -431,9 +431,9 @@ button, input, textarea, select {
 .section-panel {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
-  border-radius: 28px;
-  padding: 26px;
-  box-shadow: var(--shadow-card);
+  border-radius: var(--border-radius-sm);
+  padding: 24px;
+  box-shadow: none;
 }
 
 .section-title {
@@ -689,9 +689,9 @@ button, input, textarea, select {
 .card {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
-  border-radius: 24px;
+  border-radius: var(--border-radius-sm);
   padding: 24px;
-  box-shadow: var(--shadow-card);
+  box-shadow: none;
 }
 
 .card h3 {
@@ -765,11 +765,12 @@ button, input, textarea, select {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  background: var(--brand-dim);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  background: none;
   color: var(--brand-primary);
+  border: 1px solid var(--brand-border);
 }
 
 .button-group {
@@ -861,21 +862,23 @@ textarea {
 }
 
 .summary-pill {
-  padding: 10px 14px;
-  border-radius: 999px;
+  padding: 4px 10px;
+  border-radius: 3px;
   border: 1px solid var(--brand-border);
-  background: var(--brand-dim);
+  background: none;
   color: var(--brand-primary);
-  font-size: 0.9rem;
+  font-size: 12px;
 }
 
 .warning-banner {
   margin-top: 18px;
-  padding: 18px;
-  border-radius: 20px;
-  background: var(--danger-bg);
-  border: 1px solid var(--danger-border);
-  color: var(--danger-text);
+  padding: 10px 14px 10px 16px;
+  border-radius: 0;
+  background: var(--bg-surface);
+  border: none;
+  border-left: 3px solid var(--danger-solid);
+  color: var(--danger-solid);
+  font-size: 13px;
 }
 
 .export-buttons {
@@ -1182,9 +1185,9 @@ button.small {
 
 .modal-content {
   background: var(--bg-surface-raised);
-  border-radius: var(--border-radius-lg);
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-modal);
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
   max-width: 560px;
   width: 90vw;
   max-height: 90vh;
@@ -1197,14 +1200,15 @@ button.small {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 24px;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--border-default);
+  background: var(--color-gray-50);
 }
 
 .modal-header h3 {
   margin: 0;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -1562,15 +1566,7 @@ button.small {
 }
 
 .pol-sidebar-party-badge {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-sidebar);
-  background: rgba(255,255,255,0.1);
-  border-radius: 3px;
-  padding: 1px 6px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  display: none;
 }
 
 .pol-sidebar-brand-text {
@@ -1774,11 +1770,12 @@ button.small {
 
 .pol-page-header {
   background: var(--bg-surface);
-  border-radius: var(--border-radius-lg);
-  padding: 24px 28px;
+  border-radius: 0;
+  padding: 20px 0;
   margin-bottom: 24px;
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-card);
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+  box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1786,11 +1783,11 @@ button.small {
   flex-wrap: wrap;
 }
 
-/* Overview page — clean white, no gradient */
+/* Overview page */
 .pol-page-header.overview {
-  background: var(--bg-surface);
+  background: transparent;
   border-left: none;
-  padding-left: 28px;
+  padding-left: 0;
 }
 
 .pol-page-header h1 {
@@ -1859,26 +1856,31 @@ button.small {
 
 .pol-stat-grid {
   display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border-default);
+  border-radius: var(--border-radius-sm);
+  background: var(--bg-surface);
   margin-bottom: 24px;
+  overflow: hidden;
 }
 
 .pol-stat-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--border-strong);
-  border-radius: var(--border-radius-lg);
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-default);
+  border-radius: 0;
+  box-shadow: none;
   padding: 20px 24px;
-  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.pol-stat-card.warning { border-left-color: var(--warning-solid); }
-.pol-stat-card.danger  { border-left-color: var(--danger-solid); }
-.pol-stat-card.success { border-left-color: var(--success-solid); }
+.pol-stat-card:last-child { border-right: none; }
+
+.pol-stat-card.warning { border-right-color: var(--border-default); }
+.pol-stat-card.danger  { border-right-color: var(--border-default); }
+.pol-stat-card.success { border-right-color: var(--border-default); }
 
 .pol-stat-label {
   display: block;
@@ -1892,16 +1894,17 @@ button.small {
 
 .pol-stat-value {
   display: block;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--text-primary);
-  line-height: 1.1;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
 .pol-stat-value.danger  { color: var(--danger-solid) !important; }
-.pol-stat-value.success { color: var(--success-solid) !important; }
-.pol-stat-value.warning { color: var(--warning-solid) !important; }
+.pol-stat-value.success { color: var(--text-primary) !important; }
+.pol-stat-value.warning { color: var(--text-primary) !important; }
+.pol-stat-value.critical { color: var(--danger-solid) !important; }
 
 .pol-stat-sub {
   display: block;
@@ -1926,32 +1929,42 @@ button.small {
   white-space: nowrap;
 }
 
-/* Party */
-.pol-badge.democrat      { background: var(--info-bg);    color: var(--info-text); }
-.pol-badge.republican    { background: var(--danger-bg);  color: var(--danger-text); }
-.pol-badge.independent   { background: var(--bg-hover);   color: var(--text-secondary); }
-.pol-badge.party-neutral { background: #F3F4F6; color: #6B7280; border: 1px solid #E5E7EB; font-size: 10px; }
+/* Party — no background, plain text */
+.pol-badge.democrat      { background: none; border: none; color: var(--info-solid); padding: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+.pol-badge.republican    { background: none; border: none; color: var(--danger-solid); padding: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+.pol-badge.independent   { background: none; border: none; color: var(--text-tertiary); padding: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+.pol-badge.party-neutral { background: none; border: none; color: #9CA3AF; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; padding: 0; }
 
-/* Bill / item status */
+/* Bill / item status — colored text only, no background fill */
 .pol-badge.passed,
 .pol-badge.compliant,
-.pol-badge.active      { background: var(--success-bg);  color: var(--success-text); }
-.pol-badge.in-progress { background: var(--info-bg);     color: var(--info-text); }
+.pol-badge.active      { background: none; border: none; color: var(--success-solid); padding: 0; }
+.pol-badge.in-progress { background: none; border: none; color: var(--info-solid); padding: 0; }
 .pol-badge.pending,
-.pol-badge.draft       { background: var(--bg-hover);    color: var(--text-secondary); }
+.pol-badge.draft       { background: none; border: none; color: var(--text-secondary); padding: 0; }
 .pol-badge.failed,
-.pol-badge.violation   { background: var(--danger-bg);   color: var(--danger-text); }
+.pol-badge.violation   { background: none; border: none; color: var(--danger-solid); padding: 0; }
 .pol-badge.warning,
-.pol-badge.maxed-out   { background: var(--warning-bg);  color: var(--warning-text); }
+.pol-badge.maxed-out   { background: none; border: none; color: var(--warning-solid); padding: 0; }
 .pol-badge.lapsed,
-.pol-badge.closed      { background: var(--bg-hover);    color: var(--text-tertiary); }
+.pol-badge.closed      { background: none; border: none; color: var(--text-tertiary); padding: 0; }
 
-/* Donor tags */
-.pol-badge.major         { background: var(--brand-light); color: var(--brand-primary); }
-.pol-badge.volunteer-tag { background: var(--info-bg);     color: var(--info-text); }
-.pol-badge.in-kind-tag   { background: var(--success-bg);  color: var(--success-text); }
-.pol-badge.pac-tag       { background: var(--warning-bg);  color: var(--warning-text); }
-.pol-badge.recurring-tag { background: var(--brand-light); color: var(--brand-primary); }
+/* Dot prefix for status badges */
+.pol-badge.passed::before,
+.pol-badge.compliant::before,
+.pol-badge.active::before    { content: '● '; font-size: 6px; vertical-align: middle; }
+.pol-badge.in-progress::before { content: '● '; font-size: 6px; vertical-align: middle; }
+.pol-badge.failed::before,
+.pol-badge.violation::before   { content: '● '; font-size: 6px; vertical-align: middle; }
+.pol-badge.warning::before,
+.pol-badge.maxed-out::before   { content: '● '; font-size: 6px; vertical-align: middle; }
+
+/* Donor tags — keep subtle background for contextual tables */
+.pol-badge.major         { background: none; border: none; color: var(--brand-primary); padding: 0; }
+.pol-badge.volunteer-tag { background: none; border: none; color: var(--info-solid); padding: 0; }
+.pol-badge.in-kind-tag   { background: none; border: none; color: var(--success-solid); padding: 0; }
+.pol-badge.pac-tag       { background: none; border: none; color: var(--warning-solid); padding: 0; }
+.pol-badge.recurring-tag { background: none; border: none; color: var(--brand-primary); padding: 0; }
 
 
 /* ─── Buttons ────────────────────────────────────────────────────────────── */
@@ -1960,13 +1973,13 @@ button.pol-btn-primary {
   background: var(--brand-primary);
   color: white;
   border: 1px solid var(--brand-primary);
-  border-radius: var(--border-radius-md);
-  padding: 10px 20px;
+  border-radius: var(--border-radius-sm);
+  padding: 8px 16px;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 13px;
   font-weight: 600;
   font-family: inherit;
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition: background 0.15s ease;
   white-space: nowrap;
 }
 
@@ -1984,10 +1997,10 @@ button.pol-btn-secondary {
   background: var(--bg-surface);
   color: var(--text-secondary);
   border: 1px solid var(--border-strong);
-  border-radius: var(--border-radius-md);
-  padding: 10px 20px;
+  border-radius: var(--border-radius-sm);
+  padding: 8px 16px;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 13px;
   font-weight: 500;
   font-family: inherit;
   transition: background 0.15s ease, border-color 0.15s ease;
@@ -2003,10 +2016,10 @@ button.pol-btn-ghost {
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-strong);
-  border-radius: var(--border-radius-md);
-  padding: 10px 20px;
+  border-radius: var(--border-radius-sm);
+  padding: 8px 16px;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 13px;
   font-family: inherit;
   transition: background 0.15s ease, color 0.15s ease;
 }
@@ -2020,10 +2033,10 @@ button.pol-btn-danger {
   background: var(--bg-surface);
   color: var(--danger-solid);
   border: 1px solid var(--danger-solid);
-  border-radius: var(--border-radius-md);
-  padding: 10px 20px;
+  border-radius: var(--border-radius-sm);
+  padding: 8px 16px;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 13px;
   font-weight: 600;
   font-family: inherit;
   transition: background 0.15s ease;
@@ -2034,8 +2047,8 @@ button.pol-btn-danger:hover {
 }
 
 button.pol-btn-sm {
-  padding: 6px 14px;
-  font-size: 0.8rem;
+  padding: 6px 12px;
+  font-size: 12px;
 }
 
 
@@ -2086,21 +2099,23 @@ button.pol-btn-sm {
 .pol-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-sm);
   padding: 20px;
-  box-shadow: var(--shadow-card);
+  box-shadow: none;
 }
 
 .pol-card h3 {
-  margin: -20px -20px 16px;
-  padding: 14px 20px;
-  font-size: 14px;
+  margin: 0 0 12px;
+  padding: 0 0 8px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-disabled);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
   display: flex;
   align-items: center;
   gap: 8px;
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--color-gray-100);
 }
 
 .pol-card-body {
@@ -2128,35 +2143,27 @@ button.pol-btn-sm {
 .pol-activity-feed {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .pol-activity-item {
+  padding: 10px 0 10px 12px;
+  border-left: 2px solid var(--border-default);
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border-default);
-  min-height: 40px;
+  gap: 0;
 }
 
-.pol-activity-item:last-child {
-  border-bottom: none;
-}
+.pol-activity-item.green  { border-left-color: var(--success-solid); }
+.pol-activity-item.blue   { border-left-color: var(--info-solid); }
+.pol-activity-item.purple { border-left-color: var(--brand-primary); }
+.pol-activity-item.yellow { border-left-color: var(--warning-solid); }
+.pol-activity-item.red    { border-left-color: var(--danger-solid); }
 
+/* Hide the old dot — border is now the indicator */
 .pol-activity-dot {
-  width: 8px;
-  height: 8px;
-  min-width: 8px;
-  border-radius: 50%;
-  margin-top: 6px;
-  flex-shrink: 0;
+  display: none;
 }
-
-.pol-activity-dot.green  { background: var(--success-solid); }
-.pol-activity-dot.blue   { background: var(--info-solid); }
-.pol-activity-dot.purple { background: var(--brand-primary); }
-.pol-activity-dot.yellow { background: var(--warning-solid); }
-.pol-activity-dot.red    { background: var(--danger-solid); }
 
 .pol-activity-content {
   flex: 1;
@@ -2165,14 +2172,17 @@ button.pol-btn-sm {
 
 .pol-activity-content strong {
   display: block;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: var(--text-secondary);
+  line-height: 1.4;
 }
 
 .pol-activity-content span {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
+  margin-top: 2px;
+  display: block;
 }
 
 
@@ -2182,37 +2192,31 @@ button.pol-btn-sm {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 14px 16px;
-  border-radius: var(--border-radius-md);
-  margin-bottom: 10px;
-  border-left-width: 4px;
-  border-left-style: solid;
-  border-top: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-bottom: 1px solid transparent;
+  padding: 10px 14px 10px 16px;
+  border-radius: 0;
+  margin-bottom: 1px;
+  background: var(--bg-surface);
+  border: none;
+  border-left: 3px solid var(--border-strong);
 }
 
 .pol-alert.danger {
-  background: var(--danger-bg);
-  border-color: var(--danger-border);
+  background: var(--bg-surface);
   border-left-color: var(--danger-solid);
 }
 
 .pol-alert.warning {
-  background: var(--warning-bg);
-  border-color: var(--warning-border);
+  background: var(--bg-surface);
   border-left-color: var(--warning-solid);
 }
 
 .pol-alert.info {
-  background: var(--info-bg);
-  border-color: var(--info-border);
+  background: var(--bg-surface);
   border-left-color: var(--info-solid);
 }
 
 .pol-alert.success {
-  background: var(--success-bg);
-  border-color: var(--success-border);
+  background: var(--bg-surface);
   border-left-color: var(--success-solid);
 }
 
@@ -2220,6 +2224,9 @@ button.pol-btn-sm {
   font-size: 1rem;
   margin-top: 1px;
   flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .pol-alert.danger .pol-alert-icon  { color: var(--danger-solid); }
@@ -2229,16 +2236,20 @@ button.pol-btn-sm {
 
 .pol-alert-body strong {
   display: block;
-  font-size: 0.875rem;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
+
+.pol-alert.danger .pol-alert-body strong  { color: var(--danger-solid); }
+.pol-alert.warning .pol-alert-body strong { color: var(--warning-text); }
+.pol-alert.info .pol-alert-body strong    { color: var(--info-solid); }
+.pol-alert.success .pol-alert-body strong { color: var(--success-solid); }
 
 .pol-alert-body p {
   margin: 0;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
+  font-size: 12px;
+  color: var(--text-tertiary);
   line-height: 1.5;
 }
 
@@ -2255,19 +2266,21 @@ button.pol-btn-sm {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
-  border-radius: 14px;
-  border: 1px solid var(--border-default);
-  background: var(--bg-surface);
+  padding: 12px 0;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+  background: transparent;
   gap: 12px;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: background 0.1s ease;
   min-width: 0;
   overflow: hidden;
 }
 
+.pol-record-item:last-child { border-bottom: none; }
+
 .pol-record-item:hover {
-  border-color: var(--border-strong);
   background: var(--bg-hover);
 }
 
@@ -2317,9 +2330,9 @@ button.pol-btn-sm {
 
 .pol-thermometer {
   position: relative;
-  height: 8px;
+  height: 4px;
   background: var(--border-default);
-  border-radius: 999px;
+  border-radius: 2px;
   overflow: hidden;
   margin: 6px 0;
 }
@@ -2327,7 +2340,7 @@ button.pol-btn-sm {
 .pol-thermometer-fill {
   height: 100%;
   background: var(--brand-primary);
-  border-radius: 999px;
+  border-radius: 2px;
   transition: width 0.5s ease;
 }
 
@@ -2419,13 +2432,13 @@ button.pol-btn-sm {
 }
 
 .pol-violation-banner {
-  padding: 14px 16px;
-  border-radius: var(--border-radius-md);
-  background: var(--danger-bg);
-  border: 1px solid var(--danger-border);
-  border-left: 4px solid var(--danger-solid);
-  color: var(--danger-text);
-  font-size: 0.875rem;
+  padding: 10px 14px 10px 16px;
+  border-radius: 0;
+  background: var(--bg-surface);
+  border: none;
+  border-left: 3px solid var(--danger-solid);
+  color: var(--danger-solid);
+  font-size: 13px;
   font-weight: 600;
   margin-bottom: 16px;
   display: flex;
@@ -2484,9 +2497,10 @@ button.pol-btn-sm {
 .pol-cred-score {
   font-size: 3.5rem;
   font-weight: 800;
-  color: var(--brand-primary);
+  color: var(--text-primary);
   line-height: 1;
   margin: 8px 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .pol-cred-label {
@@ -2792,6 +2806,9 @@ button.pol-btn-sm {
 @media (max-width: 768px) {
   .pol-page { padding: 16px; }
   .pol-stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .pol-stat-card { border-right: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); }
+  .pol-stat-card:nth-child(2n) { border-right: none; }
+  .pol-stat-card:nth-last-child(-n+2) { border-bottom: none; }
 }
 
 @media (max-width: 640px) {
