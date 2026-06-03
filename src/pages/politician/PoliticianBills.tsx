@@ -156,7 +156,7 @@ function AISummaryModal({ bill, onClose }: { bill: Bill; onClose: () => void }) 
         </div>
         <div className="modal-body">
           <div style={{ fontSize: '0.85rem', color: 'var(--muted)', marginBottom: 12 }}>
-            <strong style={{ color: 'var(--color-brand, #6B5DE6)' }}>{bill.number}</strong> — {bill.title}
+            <strong style={{ color: 'var(--color-brand, #4F46E5)' }}>{bill.number}</strong> — {bill.title}
           </div>
           {loading ? (
             <div style={{ padding: '20px 0' }}>
@@ -269,7 +269,7 @@ export function PoliticianBills() {
     >
       <div style={{ flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-          <span style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.88rem' }}>{bill.number}</span>
+          <span style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)', fontSize: '0.88rem' }}>{bill.number}</span>
           {bill.sponsored && <span className="pol-badge major">Sponsored</span>}
         </div>
         <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--text)', marginBottom: 4 }}>{bill.title}</div>
@@ -344,7 +344,7 @@ export function PoliticianBills() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
                 <div>
                   <div style={{ display: 'flex', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
-                    <span style={{ fontWeight: 800, color: 'var(--color-brand, #6B5DE6)', fontSize: '1.05rem' }}>{selectedBill.number}</span>
+                    <span style={{ fontWeight: 800, color: 'var(--color-brand, #4F46E5)', fontSize: '1.05rem' }}>{selectedBill.number}</span>
                     {selectedBill.sponsored && <span className="pol-badge major">Sponsored</span>}
                     <BillStatusBadge status={selectedBill.status} />
                     {selectedBill.politicianVote && <VoteBadge vote={selectedBill.politicianVote} />}

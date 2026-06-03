@@ -29,7 +29,7 @@ function PublicProfilePreviewModal({ onClose }: { onClose: () => void }) {
           {/* Styled like the voter-side profile */}
           <div style={{ background: 'linear-gradient(135deg, #1e2444, #2d1b69)', padding: '28px 28px 20px', borderRadius: '0 0 0 0' }}>
             <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-              <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #6B5DE6, #4F46E5)', display: 'grid', placeItems: 'center', fontSize: '1.6rem', color: 'white', fontWeight: 700, flexShrink: 0 }}>
+              <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #4F46E5, #4F46E5)', display: 'grid', placeItems: 'center', fontSize: '1.6rem', color: 'white', fontWeight: 700, flexShrink: 0 }}>
                 {demoPolitician.name.charAt(0)}
               </div>
               <div>
@@ -48,7 +48,7 @@ function PublicProfilePreviewModal({ onClose }: { onClose: () => void }) {
                 { label: 'PoliCred', value: '84' },
               ].map((s) => (
                 <div key={s.label} style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-brand, #6B5DE6)' }}>{s.value}</div>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-brand, #4F46E5)' }}>{s.value}</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{s.label}</div>
                 </div>
               ))}
@@ -61,7 +61,7 @@ function PublicProfilePreviewModal({ onClose }: { onClose: () => void }) {
               <h4 style={{ margin: '0 0 6px', fontSize: '0.88rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Committees</h4>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {['Education', 'Ways & Means', 'Local Government'].map((c) => (
-                  <span key={c} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim, rgba(107,93,230,0.1))', color: 'var(--color-brand, #6B5DE6)', fontSize: '0.8rem' }}>{c}</span>
+                  <span key={c} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim, rgba(107,93,230,0.1))', color: 'var(--color-brand, #4F46E5)', fontSize: '0.8rem' }}>{c}</span>
                 ))}
               </div>
             </div>

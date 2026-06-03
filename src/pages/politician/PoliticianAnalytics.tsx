@@ -53,12 +53,12 @@ function SimpleBarChart({ data }: { data: { label: string; value: number; max: n
     <div style={{ display: 'grid', gap: 12 }}>
       {data.map((item) => (
         <div key={item.label}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: '0.85rem' }}>
-            <span style={{ color: 'var(--text)' }}>{item.label}</span>
-            <span style={{ fontWeight: 600, color: 'var(--color-brand, #6B5DE6)' }}>{item.value}</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 13 }}>
+            <span style={{ color: 'var(--text-secondary)' }}>{item.label}</span>
+            <span style={{ fontWeight: 600, color: 'var(--chart-primary, #4F46E5)', fontVariantNumeric: 'tabular-nums' }}>{item.value}</span>
           </div>
           <div className="pol-progress-track">
-            <div className="pol-progress-fill" style={{ width: `${(item.value / item.max) * 100}%` }} />
+            <div className="pol-progress-fill" style={{ width: `${(item.value / item.max) * 100}%`, background: 'var(--chart-primary)' }} />
           </div>
         </div>
       ))}
@@ -185,7 +185,7 @@ export function PoliticianAnalytics() {
                   <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{county.county} Co.</div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>{county.donors} donor{county.donors !== 1 ? 's' : ''}</div>
                 </div>
-                <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.92rem' }}>
+                <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)', fontSize: '0.92rem' }}>
                   ${county.amount.toLocaleString()}
                 </div>
               </div>
@@ -241,7 +241,7 @@ export function PoliticianAnalytics() {
         <h3>Fundraising Goal Progress</h3>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: '0.9rem' }}>
           <span style={{ color: 'var(--muted)' }}>Progress toward ${demoPolitician.fundraisingGoal.toLocaleString()} goal</span>
-          <span style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${totalRaised.toLocaleString()} ({goalPct}%)</span>
+          <span style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>${totalRaised.toLocaleString()} ({goalPct}%)</span>
         </div>
         <div className="pol-thermometer" style={{ height: 16, marginBottom: 12 }}>
           <div className="pol-thermometer-fill" style={{ width: `${goalPct}%` }} />

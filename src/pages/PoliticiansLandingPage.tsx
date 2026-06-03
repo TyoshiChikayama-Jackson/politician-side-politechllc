@@ -128,11 +128,11 @@ function HeroSection() {
             </a>
           </div>
           <p className="lp-trust-line">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#6B5DE6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#4F46E5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             No credit card required&nbsp;&nbsp;·&nbsp;&nbsp;
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#6B5DE6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#4F46E5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             Built for Indiana&nbsp;&nbsp;·&nbsp;&nbsp;
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#6B5DE6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}><path d="M2 7l3.5 3.5 6.5-7" stroke="#4F46E5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             From announcement to re-election
           </p>
         </div>
@@ -594,7 +594,7 @@ function DemoSection() {
                 (e.currentTarget.nextElementSibling as HTMLElement | null)?.removeAttribute('hidden');
               }}
             />
-            <div hidden style={{ background: '#0F1117', width: '100%', height: 380, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6B5DE6', fontSize: '14px', borderRadius: '0 0 8px 8px' }}>
+            <div hidden style={{ background: '#0F1117', width: '100%', height: 380, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4F46E5', fontSize: '14px', borderRadius: '0 0 8px 8px' }}>
               Dashboard Preview
             </div>
           </div>

@@ -1,5 +1,5 @@
 /* ============================================
-   POLITECH THEME TOKENS
+   POLITECH THEME TOKENS — Government × Enterprise SaaS
    Light mode is the default.
    Dark mode activates on [data-theme="dark"].
    All colors in the app must reference these variables.
@@ -8,73 +8,78 @@
 :root,
 [data-theme="light"] {
 
-  /* --- Backgrounds --- */
-  --bg-page:            #F9FAFB;
+  /* --- Page structure --- */
+  --bg-page:            #F4F5F7;   /* cool light gray — not pure white */
   --bg-surface:         #FFFFFF;
   --bg-surface-raised:  #FFFFFF;
-  --bg-sidebar:         #FFFFFF;
+  --bg-sidebar:         #1C2333;   /* dark navy sidebar */
+  --sidebar-border:     #2D3748;
   --bg-input:           #FFFFFF;
-  --bg-hover:           #F3F4F6;
-  --bg-active:          #F5F3FF;
+  --bg-hover:           #F9FAFB;
+  --bg-active:          #EEF2FF;
   --bg-skeleton:        #E5E7EB;
   --bg-overlay:         rgba(0,0,0,0.4);
 
   /* --- Borders --- */
   --border-default:     #E5E7EB;
   --border-strong:      #D1D5DB;
-  --border-active:      #6B5DE6;
+  --border-active:      #4F46E5;
 
   /* --- Text --- */
-  --text-primary:       #111827;
+  --text-primary:       #0D1117;
   --text-secondary:     #374151;
   --text-tertiary:      #6B7280;
   --text-disabled:      #9CA3AF;
   --text-inverse:       #FFFFFF;
-  --text-link:          #6B5DE6;
-  --text-link-hover:    #5A4DD4;
+  --text-link:          #4F46E5;
+  --text-link-hover:    #4338CA;
 
-  /* --- Brand (Purple) --- */
-  --brand-primary:      #6B5DE6;
-  --brand-hover:        #5A4DD4;
-  --brand-active:       #4A3DC4;
-  --brand-light:        #F5F3FF;
-  --brand-border:       #C4BEFA;
-  --brand-dim:          rgba(107,93,230,0.08);
-  --brand-dim-strong:   rgba(107,93,230,0.14);
+  /* --- Sidebar text (on dark nav bg) --- */
+  --text-sidebar:         #CBD5E1;
+  --text-sidebar-active:  #FFFFFF;
+
+  /* --- Brand — indigo, used sparingly --- */
+  --brand-primary:      #4F46E5;
+  --brand-hover:        #4338CA;
+  --brand-active:       #3730A3;
+  --brand-light:        #EEF2FF;
+  --brand-border:       #C7D2FE;
+  --brand-dim:          rgba(79,70,229,0.08);
+  --brand-dim-strong:   rgba(79,70,229,0.14);
 
   /* --- Semantic: Danger / Error --- */
-  --danger-text:        #B91C1C;
+  --danger-text:        #991B1B;
   --danger-bg:          #FEF2F2;
-  --danger-border:      #FCA5A5;
+  --danger-border:      #FECACA;
   --danger-solid:       #DC2626;
 
   /* --- Semantic: Warning --- */
-  --warning-text:       #92400E;
+  --warning-text:       #78350F;
   --warning-bg:         #FFFBEB;
-  --warning-border:     #FCD34D;
+  --warning-border:     #FDE68A;
   --warning-solid:      #D97706;
 
   /* --- Semantic: Success --- */
   --success-text:       #14532D;
   --success-bg:         #F0FDF4;
-  --success-border:     #86EFAC;
+  --success-border:     #BBF7D0;
   --success-solid:      #16A34A;
 
   /* --- Semantic: Info --- */
   --info-text:          #1E3A5F;
   --info-bg:            #EFF6FF;
-  --info-border:        #93C5FD;
+  --info-border:        #BFDBFE;
   --info-solid:         #2563EB;
 
-  /* --- Shadows --- */
-  --shadow-card:        0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-modal:       0 20px 25px rgba(0,0,0,0.10), 0 10px 10px rgba(0,0,0,0.04);
-  --shadow-dropdown:    0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+  /* --- Shadows — minimal, purposeful --- */
+  --shadow-card:        0 1px 2px rgba(0,0,0,0.05);
+  --shadow-modal:       0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-dropdown:    0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
 
   /* --- Charts --- */
-  --chart-primary:      #6B5DE6;
-  --chart-secondary:    #A78BFA;
-  --chart-tertiary:     #C4B5FD;
+  --chart-primary:      #4F46E5;
+  --chart-secondary:    #A5B4FC;
+  --chart-tertiary:     #C7D2FE;
   --chart-grid:         #E5E7EB;
   --chart-axis-text:    #6B7280;
 
@@ -87,7 +92,7 @@
   --scrollbar-thumb:    #D1D5DB;
   --scrollbar-hover:    #9CA3AF;
 
-  /* --- Neutral scale (referenced directly in the pol- design system) --- */
+  /* --- Neutral scale --- */
   --color-gray-50:      #F9FAFB;
   --color-gray-100:     #F3F4F6;
   --color-gray-200:     #E5E7EB;
@@ -99,7 +104,7 @@
   --color-gray-800:     #1F2937;
   --color-gray-900:     #111827;
 
-  /* --- Functional aliases (used by pol- components) --- */
+  /* --- Functional aliases --- */
   --color-brand:        var(--brand-primary);
   --color-brand-hover:  var(--brand-hover);
   --color-brand-light:  var(--brand-light);
@@ -117,14 +122,13 @@
   --color-info-bg:      var(--info-bg);
   --color-info-border:  var(--info-border);
 
-  /* --- Legacy token aliases (backward-compat with old CSS) --- */
+  /* --- Legacy token aliases (backward-compat) --- */
   --bg:               var(--bg-page);
   --surface:          var(--bg-surface);
   --surfaceSoft:      var(--bg-hover);
   --text:             var(--text-primary);
   --muted:            var(--text-tertiary);
   --brand:            var(--brand-primary);
-  --brand-hover:      var(--brand-hover);
   --card:             var(--bg-surface);
   --border:           var(--border-default);
   --border-color:     var(--border-default);
@@ -140,7 +144,7 @@
   --grad-purple:      var(--brand-primary);
   --grad-card:        var(--brand-dim);
 
-  /* --- Spacing / radius (unchanged) --- */
+  /* --- Spacing / radius --- */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
@@ -155,96 +159,101 @@
 
 [data-theme="dark"] {
 
-  /* --- Backgrounds --- */
-  --bg-page:            #0F1117;
-  --bg-surface:         #1A1D27;
-  --bg-surface-raised:  #21253A;
-  --bg-sidebar:         #14172A;
-  --bg-input:           #1A1D27;
-  --bg-hover:           #252A3D;
-  --bg-active:          #2D2A50;
-  --bg-skeleton:        #252A3D;
+  /* --- Page structure --- */
+  --bg-page:            #0D1117;
+  --bg-surface:         #161B22;
+  --bg-surface-raised:  #1C2333;
+  --bg-sidebar:         #0D1117;   /* darker than cards — sidebar merges with bg */
+  --sidebar-border:     #21262D;
+  --bg-input:           #161B22;
+  --bg-hover:           #1C2333;
+  --bg-active:          #1C2340;
+  --bg-skeleton:        #21262D;
   --bg-overlay:         rgba(0,0,0,0.65);
 
   /* --- Borders --- */
-  --border-default:     #2D3148;
-  --border-strong:      #3D4263;
-  --border-active:      #7C6FF0;
+  --border-default:     #21262D;
+  --border-strong:      #30363D;
+  --border-active:      #6366F1;
 
   /* --- Text --- */
-  --text-primary:       #F1F2F6;
-  --text-secondary:     #BFC4D6;
-  --text-tertiary:      #7B82A0;
-  --text-disabled:      #4B5268;
-  --text-inverse:       #111827;
-  --text-link:          #9B8FF5;
-  --text-link-hover:    #B8ADFF;
+  --text-primary:       #E6EDF3;
+  --text-secondary:     #8B949E;
+  --text-tertiary:      #6E7681;
+  --text-disabled:      #484F58;
+  --text-inverse:       #0D1117;
+  --text-link:          #818CF8;
+  --text-link-hover:    #A5B4FC;
+
+  /* --- Sidebar text (stays consistent in dark — sidebar gets darker bg) --- */
+  --text-sidebar:         #CBD5E1;
+  --text-sidebar-active:  #FFFFFF;
 
   /* --- Brand --- */
-  --brand-primary:      #7C6FF0;
-  --brand-hover:        #9B8FF5;
-  --brand-active:       #B8ADFF;
-  --brand-light:        #1E1B3D;
-  --brand-border:       #4A3D9E;
-  --brand-dim:          rgba(124,111,240,0.12);
-  --brand-dim-strong:   rgba(124,111,240,0.2);
+  --brand-primary:      #6366F1;
+  --brand-hover:        #818CF8;
+  --brand-active:       #A5B4FC;
+  --brand-light:        #1C2340;
+  --brand-border:       #3730A3;
+  --brand-dim:          rgba(99,102,241,0.12);
+  --brand-dim-strong:   rgba(99,102,241,0.2);
 
   /* --- Semantic: Danger --- */
   --danger-text:        #FCA5A5;
-  --danger-bg:          #2D1515;
+  --danger-bg:          #1C0A0A;
   --danger-border:      #7F1D1D;
   --danger-solid:       #EF4444;
 
   /* --- Semantic: Warning --- */
   --warning-text:       #FCD34D;
-  --warning-bg:         #2D2007;
+  --warning-bg:         #1A1000;
   --warning-border:     #78350F;
   --warning-solid:      #F59E0B;
 
   /* --- Semantic: Success --- */
   --success-text:       #86EFAC;
-  --success-bg:         #052E16;
+  --success-bg:         #0A1A0F;
   --success-border:     #14532D;
   --success-solid:      #22C55E;
 
   /* --- Semantic: Info --- */
   --info-text:          #93C5FD;
-  --info-bg:            #0C1A2E;
+  --info-bg:            #0A0F1A;
   --info-border:        #1E3A5F;
   --info-solid:         #3B82F6;
 
   /* --- Shadows --- */
-  --shadow-card:        0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-modal:       0 20px 25px rgba(0,0,0,0.5), 0 10px 10px rgba(0,0,0,0.3);
-  --shadow-dropdown:    0 4px 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-card:        0 1px 2px rgba(0,0,0,0.3);
+  --shadow-modal:       0 4px 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-dropdown:    0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
 
   /* --- Charts --- */
-  --chart-primary:      #7C6FF0;
-  --chart-secondary:    #A78BFA;
-  --chart-tertiary:     #6D4AB0;
-  --chart-grid:         #2D3148;
-  --chart-axis-text:    #7B82A0;
+  --chart-primary:      #6366F1;
+  --chart-secondary:    #A5B4FC;
+  --chart-tertiary:     #4F46E5;
+  --chart-grid:         #21262D;
+  --chart-axis-text:    #6E7681;
 
   /* --- Skeleton --- */
-  --skeleton-base:      #252A3D;
-  --skeleton-shine:     #2D3350;
+  --skeleton-base:      #21262D;
+  --skeleton-shine:     #30363D;
 
   /* --- Scrollbar --- */
-  --scrollbar-track:    #1A1D27;
-  --scrollbar-thumb:    #3D4263;
-  --scrollbar-hover:    #5B6080;
+  --scrollbar-track:    #161B22;
+  --scrollbar-thumb:    #30363D;
+  --scrollbar-hover:    #484F58;
 
   /* --- Neutral scale (dark overrides) --- */
-  --color-gray-50:      #1A1D27;
-  --color-gray-100:     #252A3D;
-  --color-gray-200:     #2D3148;
-  --color-gray-300:     #3D4263;
-  --color-gray-400:     #5B6080;
-  --color-gray-500:     #7B82A0;
-  --color-gray-600:     #9BA3C0;
-  --color-gray-700:     #BFC4D6;
-  --color-gray-800:     #D8DCE8;
-  --color-gray-900:     #F1F2F6;
+  --color-gray-50:      #161B22;
+  --color-gray-100:     #1C2333;
+  --color-gray-200:     #21262D;
+  --color-gray-300:     #30363D;
+  --color-gray-400:     #484F58;
+  --color-gray-500:     #6E7681;
+  --color-gray-600:     #8B949E;
+  --color-gray-700:     #B1BAC4;
+  --color-gray-800:     #C9D1D9;
+  --color-gray-900:     #E6EDF3;
 
   /* --- Functional aliases (dark) --- */
   --color-brand:        var(--brand-primary);
@@ -699,29 +708,43 @@ button, input, textarea, select {
   width: 100%;
   border-collapse: collapse;
   background: transparent;
+  font-size: 14px;
 }
 
 .data-table th {
-  padding: 10px 14px;
+  padding: 10px 16px;
   text-align: left;
   border-bottom: 1px solid var(--border-default);
   background: var(--bg-hover);
   color: var(--text-tertiary);
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
 
 .data-table td {
-  padding: 13px 14px;
+  padding: 12px 16px;
   text-align: left;
   border-bottom: 1px solid var(--border-default);
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 14px;
   vertical-align: middle;
-  min-height: 48px;
+}
+
+.data-table td.primary {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.data-table td.numeric {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.data-table tbody tr {
+  transition: background 0.1s;
 }
 
 .data-table tbody tr:hover td {
@@ -730,6 +753,12 @@ button, input, textarea, select {
 
 .data-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.table-wrapper {
+  border: 1px solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
 }
 
 .status-pill {
@@ -783,18 +812,25 @@ textarea,
 select {
   width: 100%;
   border: 1px solid var(--border-strong);
-  border-radius: 16px;
-  padding: 14px 16px;
+  border-radius: var(--border-radius-md);
+  padding: 9px 12px;
   background: var(--bg-input);
   color: var(--text-primary);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+  font-size: 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid var(--border-active);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-disabled);
 }
 
 textarea {
@@ -1422,10 +1458,10 @@ button.small {
 /* ─── Sidebar ────────────────────────────────────────────────────────────── */
 
 .pol-sidebar {
-  width: 248px;
+  width: 220px;
   min-height: 100vh;
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border-default);
+  background: var(--bg-sidebar);      /* #1C2333 light / #0D1117 dark */
+  border-right: 1px solid var(--sidebar-border);
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -1438,17 +1474,21 @@ button.small {
 }
 
 .pol-sidebar.collapsed {
-  width: 64px;
+  width: 56px;
 }
 
 .pol-sidebar-brand {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 16px 14px;
-  border-bottom: 1px solid var(--border-default);
-  min-height: 64px;
+  flex-direction: column;
+  gap: 0;
+  padding: 20px 16px 0;
   overflow: hidden;
+}
+
+.pol-sidebar-brand-logo-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
 }
 
 .pol-sidebar-logo {
@@ -1466,23 +1506,72 @@ button.small {
 }
 
 .pol-sidebar-logo-img {
-  height: 32px;
+  height: 28px;
   width: auto;
   max-width: 140px;
   object-fit: contain;
   flex-shrink: 0;
 }
 
-/* Show light logo by default, hide dark logo */
+/* Always show the light-bg-optimized logo on dark sidebar */
 .pol-sidebar-logo-light { display: block; }
 .pol-sidebar-logo-dark  { display: none; }
 
-/* Swap when dark theme is active */
+/* In dark theme, sidebar stays dark (#0D1117), keep showing dark logo */
 [data-theme="dark"] .pol-sidebar-logo-light { display: none; }
 [data-theme="dark"] .pol-sidebar-logo-dark  { display: block; }
 
-/* Hide both logos when sidebar is collapsed — the text is already hidden */
 .pol-sidebar.collapsed .pol-sidebar-logo-img { display: none; }
+
+.pol-sidebar-divider {
+  height: 1px;
+  background: var(--sidebar-border);
+  margin: 0 0 12px;
+}
+
+.pol-sidebar-identity {
+  padding: 0 0 14px;
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.pol-sidebar.collapsed .pol-sidebar-identity {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  padding: 0;
+}
+
+.pol-sidebar-identity-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-sidebar-active);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 2px;
+}
+
+.pol-sidebar-identity-office {
+  font-size: 11px;
+  color: var(--text-sidebar);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 6px;
+}
+
+.pol-sidebar-party-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-sidebar);
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  padding: 1px 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
 
 .pol-sidebar-brand-text {
   overflow: hidden;
@@ -1511,12 +1600,32 @@ button.small {
 
 .pol-sidebar-nav {
   flex: 1;
-  padding: 12px 10px;
+  padding: 4px 8px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+/* Section group label inside nav */
+.pol-nav-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4A5568;
+  padding: 10px 12px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.pol-sidebar.collapsed .pol-nav-section-label {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  padding: 0;
 }
 
 .pol-nav-item {
@@ -1524,52 +1633,61 @@ button.small {
   align-items: center;
   gap: 10px;
   padding: 0 12px;
-  height: 44px;
-  min-height: 44px;
-  border-radius: var(--border-radius-md);
+  height: 40px;
+  min-height: 40px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   border: none;
-  border-left: 3px solid transparent;
+  border-left: 2px solid transparent;
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--text-sidebar);
   width: 100%;
   text-align: left;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
   white-space: nowrap;
-  font-size: 0.88rem;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: inherit;
 }
 
 .pol-nav-item:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+  background: rgba(255,255,255,0.06);
+  color: #FFFFFF;
 }
 
 .pol-nav-item.active {
-  background: var(--bg-active);
-  color: var(--brand-primary);
+  background: rgba(79,70,229,0.2);
+  color: #FFFFFF;
   border-left-color: var(--brand-primary);
-  font-weight: 600;
+  padding-left: 10px;   /* compensate for 2px border */
+  font-weight: 500;
 }
 
 .pol-nav-icon {
-  font-size: 0.95rem;
-  min-width: 20px;
+  font-size: 16px;
+  min-width: 16px;
+  width: 16px;
   text-align: center;
-  color: var(--text-tertiary);
-  transition: color 0.15s ease;
+  color: var(--text-sidebar);
+  transition: color 0.12s ease;
   flex-shrink: 0;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.pol-nav-item.active .pol-nav-icon,
 .pol-nav-item:hover .pol-nav-icon {
-  color: inherit;
+  color: #FFFFFF;
+}
+
+.pol-nav-item.active .pol-nav-icon {
+  color: #818CF8;
 }
 
 .pol-nav-label {
   transition: opacity 0.2s ease;
-  font-size: 0.875rem;
+  font-size: 13px;
 }
 
 .pol-sidebar.collapsed .pol-nav-label {
@@ -1580,8 +1698,8 @@ button.small {
 }
 
 .pol-sidebar-footer {
-  padding: 12px 10px;
-  border-top: 1px solid var(--border-default);
+  padding: 10px 8px 16px;
+  border-top: 1px solid var(--sidebar-border);
 }
 
 .pol-sidebar-back-link {
@@ -1591,18 +1709,18 @@ button.small {
   gap: 10px;
   padding: 0 12px;
   height: 36px;
-  border-radius: var(--border-radius-md);
-  color: var(--text-tertiary);
-  font-size: 0.82rem;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-sidebar);
+  font-size: 12px;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.12s ease, color 0.12s ease;
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: 2px;
 }
 .pol-sidebar-back-link:hover {
-  background: var(--bg-hover);
-  color: var(--brand-primary);
+  background: rgba(255,255,255,0.06);
+  color: #FFFFFF;
 }
 
 .pol-sidebar-collapse-btn {
@@ -1611,21 +1729,22 @@ button.small {
   align-items: center;
   gap: 10px;
   padding: 0 12px;
-  height: 40px;
-  border-radius: var(--border-radius-md);
+  height: 36px;
+  border-radius: var(--border-radius-sm);
   border: none;
   background: transparent;
-  color: var(--text-tertiary);
+  color: var(--text-sidebar);
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.15s ease, color 0.15s ease;
+  font-size: 12px;
+  font-family: inherit;
+  transition: background 0.12s ease, color 0.12s ease;
   white-space: nowrap;
   overflow: hidden;
 }
 
 .pol-sidebar-collapse-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+  background: rgba(255,255,255,0.06);
+  color: #FFFFFF;
 }
 
 
@@ -1633,7 +1752,7 @@ button.small {
 
 .pol-main {
   flex: 1;
-  margin-left: 248px;
+  margin-left: 220px;
   min-height: 100vh;
   transition: margin-left 0.25s ease;
   background: var(--bg-page);
@@ -1641,12 +1760,12 @@ button.small {
 }
 
 .pol-main.sidebar-collapsed {
-  margin-left: 64px;
+  margin-left: 56px;
 }
 
 .pol-page {
-  padding: 32px;
-  max-width: 1300px;
+  padding: 24px 32px;
+  max-width: 1280px;
   overflow: hidden;
 }
 
@@ -1667,11 +1786,11 @@ button.small {
   flex-wrap: wrap;
 }
 
-/* Overview page gets a subtle left accent */
+/* Overview page — clean white, no gradient */
 .pol-page-header.overview {
-  background: linear-gradient(to right, var(--bg-surface) 60%, var(--brand-light));
-  border-left: 4px solid var(--brand-primary);
-  padding-left: 24px;
+  background: var(--bg-surface);
+  border-left: none;
+  padding-left: 28px;
 }
 
 .pol-page-header h1 {
@@ -1748,40 +1867,47 @@ button.small {
 .pol-stat-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
+  border-left: 3px solid var(--border-strong);
   border-radius: var(--border-radius-lg);
-  padding: 20px 22px;
+  padding: 20px 24px;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
+
+.pol-stat-card.warning { border-left-color: var(--warning-solid); }
+.pol-stat-card.danger  { border-left-color: var(--danger-solid); }
+.pol-stat-card.success { border-left-color: var(--success-solid); }
 
 .pol-stat-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 11px;
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-weight: 500;
+  margin-bottom: 4px;
 }
 
 .pol-stat-value {
   display: block;
-  font-size: 1.75rem;
+  font-size: 28px;
   font-weight: 700;
   color: var(--text-primary);
-  line-height: 1;
-  margin-bottom: 6px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 
 .pol-stat-value.danger  { color: var(--danger-solid) !important; }
 .pol-stat-value.success { color: var(--success-solid) !important; }
+.pol-stat-value.warning { color: var(--warning-solid) !important; }
 
 .pol-stat-sub {
   display: block;
-  font-size: 0.78rem;
-  color: var(--text-disabled);
-  margin-top: auto;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
 }
 
 
@@ -1791,11 +1917,11 @@ button.small {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 10px;
+  padding: 2px 8px;
   border-radius: var(--border-radius-sm);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -1804,7 +1930,7 @@ button.small {
 .pol-badge.democrat      { background: var(--info-bg);    color: var(--info-text); }
 .pol-badge.republican    { background: var(--danger-bg);  color: var(--danger-text); }
 .pol-badge.independent   { background: var(--bg-hover);   color: var(--text-secondary); }
-.pol-badge.party-neutral { background: #4B5563;           color: #E5E7EB; }
+.pol-badge.party-neutral { background: #F3F4F6; color: #6B7280; border: 1px solid #E5E7EB; font-size: 10px; }
 
 /* Bill / item status */
 .pol-badge.passed,
@@ -1961,18 +2087,24 @@ button.pol-btn-sm {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
   border-radius: var(--border-radius-lg);
-  padding: 24px;
+  padding: 20px;
   box-shadow: var(--shadow-card);
 }
 
 .pol-card h3 {
-  margin: 0 0 16px;
-  font-size: 0.95rem;
+  margin: -20px -20px 16px;
+  padding: 14px 20px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 8px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.pol-card-body {
+  padding: 0;
 }
 
 /* Info box with brand tint */
@@ -1994,26 +2126,30 @@ button.pol-btn-sm {
 /* ─── Activity Feed ──────────────────────────────────────────────────────── */
 
 .pol-activity-feed {
-  display: grid;
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .pol-activity-item {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--border-default);
-  background: var(--bg-surface);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-default);
+  min-height: 40px;
+}
+
+.pol-activity-item:last-child {
+  border-bottom: none;
 }
 
 .pol-activity-dot {
-  width: 10px;
-  height: 10px;
-  min-width: 10px;
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
   border-radius: 50%;
-  margin-top: 5px;
+  margin-top: 6px;
+  flex-shrink: 0;
 }
 
 .pol-activity-dot.green  { background: var(--success-solid); }
@@ -2022,14 +2158,20 @@ button.pol-btn-sm {
 .pol-activity-dot.yellow { background: var(--warning-solid); }
 .pol-activity-dot.red    { background: var(--danger-solid); }
 
+.pol-activity-content {
+  flex: 1;
+  min-width: 0;
+}
+
 .pol-activity-content strong {
   display: block;
-  font-size: 0.92rem;
-  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
 }
 
 .pol-activity-content span {
-  font-size: 0.82rem;
+  font-size: 12px;
   color: var(--text-tertiary);
 }
 
@@ -2203,18 +2345,20 @@ button.pol-btn-sm {
 .pol-search-input {
   flex: 1;
   min-width: 200px;
-  padding: 10px 16px 10px 38px;
-  border: 1px solid var(--border-default);
-  border-radius: 12px;
+  padding: 9px 12px 9px 36px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--border-radius-md);
   background: var(--bg-input);
   color: var(--text-primary);
-  font-size: 0.92rem;
+  font-size: 14px;
   position: relative;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .pol-search-input:focus {
   outline: none;
-  border-color: var(--border-active);
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
 }
 
 .pol-search-wrapper {
@@ -2394,24 +2538,24 @@ button.pol-btn-sm {
 .pol-field-group input,
 .pol-field-group select,
 .pol-field-group textarea {
-  padding: 10px 14px;
-  border: 1px solid var(--border-default);
-  border-radius: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--border-radius-md);
   background: var(--bg-input);
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 14px;
   font-family: inherit;
   width: 100%;
   box-sizing: border-box;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .pol-field-group input:focus,
 .pol-field-group select:focus,
 .pol-field-group textarea:focus {
   outline: none;
-  border-color: var(--border-active);
-  box-shadow: 0 0 0 3px var(--brand-dim);
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
 }
 
 .pol-field-group input::placeholder,
@@ -2458,23 +2602,24 @@ button.pol-btn-sm {
 }
 
 .pol-ai-launcher {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: var(--brand-primary);
-  border: none;
-  color: white;
-  font-size: 1.4rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--brand-primary);
+  font-size: 1.3rem;
   cursor: pointer;
-  box-shadow: 0 8px 24px var(--brand-dim-strong);
+  box-shadow: var(--shadow-dropdown);
   display: grid;
   place-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.15s ease;
 }
 
 .pol-ai-launcher:hover {
-  transform: scale(1.08);
-  box-shadow: 0 12px 32px var(--brand-dim-strong);
+  transform: scale(1.06);
+  border-color: var(--brand-primary);
+  box-shadow: var(--shadow-modal);
 }
 
 .pol-ai-panel {

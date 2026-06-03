@@ -139,7 +139,7 @@ export function PoliticianSettings() {
               {profilePhotoUrl ? (
                 <img src={profilePhotoUrl} alt="Profile" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', margin: '0 auto 12px', display: 'block', border: '2px solid var(--border)' }} />
               ) : (
-                <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--grad-purple, linear-gradient(135deg, #6B5DE6, #4F46E5))', display: 'grid', placeItems: 'center', fontSize: '1.8rem', margin: '0 auto 12px', color: 'white', fontWeight: 700 }}>
+                <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--grad-purple, linear-gradient(135deg, #4F46E5, #4F46E5))', display: 'grid', placeItems: 'center', fontSize: '1.8rem', margin: '0 auto 12px', color: 'white', fontWeight: 700 }}>
                   M
                 </div>
               )}
@@ -360,7 +360,7 @@ export function PoliticianSettings() {
           <h3>PoliTech Subscription</h3>
           <div style={{ padding: '20px 24px', borderRadius: 14, background: 'var(--navy-card, #1e2444)', border: '1px solid var(--navy-border)', marginBottom: 20 }}>
             <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>Current Plan</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-brand, #6B5DE6)', marginBottom: 4 }}>Professional</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-brand, #4F46E5)', marginBottom: 4 }}>Professional</div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.88rem' }}>$149/month · Billed monthly</div>
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.82rem', marginTop: 8 }}>Next billing: June 1, 2026</div>
           </div>
@@ -371,7 +371,7 @@ export function PoliticianSettings() {
             <button className="pol-btn-danger pol-btn-sm" onClick={() => { if (window.confirm('Are you sure you want to cancel your subscription?')) showSavedToast('Cancellation request received. A team member will follow up.'); }}>Cancel Subscription</button>
           </div>
           <p style={{ color: 'var(--muted)', fontSize: '0.82rem', marginTop: 16 }}>
-            Need help? Contact <a href="mailto:support@politechllc.com" style={{ color: 'var(--color-brand, #6B5DE6)' }}>support@politechllc.com</a>
+            Need help? Contact <a href="mailto:support@politechllc.com" style={{ color: 'var(--color-brand, #4F46E5)' }}>support@politechllc.com</a>
           </p>
         </div>
       )}

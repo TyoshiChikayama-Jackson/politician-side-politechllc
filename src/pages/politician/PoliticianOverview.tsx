@@ -294,39 +294,48 @@ export function PoliticianOverview() {
 
   return (
     <div>
-      <div className="pol-page-header overview" style={{ marginBottom: 24 }}>
+      {/* Welcome bar — clean white card, no gradient */}
+      <div className="pol-page-header overview" style={{ marginBottom: 20 }}>
         <div className="pol-header-left">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            <span className="pol-badge party-neutral">YOUR PARTY</span>
-            <span style={{ color: 'var(--color-gray-500)', fontSize: '0.8rem' }}>{demoPolitician.district}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+            <span style={{ fontSize: 20, fontWeight: 600, color: 'var(--text-primary)' }}>
+              {demoPolitician.name}
+            </span>
+            <span className="pol-badge party-neutral">Your Party</span>
           </div>
-          <h1>Welcome back, {demoPolitician.name.split(' ')[0]}</h1>
-          <p>{demoPolitician.office} · {demoPolitician.state} · {demoPolitician.campaignName}</p>
+          <div style={{ fontSize: 13, color: 'var(--text-tertiary)', marginBottom: 16 }}>
+            {demoPolitician.office} · {demoPolitician.district}
+          </div>
 
           <div className="pol-overview-meta">
-            <div className="pol-fundraising-row">
-              <span>Fundraising Goal</span>
-              <span>${totalRaised.toLocaleString()} of ${demoPolitician.fundraisingGoal.toLocaleString()} ({goalPct}%)</span>
+            <div className="pol-fundraising-row" style={{ marginBottom: 6 }}>
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Fundraising Goal</span>
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums' }}>
+                ${totalRaised.toLocaleString()} of ${demoPolitician.fundraisingGoal.toLocaleString()}
+              </span>
             </div>
             <div className="pol-thermometer">
               <div className="pol-thermometer-fill" style={{ width: `${goalPct}%` }} />
             </div>
+            <div style={{ fontSize: 12, color: 'var(--text-tertiary)', marginTop: 6, textAlign: 'right' }}>
+              {daysUntilElection} days until election
+            </div>
           </div>
-        </div>
-
-        <div className="pol-days-badge">
-          <span className="pol-days-count">{daysUntilElection}</span>
-          <span className="pol-days-label">days until election</span>
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
+      {/* Action buttons — secondary style row */}
+      <div style={{
+        display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20,
+        padding: '12px 0', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)',
+      }}>
         <button className="pol-btn-primary pol-btn-sm" onClick={() => setShowNewPost(true)}>New Post</button>
         <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowAddDonor(true)}>Add Donor</button>
         <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowLogExpense(true)}>Log Expense</button>
         <button className="pol-btn-secondary pol-btn-sm" onClick={() => setShowEmailCampaign(true)}>New Email Campaign</button>
       </div>
 
+      {/* Stat cards */}
       <div className="pol-stat-grid">
         <div className="pol-stat-card">
           <span className="pol-stat-label">Total Donors</span>
@@ -415,6 +424,7 @@ export function PoliticianOverview() {
             ))}
           </div>
         </div>
+
       </div>
 
       <div className="pol-grid-2">

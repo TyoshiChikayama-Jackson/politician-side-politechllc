@@ -243,7 +243,7 @@ function SpeechGenerator({ onSave, onCancel }: { onSave: (s: Speech) => void; on
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 24 }}>
         {['1. Setup', '2. Generate', '3. Edit', '4. Save'].map((label, i) => (
-          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #6B5DE6)' : 'var(--muted)' }}>{label}</span>
+          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #4F46E5)' : 'var(--muted)' }}>{label}</span>
         ))}
       </div>
 
@@ -449,7 +449,7 @@ function SpeechEditor({ speech, onUpdate, onClose, onToast }: { speech: Speech; 
           <div className="info-label" style={{ marginBottom: 8 }}>Key Points</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {speech.keyPoints.map((p, i) => (
-              <span key={i} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--color-brand, #6B5DE6)', fontSize: '0.78rem' }}>{p}</span>
+              <span key={i} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--color-brand, #4F46E5)', fontSize: '0.78rem' }}>{p}</span>
             ))}
           </div>
         </div>
@@ -591,7 +591,7 @@ export function PoliticianSpeech() {
                       </div>
                     </div>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.88rem' }}>~{sp.estimatedMinutes}min</div>
+                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)', fontSize: '0.88rem' }}>~{sp.estimatedMinutes}min</div>
                       <button
                         className="pol-btn-ghost pol-btn-sm"
                         style={{ marginTop: 4, fontSize: '0.72rem' }}

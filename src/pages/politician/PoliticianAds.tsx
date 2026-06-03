@@ -136,7 +136,7 @@ function AdLibrary({
                   <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 2 }}>{ad.goal} · {ad.variants.length} variants</div>
                 </div>
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  {ad.impressions != null && <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{ad.impressions.toLocaleString()} impr.</div>}
+                  {ad.impressions != null && <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>{ad.impressions.toLocaleString()} impr.</div>}
                 </div>
               </div>
             ))}
@@ -342,7 +342,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 24 }}>
         {['1. Setup', '2. Generate', '3. Review', '4. Save'].map((label, i) => (
-          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #6B5DE6)' : 'var(--muted)' }}>{label}</span>
+          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #4F46E5)' : 'var(--muted)' }}>{label}</span>
         ))}
       </div>
 
@@ -429,7 +429,7 @@ function AdCreator({ onSave, onCancel }: { onSave: (ad: AdCampaign) => void; onC
             {variants.map((variant, i) => (
               <div key={variant.id} style={{ padding: '16px 18px', borderRadius: 12, border: '1px solid var(--border)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                  <strong style={{ fontSize: '0.9rem', color: 'var(--color-brand, #6B5DE6)' }}>{variant.label}</strong>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--color-brand, #4F46E5)' }}>{variant.label}</strong>
                 </div>
                 <div className="pol-field-group" style={{ marginBottom: 10 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>

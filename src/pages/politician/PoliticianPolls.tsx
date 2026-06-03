@@ -33,7 +33,7 @@ function ShareSurveyModal({ survey, onClose }: { survey: Survey; onClose: () => 
         <div className="modal-body">
           <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 16 }}>Share this link with constituents to collect responses for "{survey.title}".</p>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', padding: '12px 14px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)' }}>
-            <div style={{ flex: 1, fontSize: '0.85rem', color: 'var(--color-brand, #6B5DE6)', fontWeight: 600, overflowWrap: 'break-word', wordBreak: 'break-all' }}>{url}</div>
+            <div style={{ flex: 1, fontSize: '0.85rem', color: 'var(--color-brand, #4F46E5)', fontWeight: 600, overflowWrap: 'break-word', wordBreak: 'break-all' }}>{url}</div>
             <button className="pol-btn-primary pol-btn-sm" onClick={copy} style={{ flexShrink: 0 }}>{copied ? 'Copied!' : 'Copy Link'}</button>
           </div>
         </div>
@@ -159,7 +159,7 @@ function SurveyResultsPanel({ survey, onToast, onShare, onClose: onCloseSurvey }
           <div style={{ display: 'grid', gap: 8 }}>
             {themes.map((theme, i) => (
               <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 14px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--color-brand, #6B5DE6)', fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--color-brand, #4F46E5)', fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
                 <span style={{ fontSize: '0.88rem', color: 'var(--text)' }}>{theme}</span>
               </div>
             ))}
@@ -174,7 +174,7 @@ function SurveyResultsPanel({ survey, onToast, onShare, onClose: onCloseSurvey }
       {survey.shareLink && (
         <div style={{ padding: '12px 16px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)', marginBottom: 16 }}>
           <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 4 }}>SURVEY LINK</div>
-          <div style={{ fontWeight: 600, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.88rem' }}>{survey.shareLink}</div>
+          <div style={{ fontWeight: 600, color: 'var(--color-brand, #4F46E5)', fontSize: '0.88rem' }}>{survey.shareLink}</div>
         </div>
       )}
 
@@ -307,7 +307,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--muted)', marginBottom: 24 }}>
         {['1. Setup', '2. Questions', '3. Distribute'].map((label, i) => (
-          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #6B5DE6)' : 'var(--muted)' }}>{label}</span>
+          <span key={label} style={{ fontWeight: step === i + 1 ? 700 : 400, color: step === i + 1 ? 'var(--color-brand, #4F46E5)' : 'var(--muted)' }}>{label}</span>
         ))}
       </div>
 
@@ -378,7 +378,7 @@ function SurveyBuilder({ onSave, onCancel }: { onSave: (s: Survey) => void; onCa
                       {q.options && q.options.length > 0 && (
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
                           {q.options.map((opt) => (
-                            <span key={opt} style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--color-brand, #6B5DE6)' }}>{opt}</span>
+                            <span key={opt} style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: 999, background: 'var(--purple-dim)', color: 'var(--color-brand, #4F46E5)' }}>{opt}</span>
                           ))}
                         </div>
                       )}
@@ -558,7 +558,7 @@ export function PoliticianPolls() {
                     {survey.createdAt && <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: 2 }}>Created {survey.createdAt}</div>}
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{survey.responseCount}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>{survey.responseCount}</div>
                     <div style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>responses</div>
                   </div>
                 </div>

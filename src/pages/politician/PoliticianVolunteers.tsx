@@ -384,7 +384,7 @@ export function PoliticianVolunteers() {
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{v.totalHours}h</div>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>{v.totalHours}h</div>
                     <span className={`pol-badge ${v.status}`} style={{ marginTop: 4, display: 'inline-flex' }}>{v.status}</span>
                   </div>
                 </div>
@@ -480,7 +480,7 @@ export function PoliticianVolunteers() {
                   {shift.assignedVolunteerIds.map((vid) => {
                     const vol = volunteers.find((v) => v.id === vid);
                     return vol ? (
-                      <span key={vid} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim, rgba(107,93,230,0.12))', color: 'var(--color-brand, #6B5DE6)', fontSize: '0.8rem' }}>
+                      <span key={vid} style={{ padding: '4px 10px', borderRadius: 999, background: 'var(--purple-dim, rgba(107,93,230,0.12))', color: 'var(--color-brand, #4F46E5)', fontSize: '0.8rem' }}>
                         {vol.firstName} {vol.lastName} ({Object.values(shift.hoursLogged)[shift.assignedVolunteerIds.indexOf(vid)]}h)
                       </span>
                     ) : null;
@@ -510,7 +510,7 @@ export function PoliticianVolunteers() {
           <div className="pol-record-list">
             {sorted.map((v, i) => (
               <div key={v.id} className="pol-record-item" style={{ cursor: 'default' }}>
-                <div style={{ width: 32, height: 32, borderRadius: '50%', background: i === 0 ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : i === 1 ? 'linear-gradient(135deg, #94a3b8, #64748b)' : i === 2 ? 'linear-gradient(135deg, #b45309, #92400e)' : 'var(--purple-dim)', display: 'grid', placeItems: 'center', fontWeight: 700, color: i < 3 ? 'white' : 'var(--color-brand, #6B5DE6)', fontSize: '0.85rem', flexShrink: 0 }}>
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: i === 0 ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : i === 1 ? 'linear-gradient(135deg, #94a3b8, #64748b)' : i === 2 ? 'linear-gradient(135deg, #b45309, #92400e)' : 'var(--purple-dim)', display: 'grid', placeItems: 'center', fontWeight: 700, color: i < 3 ? 'white' : 'var(--color-brand, #4F46E5)', fontSize: '0.85rem', flexShrink: 0 }}>
                   #{i + 1}
                 </div>
                 <div style={{ flex: 1 }}>
@@ -518,7 +518,7 @@ export function PoliticianVolunteers() {
                   <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{v.skills.join(', ')}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--color-brand, #6B5DE6)' }}>{v.totalHours}h</div>
+                  <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--color-brand, #4F46E5)' }}>{v.totalHours}h</div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>since {v.joinDate}</div>
                 </div>
               </div>

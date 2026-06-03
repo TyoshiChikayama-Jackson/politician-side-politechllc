@@ -463,7 +463,7 @@ export function PoliticianDonors() {
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.95rem' }}>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)', fontSize: '0.95rem' }}>
                       ${donor.cycleTotal.toLocaleString()}
                     </div>
                     <span className={`pol-badge ${donor.status}`} style={{ marginTop: 4, display: 'inline-flex' }}>
@@ -631,7 +631,7 @@ export function PoliticianDonors() {
             <h3>Contribution Limit Status</h3>
             <div style={{ marginBottom: 16, padding: '12px 14px', background: 'var(--purple-dim, rgba(107,93,230,0.12))', borderRadius: 12, border: '1px solid var(--navy-border)' }}>
               <div style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>Indiana State Limit (Individual)</div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-brand, #6B5DE6)' }}>${STATE_LIMIT.toLocaleString()}</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--color-brand, #4F46E5)' }}>${STATE_LIMIT.toLocaleString()}</div>
             </div>
             <div className="pol-record-list">
               {donors.filter((d) => d.cycleTotal > 0).sort((a, b) => b.cycleTotal - a.cycleTotal).map((donor) => {
@@ -641,7 +641,7 @@ export function PoliticianDonors() {
                   <div key={donor.id} style={{ padding: '14px 0', borderBottom: '1px solid var(--border)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                       <span style={{ fontWeight: 600, fontSize: '0.92rem' }}>{donor.firstName} {donor.lastName}</span>
-                      <span style={{ fontWeight: 700, color: isOver ? '#f87171' : 'var(--color-brand, #6B5DE6)', fontSize: '0.92rem' }}>
+                      <span style={{ fontWeight: 700, color: isOver ? '#f87171' : 'var(--color-brand, #4F46E5)', fontSize: '0.92rem' }}>
                         ${donor.cycleTotal.toLocaleString()} {isOver && '!'}
                       </span>
                     </div>

@@ -102,7 +102,7 @@ function CalendarView({ events }: { events: CampaignEvent[] }) {
               <>
                 <div style={{ fontSize: '0.8rem', fontWeight: day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear() ? 800 : 500, color: 'var(--text)', marginBottom: 4 }}>{day}</div>
                 {(eventsByDay[day] || []).map((evt) => (
-                  <div key={evt.id} style={{ fontSize: '0.68rem', background: 'var(--purple-dim)', color: 'var(--color-brand, #6B5DE6)', borderRadius: 4, padding: '2px 4px', marginBottom: 2, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                  <div key={evt.id} style={{ fontSize: '0.68rem', background: 'var(--purple-dim)', color: 'var(--color-brand, #4F46E5)', borderRadius: 4, padding: '2px 4px', marginBottom: 2, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                     {evt.title}
                   </div>
                 ))}
@@ -362,7 +362,7 @@ function EventDetail({ event, onToast, onEdit }: { event: CampaignEvent; onToast
                       {tier.description && <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{tier.description}</div>}
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${tier.price === 0 ? 'Free' : tier.price.toLocaleString()}</div>
+                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>${tier.price === 0 ? 'Free' : tier.price.toLocaleString()}</div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>{tier.sold}/{tier.capacity} sold</div>
                     </div>
                   </div>
@@ -404,7 +404,7 @@ function EventDetail({ event, onToast, onEdit }: { event: CampaignEvent; onToast
                     <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{rsvp.email}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    {rsvp.amountPaid > 0 && <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${rsvp.amountPaid.toLocaleString()}</div>}
+                    {rsvp.amountPaid > 0 && <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>${rsvp.amountPaid.toLocaleString()}</div>}
                     <span className={`pol-badge ${rsvp.status === 'confirmed' ? 'passed' : rsvp.status === 'waitlist' ? 'warning' : 'failed'}`}>{rsvp.status}</span>
                   </div>
                 </div>
@@ -430,7 +430,7 @@ function EventDetail({ event, onToast, onEdit }: { event: CampaignEvent; onToast
                       <strong>{tier.name}</strong>
                       <div style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>{tier.sold} × ${tier.price.toLocaleString()}</div>
                     </div>
-                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>${tierRevenue.toLocaleString()}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>${tierRevenue.toLocaleString()}</div>
                   </div>
                 );
               })}
@@ -447,7 +447,7 @@ function EventDetail({ event, onToast, onEdit }: { event: CampaignEvent; onToast
             <div>
               <div style={{ padding: '14px 16px', borderRadius: 10, background: 'var(--purple-dim)', border: '1px solid var(--navy-border)', marginBottom: 16 }}>
                 <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginBottom: 4 }}>PUBLIC EVENT URL</div>
-                <div style={{ fontWeight: 600, color: 'var(--color-brand, #6B5DE6)', fontSize: '0.9rem' }}>
+                <div style={{ fontWeight: 600, color: 'var(--color-brand, #4F46E5)', fontSize: '0.9rem' }}>
                   alexjohnson-d12.com/events/{event.id}
                 </div>
               </div>
@@ -621,7 +621,7 @@ export function PoliticianEvents() {
                       </div>
                     </div>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #6B5DE6)' }}>{evt.rsvpCount} RSVPs</div>
+                      <div style={{ fontWeight: 700, color: 'var(--color-brand, #4F46E5)' }}>{evt.rsvpCount} RSVPs</div>
                       {evt.totalRevenue > 0 && <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>${evt.totalRevenue.toLocaleString()}</div>}
                     </div>
                   </div>
